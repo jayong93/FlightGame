@@ -66,13 +66,13 @@ def init():
     Camera.x, Camera.y = map.w / 2, map.h / 2
     Camera.w, Camera.h = WIDTH * 2, HEIGHT * 2
 
-    w, h = mapW / (NODE_NUM + 1), mapH / (NODE_NUM + 1)
+    w, h = mapW / (NODE_NUM - 1), mapH / (NODE_NUM - 1)
     if nodeList is None:
         nodeList = []
     for i in range(NODE_NUM):
         l = []
         for j in range(NODE_NUM):
-            n = Node((j + 1) * w, (i + 1) * h)
+            n = Node(j * w, i * h)
             l.append(n)
         nodeList.append(l)
 
@@ -245,9 +245,9 @@ def link_node():
                 if j + 1 < NODE_NUM:
                     n.link |= 8
 
-    bw, bh = mapW / (NODE_NUM + 1), mapH / (NODE_NUM + 1)
+    bw, bh = mapW / (NODE_NUM - 1), mapH / (NODE_NUM - 1)
     for obj in objectList:
-        ox, oy = int(obj.x / bw) - 1, int(obj.y / bh) - 1
+        ox, oy = int(obj.x / bw), int(obj.y / bh)
         for i in range(-1, 2):
             if oy+i < 0 or oy+i >= NODE_NUM: continue
             for j in range(-1, 3):
