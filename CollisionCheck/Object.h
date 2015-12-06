@@ -31,11 +31,12 @@ public:
 
 	const vec3& GetPos() const;
 
-	const float* GetMatrix() const;
+	void GetMatrix(float* m) const;
+	void SetMatrix(const float* m);
 
-	void Move(const vec3&);
+	virtual void Move(const vec3&);
 
-	void Rotate(float, float, float);
+	virtual void Rotate(float, float, float);
 };
 
 class CubeObject : public Object {
