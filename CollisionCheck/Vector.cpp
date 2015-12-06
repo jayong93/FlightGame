@@ -13,7 +13,7 @@ vec3 vec3::MultMatrix(const float * m) const
 	{
 		v[i] = m[i] * x + m[4 + i] * y + m[8 + i] * z;
 	}
-	return vec3();
+	return vec3(v[0], v[1], v[2]);
 }
 
 vec4::operator vec3() const

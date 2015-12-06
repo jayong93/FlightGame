@@ -11,6 +11,8 @@ Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0)
 	cubeList.push_back(new PlayerWing(pos, vec3(-4,0,5)));
 
 	cubeList.push_back(new PlayerWing(pos, vec3(4,0,5)));
+
+	velocity = vec3(0, 0, -0.1);
 }
 
 bool Player::ColiisionCheck(const Object & obj)
@@ -47,6 +49,17 @@ void Player::Move(const vec3 & dir)
 		// 충돌체크를 위해 꼭 해줘야 함
 		c->Move(dir);
 	}
+
+	float mat[16], tmp[16];
+	glMatrixMode(GL_MODELVIEW);
+	glGetFloatv(GL_MODELVIEW_MATRIX, tmp);
+	this->GetMatrix(mat);
+	glLoadIdentity();
+	glTranslatef(dir.x, dir.y, dir.z);
+	glMultMatrixf(mat);
+	glGetFloatv(GL_MODELVIEW_MATRIX, mat);
+	this->SetMatrix(mat);
+	glLoadMatrixf(tmp);
 }
 
 void Player::Rotate(float pitch, float yaw, float roll)
@@ -71,6 +84,7 @@ void Player::Rotate(float pitch, float yaw, float roll)
 
 void Player::Update()
 {
+	this->Move(velocity);
 }
 
 PlayerBody::PlayerBody(const vec3& oPos, const vec3& rPos) : CubeObject(vec3(2, 1.25, 7), oPos + rPos, 7, 0, 0, 0), relativePos(rPos)
