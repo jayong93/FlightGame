@@ -10,7 +10,7 @@ public:
 	virtual void Render();
 	virtual void Move(const vec3 &);
 	virtual void Rotate(float, float, float);
-	void Update();
+	void Update(float frameTime);
 };
 
 class PlayerBody : public CubeObject
