@@ -49,9 +49,14 @@ const vec3 & Object::GetPos() const
 	return position;
 }
 
-const float * Object::GetMatrix() const
+void Object::GetMatrix(float* m) const
 {
-	return matrix;
+	memcpy_s(m, sizeof(float) * 16, matrix, sizeof(float) * 16);
+}
+
+void Object::SetMatrix(const float * m)
+{
+	memcpy_s(matrix, sizeof(float) * 16, m, sizeof(float) * 16);
 }
 
 void Object::Move(const vec3 & shift)

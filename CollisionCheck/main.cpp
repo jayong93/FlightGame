@@ -1,5 +1,7 @@
 #include "std.h"
-#include "Object.h"
+#include "Unit.h"
+#include "Player.h"
+#include "text.h"
 
 const int width = 800, height = 600;
 
@@ -24,11 +26,12 @@ public:
 	void CameraTransform() {
 		glMatrixMode(GL_MODELVIEW);
 
-		//glTranslatef(-vPositon.x, -vPositon.y, -vPositon.z);
 
-		//glRotatef(-fPitch, 1.0f, 0.0f, 0.0f);
-		//glRotatef(-fYaw, 0.0f, 1.0f, 0.0f);
-		//glRotatef(-fRoll, 0.0f, 0.0f, 1.0f);
+		glTranslatef(-vPositon.x, -vPositon.y, -vPositon.z);
+
+		glRotatef(-fPitch, 1.0f, 0.0f, 0.0f);
+		glRotatef(-fYaw, 0.0f, 1.0f, 0.0f);
+		glRotatef(-fRoll, 0.0f, 0.0f, 1.0f);
 
 	}
 
@@ -62,8 +65,8 @@ public:
 
 } Camera(0.0f, 0.0f, 70.0f, 0.0f, 0.0f, 0.0f);
 
-Building b1(vec3(5, 3, 5), vec3(0, 0, 0), GetDistance(vec3(0.0f, 0.0f, 0.0f), vec3(5, 3, 5)), 0.0f, 0.0f, 0.0f);
-Building b2(vec3(5, 3, 5), vec3(0, 10, 0), GetDistance(vec3(0.0f, 0.0f, 0.0f), vec3(5, 3, 5)), 0.0f, 0.0f, 0.0f);
+std::vector<Object*> objList;
+
 
 int main() {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
@@ -76,6 +79,16 @@ int main() {
 	glutTimerFunc(17, TimerFunction, 1);
 	glutKeyboardFunc(ProcessKeyInput);
 	glutSpecialFunc(ProcessSpeciaKeyInput);
+
+	objList.push_back(new Building(vec3(5, 3, 5), vec3(0, 10, 0), GetDistance(vec3(0.0f, 0.0f, 0.0f), vec3(5, 3, 5)), 0.0f, 0.0f, 0.0f));
+	objList.push_back(new Drone(vec3(0, 0, 0)));
+	objList.push_back(new Player(30, 0, -20));
+
+	glEnable(GL_CULL_FACE);
+	glFrontFace(GL_CCW);
+	glCullFace(GL_BACK);
+	glEnable(GL_DEPTH_TEST);
+	t3dInit();
 
 	glutMainLoop();
 }
@@ -104,18 +117,19 @@ void DrawScene() {
 	//	CameraTransform
 	Camera.CameraTransform();
 
-	b1.Render();
-	b2.Render();
+	for (unsigned int i = 0; i < objList.size(); ++i)
+	{
+		objList[i]->Render();
+	}
 	glPopMatrix();
 
 	glutSwapBuffers();
 }
 
 void TimerFunction(int value) {
-	b1.Update();
-	b2.Update();
-	static int i = 0;
-	if (b1.CollisionCheck(b2)) std::cout << "OOBB Hit"<< i++ << std::endl;
+	//b2.Update();
+	//static int i = 0;
+	//if (objList[0]->CollisionCheck(*objList[1])) std::cout << "OOBB Hit"<< i++ << std::endl;
 	glutTimerFunc(17, TimerFunction, 1);
 	glutPostRedisplay();
 }
@@ -150,19 +164,19 @@ void ProcessKeyInput(unsigned char key, int x, int y) {
 	}
 
 	case 'a':
-		b1.Rotate(2.0f, 0.0f, 0.0f);
+		objList[1]->Rotate(2.0f, 0.0f, 0.0f);
 		break;
 	case 's':
-		b1.Rotate(0.0f, 2.0f, 0.0f);
+		objList[1]->Rotate(0.0f, 2.0f, 0.0f);
 		break;
 	case 'd':
-		b1.Rotate(0.0f, 0.0f, 2.0f);
+		objList[1]->Rotate(0.0f, 0.0f, 2.0f);
 		break;
 	case 'w':
-		b1.Move(vec3(0.0f, 2.0f, 0.0f));
+		objList[1]->Move(vec3(0.0f, 2.0f, 0.0f));
 		break;
 	case 'e':
-		b1.Move(vec3(0.0f, -2.0f, 0.0f));
+		objList[1]->Move(vec3(0.0f, -2.0f, 0.0f));
 		break;
 	default:
 		break;
@@ -173,19 +187,34 @@ void ProcessKeyInput(unsigned char key, int x, int y) {
 
 void ProcessSpeciaKeyInput(int key, int x, int y)
 {
+	float mat[16], tmp[16];
 	switch (key)
 	{
+	//case GLUT_KEY_LEFT:
+	//	objList[1]->Move(vec3(-2.0f, 0.0f, 0.0f));
+	//	break;
+	//case GLUT_KEY_RIGHT:
+	//	objList[1]->Move(vec3(2.0f, 0.0f, 0.0f));
+	//	break;
+	//case GLUT_KEY_DOWN:
+	//	objList[1]->Move(vec3(0.0f, 0.0f, 2.0f));
+	//	break;
+	//case GLUT_KEY_UP:
+	//	objList[1]->Move(vec3(0.0f, 0.0f, -2.0f));
+	//	break;
+	//default:
+	//	break;
 	case GLUT_KEY_LEFT:
-		b1.Move(vec3(-2.0f, 0.0f, 0.0f));
+		objList[2]->Rotate(0, 0, 10);
 		break;
 	case GLUT_KEY_RIGHT:
-		b1.Move(vec3(2.0f, 0.0f, 0.0f));
+		objList[2]->Rotate(0, 0, -10);
 		break;
 	case GLUT_KEY_DOWN:
-		b1.Move(vec3(0.0f, 0.0f, 2.0f));
+		objList[2]->Rotate(10, 0, 0);
 		break;
 	case GLUT_KEY_UP:
-		b1.Move(vec3(0.0f, 0.0f, -2.0f));
+		objList[2]->Rotate(-10, 0, 0);
 		break;
 	default:
 		break;

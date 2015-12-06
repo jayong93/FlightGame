@@ -149,6 +149,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="text.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
