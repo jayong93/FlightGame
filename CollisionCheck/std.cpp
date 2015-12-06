@@ -7,7 +7,7 @@ GLubyte * LoadDIBitmap(const char * filename, BITMAPINFO ** info)
 	int bitsize, infosize;
 	BITMAPFILEHEADER header;
 	// 바이너리 읽기 모드로 파일을 연다
-	if ((fopen_s(&fp, filename, "rb")) == NULL)
+	if ((fopen_s(&fp, filename, "rb")) != 0)
 		return NULL;
 	// 비트맵 파일 헤더를 읽는다.
 	if (fread(&header, sizeof(BITMAPFILEHEADER), 1, fp) < 1) {
@@ -21,7 +21,7 @@ GLubyte * LoadDIBitmap(const char * filename, BITMAPINFO ** info)
 	}
 	// BITMAPINFOHEADER 위치로 갂다.
 	infosize = header.bfOffBits - sizeof(BITMAPFILEHEADER);
-	// 비트맵 이미지 데이터를 넣을 메모리 핛당을 핚다.
+	// 비트맵 이미지 데이터를 넣을 메모리 할당을 핚다.
 	if ((*info = (BITMAPINFO *)malloc(infosize)) == NULL) {
 		fclose(fp);
 		exit(0);

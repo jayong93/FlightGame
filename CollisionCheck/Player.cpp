@@ -1,18 +1,19 @@
 #include "Player.h"
 #include "std.h"
+#include "InputManager.h"
 
-Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0)
+Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), direction(0, 0, -1)
 {
-	cubeList.push_back(new PlayerBody(position, vec3(0,0,-2)));
+	cubeList.push_back(new PlayerBody(position, vec3(0, 0, -2)));
 	vec3 pos = position;
 
-	cubeList.push_back(new PlayerWing(pos, vec3(0,2.5,5)));
+	cubeList.push_back(new PlayerWing(pos, vec3(0, 2.5, 5)));
 
-	cubeList.push_back(new PlayerWing(pos, vec3(-4,0,5)));
+	cubeList.push_back(new PlayerWing(pos, vec3(-4, 0, 5)));
 
-	cubeList.push_back(new PlayerWing(pos, vec3(4,0,5)));
+	cubeList.push_back(new PlayerWing(pos, vec3(4, 0, 5)));
 
-	velocity = vec3(0, 0, -500);
+	velocity = vec3(0, 0, 0);
 }
 
 bool Player::ColiisionCheck(const Object & obj)
@@ -78,12 +79,64 @@ void Player::Rotate(float pitch, float yaw, float roll)
 
 	float speed = velocity.GetSize();
 	vec3 unit(0, 0, -1);
-	unit = unit.MultMatrix(mat);
-	velocity = unit*speed;
+	direction = unit.MultMatrix(mat);
+	velocity = direction*speed;
 }
 
 void Player::Update(float frameTime)
 {
+	IM* im = IM::GetInstance();
+	if (im->GetSpecialKeyState(GLUT_KEY_LEFT))
+	{
+		this->Rotate(0, 0, 50 * frameTime);
+	}
+	if (im->GetSpecialKeyState(GLUT_KEY_RIGHT))
+	{
+		this->Rotate(0, 0, -50 * frameTime);
+	}
+	if (im->GetSpecialKeyState(GLUT_KEY_UP))
+	{
+		this->Rotate(-40 / 250.0 * velocity.GetSize() * frameTime, 0, 0);
+	}
+	if (im->GetSpecialKeyState(GLUT_KEY_DOWN))
+	{
+		this->Rotate(40 / 250.0 * velocity.GetSize() * frameTime, 0, 0);
+	}
+	if (im->GetKeyState('a'))
+	{
+		this->Rotate(0, 20 * frameTime, 0);
+	}
+	if (im->GetKeyState('d'))
+	{
+		this->Rotate(0, -20 * frameTime, 0);
+	}
+	if (im->GetKeyState('w'))
+	{
+		float inc = 40 * frameTime;
+		float speed = velocity.GetSize();
+		if (speed + inc < 250)
+		{
+			velocity = direction * (speed + inc);
+		}
+		else if (speed + inc > 250)
+		{
+			velocity = direction * 250;
+		}
+	}
+	if (im->GetKeyState('s'))
+	{
+		float inc = -40 * frameTime;
+		float speed = velocity.GetSize();
+		if (speed + inc > 30)
+		{
+			velocity = direction * (speed + inc);
+		}
+		else if (speed + inc < 30)
+		{
+			velocity = direction * 30;
+		}
+	}
+
 	this->Move(velocity*frameTime);
 }
 

@@ -38,8 +38,8 @@ void StageManager::Init()
 	{
 		Json::Value& value = data[i];
 		float height = rand() % 250 + 200;
-		Building building(vec3(value["w"].asInt() / 2.0f, height/2.0f, value["h"].asInt()/2.0f),vec3(value["x"].asInt() - mapW / 2, height / 2.0, -(value["y"].asInt() - mapH / 2)), vec3(value["w"].asInt() / 2.0f, height / 2.0f, value["h"].asInt() / 2.0f).GetSize(),0.0f,(float)(rand()%360),0.0f);
-		building.SetColor(rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, rand() / (float)RAND_MAX);
+		Building building(vec3(value["w"].asInt() / 2.0f, height / 2.0f, value["h"].asInt() / 2.0f), vec3(value["x"].asInt() - mapW / 2, height / 2.0, -(value["y"].asInt() - mapH / 2)), vec3(value["w"].asInt() / 2.0f, height / 2.0f, value["h"].asInt() / 2.0f).GetSize(), 0.0f, (float)(rand() % 360), 0.0f);
+		building.SetColor(rand() / (float)RAND_MAX * 2 + 0.4f, rand() / (float)RAND_MAX * 2 + 0.4f, rand() / (float)RAND_MAX * 2 + 0.4f);
 		buildingList.push_back(building);
 	}
 
