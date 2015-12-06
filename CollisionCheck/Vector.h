@@ -11,7 +11,7 @@ struct vec3 {
 	vec3(float x = 0.0f, float y = 0.0f, float z = 0.0f) : x(x), y(y), z(z) { }
 
 	operator vec4() const;
-	
+
 	vec3 Normalize() const
 	{
 		float div = sqrt(x*x + y*y + z*z);
