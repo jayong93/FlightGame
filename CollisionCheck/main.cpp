@@ -2,6 +2,7 @@
 #include "Unit.h"
 #include "Player.h"
 #include "text.h"
+#include <time.h>
 
 const int width = 800, height = 600;
 
@@ -23,51 +24,33 @@ class CCamera {
 
 public:
 	CCamera(float px = 0.0f, float py = 0.0f, float pz = 300.0f, float fP = 0.0f, float fY = 0.0f, float fR = 0.0f) :
-		vPositon(px, py, pz), fPitch(fP), fYaw(fY), fRoll(fR) {}
+		vPositon(px, py, pz), fPitch(fP), fYaw(fY), fRoll(fR), target(nullptr) {}
 
 	void CameraTransform() {
 		glMatrixMode(GL_MODELVIEW);
 
-		//float mat[16];
-		//target->GetMatrix(mat);
-		//float tmp;
-		//for (int i = 0; i < 3; ++i)
-		//{
-		//	for (int j = 0; j < 3; ++j)
-		//	{
-		//		tmp = mat[j * 4 + i];
-		//		mat[j * 4 + i] = mat[i * 4 + j];
-		//		mat[i * 4 + j] = tmp;
-		//	}
-		//}
-		//for (int i = 0; i < 3; ++i)
-		//{
-		//	mat[12 + i] = 0;
-		//}
+		if (target)
+		{
+			float mat[16];
+			target->GetMatrix(mat);
 
-		//vec3 pPos = target->GetPos();
-		//glTranslatef(-pPos.x, -pPos.y, -pPos.z);
+			vec3 pPos = target->GetPos();
+			vec3 dir(0, 0, -1), up(0, 1, 0);
+			dir = dir.MultMatrix(mat);
+			up = up.MultMatrix(mat);
 
-		//glMultMatrixf(mat);
-		//glTranslatef(0, 0, -20);
+			vec3 cPos = pPos + (up * 20) - (dir * 40);
+			vec3 at = cPos + dir;
+			gluLookAt(cPos.x, cPos.y, cPos.z, at.x, at.y, at.z, up.x, up.y, up.z);
+		}
 
-		//glTranslatef(-vPositon.x, -vPositon.y, -vPositon.z);
-
-		//glRotatef(-fPitch, 1.0f, 0.0f, 0.0f);
-		//glRotatef(-fYaw, 0.0f, 1.0f, 0.0f);
-		//glRotatef(-fRoll, 0.0f, 0.0f, 1.0f);
-
-		float mat[16];
-		target->GetMatrix(mat);
-
-		vec3 pPos = target->GetPos();
-		vec3 dir(0, 0, -1), up(0, 1, 0);
-		dir = dir.MultMatrix(mat);
-		up = up.MultMatrix(mat);
-
-		vec3 cPos = pPos + (up * 20) - (dir * 60);
-		vec3 at = cPos + dir;
-		gluLookAt(cPos.x, cPos.y, cPos.z, at.x, at.y, at.z, up.x, up.y, up.z);
+		else
+		{
+			glTranslatef(-vPositon.x, -vPositon.y, -vPositon.z);
+			glRotatef(-fPitch, 1.0f, 0.0f, 0.0f);
+			glRotatef(-fYaw, 0.0f, 1.0f, 0.0f);
+			glRotatef(-fRoll, 0.0f, 0.0f, 1.0f);
+		}
 	}
 
 	void PitchRotate(float fDelta) {
@@ -103,7 +86,7 @@ public:
 		target = p;
 	}
 
-} Camera(0.0f, 0.0f, 70.0f, 0.0f, 0.0f, 0.0f);
+} Camera(0.0f, 0.0f, 100.0f, 0.0f, 0.0f, 0.0f);
 
 std::vector<Object*> objList;
 
@@ -130,6 +113,15 @@ int main() {
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_COLOR_MATERIAL);
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+	float globalAmbient[] = { 0.5, 0.5, 0.5, 1 };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
+
 	t3dInit();
 
 	glutMainLoop();
@@ -143,7 +135,7 @@ void Reshape(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//Clip공간 설정
-	gluPerspective(60.0, w / h, 1.0, 1000.0);
+	gluPerspective(90.0, w / h, 1.0, 1000.0);
 
 	//ModelView
 	glMatrixMode(GL_MODELVIEW);
@@ -159,6 +151,9 @@ void DrawScene() {
 	//	CameraTransform
 	Camera.CameraTransform();
 
+	float lightPos[4] = { 0,1,1,0 };
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+
 	for (unsigned int i = 0; i < objList.size(); ++i)
 	{
 		objList[i]->Render();
@@ -169,9 +164,11 @@ void DrawScene() {
 }
 
 void TimerFunction(int value) {
-	//b2.Update();
-	//static int i = 0;
-	//if (objList[0]->CollisionCheck(*objList[1])) std::cout << "OOBB Hit"<< i++ << std::endl;
+	static clock_t prevClock = 0;
+	clock_t nowClock = clock();
+	printf("FPS : %f\n", 1 / ((nowClock - prevClock) / float(CLOCKS_PER_SEC)));
+	prevClock = nowClock;
+
 	static_cast<Player*>(objList[2])->Update();
 	glutTimerFunc(17, TimerFunction, 1);
 	glutPostRedisplay();
@@ -207,19 +204,16 @@ void ProcessKeyInput(unsigned char key, int x, int y) {
 	}
 
 	case 'a':
-		objList[1]->Rotate(2.0f, 0.0f, 0.0f);
+		objList[2]->Rotate(0.0f, 10.0f, 0.0f);
 		break;
 	case 's':
 		objList[1]->Rotate(0.0f, 2.0f, 0.0f);
 		break;
 	case 'd':
-		objList[1]->Rotate(0.0f, 0.0f, 2.0f);
+		objList[2]->Rotate(0.0f, -10.0f, 0.0f);
 		break;
 	case 'w':
 		objList[1]->Move(vec3(0.0f, 2.0f, 0.0f));
-		break;
-	case 'e':
-		objList[1]->Move(vec3(0.0f, -2.0f, 0.0f));
 		break;
 	default:
 		break;
@@ -233,20 +227,6 @@ void ProcessSpeciaKeyInput(int key, int x, int y)
 	float mat[16], tmp[16];
 	switch (key)
 	{
-		//case GLUT_KEY_LEFT:
-		//	objList[1]->Move(vec3(-2.0f, 0.0f, 0.0f));
-		//	break;
-		//case GLUT_KEY_RIGHT:
-		//	objList[1]->Move(vec3(2.0f, 0.0f, 0.0f));
-		//	break;
-		//case GLUT_KEY_DOWN:
-		//	objList[1]->Move(vec3(0.0f, 0.0f, 2.0f));
-		//	break;
-		//case GLUT_KEY_UP:
-		//	objList[1]->Move(vec3(0.0f, 0.0f, -2.0f));
-		//	break;
-		//default:
-		//	break;
 	case GLUT_KEY_LEFT:
 		objList[2]->Rotate(0, 0, 10);
 		break;
