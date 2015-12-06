@@ -2,6 +2,7 @@
 #include "Unit.h"
 #include "Player.h"
 #include "text.h"
+#include "StageManager.h"
 #include <time.h>
 
 const int width = 800, height = 600;
@@ -86,7 +87,7 @@ public:
 		target = p;
 	}
 
-} Camera(0.0f, 0.0f, 100.0f, 0.0f, 0.0f, 0.0f);
+} Camera(0.0f, 60.0f, 0.0f, -10.0f, 0.0f, 0.0f);
 
 std::vector<Object*> objList;
 
@@ -99,15 +100,18 @@ int main() {
 
 	glutDisplayFunc(DrawScene);
 	glutReshapeFunc(Reshape);
-	glutTimerFunc(17, TimerFunction, 1);
+	glutTimerFunc(1, TimerFunction, 1);
 	glutKeyboardFunc(ProcessKeyInput);
 	glutSpecialFunc(ProcessSpeciaKeyInput);
 
 	objList.push_back(new Building(vec3(5, 3, 5), vec3(0, 10, 0), GetDistance(vec3(0.0f, 0.0f, 0.0f), vec3(5, 3, 5)), 0.0f, 0.0f, 0.0f));
-	objList.push_back(new Drone(vec3(0, 0, 0)));
-	objList.push_back(new Player(0, 0, 100));
+	objList.push_back(new Drone(vec3(0, 0, 0), 5.0f));
+	objList.push_back(new Player(0, 50, 5000));
 
 	Camera.SetTarget((Player*)objList[2]);
+
+	StageManager* stm = StageManager::Instance();
+	stm->Init();
 
 	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
@@ -116,11 +120,14 @@ int main() {
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	float lightValue[] = { 0.2,0.2,0.2,1 };
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightValue);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, lightValue);
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
-	float globalAmbient[] = { 0.5, 0.5, 0.5, 1 };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
+	//float globalAmbient[] = { 0.3, 0.3, 0.3, 1 };
+	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
 	t3dInit();
 
@@ -135,7 +142,7 @@ void Reshape(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//Clip공간 설정
-	gluPerspective(90.0, w / h, 1.0, 1000.0);
+	gluPerspective(90.0, w / h, 1.0, 600.0);
 
 	//ModelView
 	glMatrixMode(GL_MODELVIEW);
@@ -148,16 +155,20 @@ void DrawScene() {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
+	glScalef(0.1, 0.1, 0.1);
+
 	//	CameraTransform
 	Camera.CameraTransform();
 
-	float lightPos[4] = { 0,1,1,0 };
+	float lightPos[4] = { 0,1,0,0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-	for (unsigned int i = 0; i < objList.size(); ++i)
-	{
-		objList[i]->Render();
-	}
+	for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
+	BulletManager* bulletmger = BulletManager::Instance();
+	bulletmger->Render();
+
+	StageManager* stm = StageManager::Instance();
+	stm->Render();
 	glPopMatrix();
 
 	glutSwapBuffers();
@@ -166,11 +177,14 @@ void DrawScene() {
 void TimerFunction(int value) {
 	static clock_t prevClock = 0;
 	clock_t nowClock = clock();
-	printf("FPS : %f\n", 1 / ((nowClock - prevClock) / float(CLOCKS_PER_SEC)));
+	float frameTime = (nowClock - prevClock) / float(CLOCKS_PER_SEC);
+	printf("FPS : %f\n", 1 / frameTime);
 	prevClock = nowClock;
 
-	static_cast<Player*>(objList[2])->Update();
-	glutTimerFunc(17, TimerFunction, 1);
+	static_cast<Player*>(objList[2])->Update(frameTime);
+	if (frameTime * 1000 < 16)
+		Sleep(16 - frameTime * 1000);
+	glutTimerFunc(16, TimerFunction, 1);
 	glutPostRedisplay();
 }
 
@@ -224,7 +238,6 @@ void ProcessKeyInput(unsigned char key, int x, int y) {
 
 void ProcessSpeciaKeyInput(int key, int x, int y)
 {
-	float mat[16], tmp[16];
 	switch (key)
 	{
 	case GLUT_KEY_LEFT:

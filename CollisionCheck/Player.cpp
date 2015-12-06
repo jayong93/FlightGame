@@ -12,7 +12,7 @@ Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0)
 
 	cubeList.push_back(new PlayerWing(pos, vec3(4,0,5)));
 
-	velocity = vec3(0, 0, -0.1);
+	velocity = vec3(0, 0, -500);
 }
 
 bool Player::ColiisionCheck(const Object & obj)
@@ -82,9 +82,9 @@ void Player::Rotate(float pitch, float yaw, float roll)
 	velocity = unit*speed;
 }
 
-void Player::Update()
+void Player::Update(float frameTime)
 {
-	this->Move(velocity);
+	this->Move(velocity*frameTime);
 }
 
 PlayerBody::PlayerBody(const vec3& oPos, const vec3& rPos) : CubeObject(vec3(2, 1.25, 7), oPos + rPos, 7, 0, 0, 0), relativePos(rPos)

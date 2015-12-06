@@ -20,4 +20,8 @@ Road::Road(float x, float y, float z, float w, float h) : CubeObject(vec3(w / 2.
 	}
 }
 
+void Road::Render()
+{
+}
+
 unsigned int Road::texture = -1;
