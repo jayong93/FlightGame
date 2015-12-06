@@ -11,6 +11,9 @@ public:
 	virtual void Move(const vec3 &);
 	virtual void Rotate(float, float, float);
 	void Update(float frameTime);
+
+private:
+	vec3 direction;
 };
 
 class PlayerBody : public CubeObject
