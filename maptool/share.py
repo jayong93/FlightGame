@@ -1,0 +1,2 @@
+WIDTH, HEIGHT = 800, 800
+mapW, mapH = 12000, 12000
