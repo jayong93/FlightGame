@@ -27,4 +27,4 @@ def GetRMouseState():
 
 
 def GetMousePos():
-    pass
+    return mouseX, mouseY
