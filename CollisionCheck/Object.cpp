@@ -72,7 +72,7 @@ void Object::SetMatrix(const float * m)
 }
 
 
-CubeObject::CubeObject(vec3 & ext, vec3 & pos, float boundingRadius, float p, float y, float r) : Object::Object(pos, boundingRadius, p, y, r), extent(ext)
+CubeObject::CubeObject(vec3 & ext, vec3 & pos, float boundingRadius, float p, float y, float r) : Object::Object(pos, boundingRadius, p, y, r), extent(ext), alpha(1)
 {
 }
 

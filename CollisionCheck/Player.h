@@ -10,7 +10,13 @@ public:
 	virtual void Render();
 	virtual void Move(const vec3 &);
 	virtual void Rotate(float, float, float);
-	void Update();
+	void Update(float frameTime);
+
+private:
+	vec3 direction;
+	bool isBoost, isStelth;
+	float boostTimer, stelthTimer, alpha, mana;
+	float fireTimer;
 };
 
 class PlayerBody : public CubeObject
@@ -19,7 +25,6 @@ public:
 	PlayerBody(const vec3& oPos, const vec3& rPos);
 
 	virtual void Render();
-
 private:
 	vec3 relativePos;
 };
@@ -30,7 +35,6 @@ public:
 	PlayerWing(const vec3& oPos, const vec3& rPos);
 
 	virtual void Render();
-
 private:
 	vec3 relativePos;
 };
