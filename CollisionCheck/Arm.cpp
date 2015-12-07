@@ -8,6 +8,12 @@ void Arm::Shot(bool isAlly, float* mtx)
 	bulletmgr->AddBullet(Bullet(isAlly, vec3(0.25f, 0.25f, 1.0f), mtx));
 }
 
+void Arm::Shot(bool isAlly, float* mtx, const vec3& dir)
+{
+	BulletManager* bulletmgr = BulletManager::Instance();
+	bulletmgr->AddBullet(Bullet(isAlly, vec3(0.25f, 0.25f, 1.0f), mtx, dir));
+}
+
 void Arm::Render()
 {
 	glColor3f(0.5f, 0.5f, 1.0f);
@@ -26,6 +32,18 @@ Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx)
 
 	velocity = vec3(matrix[8],matrix[9],matrix[10]);
 	velocity.Normalize();
+}
+
+Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir)
+	:CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(2.0f), speedRate(2.0f)
+	, timer(0), isAlive(true)
+{
+	for (int i = 0; i < 16; ++i) matrix[i] = mtx[i];
+
+	velocity = dir;
+	velocity.Normalize();
+
+	position = position + (velocity * 10);
 }
 
 void Bullet::Render()

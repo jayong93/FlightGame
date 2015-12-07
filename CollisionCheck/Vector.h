@@ -12,11 +12,11 @@ struct vec3 {
 
 	operator vec4() const;
 
-	vec3 Normalize() const
+	void Normalize()
 	{
 		float div = float(sqrt(x*x + y*y + z*z));
-		if (div == 0) return vec3(0, 0, 0);
-		return vec3(x / div, y / div, z / div);
+		if (div == 0) return;
+		x /= div, y /= div, z /= div;
 	}
 
 	float GetSize() const
@@ -70,4 +70,11 @@ struct vec4
 
 	operator vec3() const;
 	vec4 MultMatrix(const float* m) const;
+};
+
+struct Node {
+	int row;
+	int col;
+
+	Node(int r = -1, int c = -1) : row(r), col(c) { }
 };

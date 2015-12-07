@@ -6,6 +6,7 @@ class Arm {
 public:
 	Arm() { }
 	void Shot(bool, float*);
+	void Shot(bool, float*, const vec3&);
 	void Render();
 };
 
@@ -19,9 +20,11 @@ class Bullet : public CubeObject {
 	bool isAlive;
 public:
 	Bullet(bool, vec3&, float*);
-	
+
+	Bullet(bool, vec3&, float*, const vec3&);
+
 	void Render();
-	
+
 	void Update();
 
 	bool GetIsAlive() { return isAlive; }
@@ -39,6 +42,6 @@ public:
 	void AddBullet(Bullet& bullet);
 
 	void Render();
-	
+
 	void Update();
 };
