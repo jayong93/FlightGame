@@ -14,6 +14,9 @@ public:
 
 private:
 	vec3 direction;
+	bool isBoost, isStelth;
+	float boostTimer, stelthTimer, alpha, mana;
+	float fireTimer;
 };
 
 class PlayerBody : public CubeObject
@@ -22,7 +25,6 @@ public:
 	PlayerBody(const vec3& oPos, const vec3& rPos);
 
 	virtual void Render();
-
 private:
 	vec3 relativePos;
 };
@@ -33,7 +35,6 @@ public:
 	PlayerWing(const vec3& oPos, const vec3& rPos);
 
 	virtual void Render();
-
 private:
 	vec3 relativePos;
 };

@@ -14,14 +14,14 @@ struct vec3 {
 
 	vec3 Normalize() const
 	{
-		float div = sqrt(x*x + y*y + z*z);
+		float div = float(sqrt(x*x + y*y + z*z));
 		if (div == 0) return vec3(0, 0, 0);
 		return vec3(x / div, y / div, z / div);
 	}
 
 	float GetSize() const
 	{
-		return sqrt(x*x + y*y + z*z);
+		return float(sqrt(x*x + y*y + z*z));
 	}
 
 	vec3 operator+(const vec3& v) const

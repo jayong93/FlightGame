@@ -7,7 +7,17 @@
 #include "InputManager.h"
 #include <time.h>
 
-const int width = 1024, height = width/16.0*9;
+static const int width = 1024, height = width/16.0*9;
+
+int GetWindowWidth()
+{
+	return width;
+}
+
+int GetWindowHeight()
+{
+	return height;
+}
 
 void DrawScene();
 void Reshape(int, int);
@@ -15,7 +25,7 @@ void TimerFunction(int);
 void ProcessKeyInput(unsigned char, int, int);
 void ProcessSpeciaKeyInput(int, int, int);
 void ProcessKeyRelease(unsigned char, int, int);
-void ProcessSpeciaKeyRelease(int, int, int);
+extern void ProcessSpeciaKeyRelease(int, int, int);
 
 
 class CCamera {
@@ -44,7 +54,7 @@ public:
 			dir = dir.MultMatrix(mat);
 			up = up.MultMatrix(mat);
 
-			vec3 cPos = pPos + (up * 20) - (dir * 40);
+			vec3 cPos = pPos + (up * 20) - (dir * 50);
 			vec3 at = cPos + dir;
 			gluLookAt(cPos.x, cPos.y, cPos.z, at.x, at.y, at.z, up.x, up.y, up.z);
 		}
@@ -104,7 +114,7 @@ int main() {
 
 	glutDisplayFunc(DrawScene);
 	glutReshapeFunc(Reshape);
-	glutTimerFunc(10, TimerFunction, 1);
+	glutTimerFunc(5, TimerFunction, 1);
 	glutKeyboardFunc(ProcessKeyInput);
 	glutKeyboardUpFunc(ProcessKeyRelease);
 	glutSpecialFunc(ProcessSpeciaKeyInput);
@@ -113,9 +123,9 @@ int main() {
 	srand(time(NULL));
 
 	// OpenGL Setting
-	glEnable(GL_CULL_FACE);
-	glFrontFace(GL_CCW);
-	glCullFace(GL_BACK);
+	//glEnable(GL_CULL_FACE);
+	//glFrontFace(GL_CCW);
+	//glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
 
 	glEnable(GL_LIGHTING);
@@ -126,17 +136,17 @@ int main() {
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
-	float globalAmbient[] = { 0.35, 0.35, 0.35, 1 };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
+	//float globalAmbient[] = { 0.35, 0.35, 0.35, 1 };
+	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
 	// Object Init
 	objList.push_back(new Building(vec3(40, 10, 5), vec3(0, 0, 0), vec3(5, 3, 5).GetSize(), 0.0f, 45.0f, 0.0f));
 	((Building*)objList[0])->SetColor(1, 0, 1);
 	objList.push_back(new Drone(vec3(0, 0, 0), 5.0f));
-	objList.push_back(new Player(0, 3, 5000));
 	objList.push_back(new Road(0, 0, 3000, 500, 6000, 0, 0, 0));
+	objList.push_back(new Player(0, 3, 5000));
 
-	Camera.SetTarget((Player*)objList[2]);
+	Camera.SetTarget((Player*)objList.back());
 
 	StageManager* stm = StageManager::Instance();
 	stm->Init();
@@ -154,7 +164,7 @@ void Reshape(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//Clip공간 설정
-	gluPerspective(80.0, w / float(h), 1.0, 4000.0);
+	gluPerspective(60.0, w / float(h), 1.0, 2000.0);
 
 	//ModelView
 	glMatrixMode(GL_MODELVIEW);
@@ -168,7 +178,7 @@ void DrawScene() {
 	glLoadIdentity();
 	glPushMatrix();
 
-	glScalef(0.5, 0.5, 0.5);
+	glScalef(0.3, 0.3, 0.3);
 
 	// Camera Transform
 	Camera.CameraTransform();
@@ -176,12 +186,14 @@ void DrawScene() {
 	float lightPos[4] = { 0,1,1,0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-	for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
 	BulletManager* bulletmger = BulletManager::Instance();
 	bulletmger->Render();
 
 	StageManager* stm = StageManager::Instance();
 	stm->Render();
+
+	for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
+
 	glPopMatrix();
 
 	glutSwapBuffers();
@@ -194,8 +206,8 @@ void TimerFunction(int value) {
 	//printf("FPS : %f\n", 1 / frameTime);
 	prevClock = nowClock;
 
-	static_cast<Player*>(objList[2])->Update(frameTime);
-	glutTimerFunc(10, TimerFunction, 1);
+	static_cast<Player*>(objList.back())->Update(frameTime);
+	glutTimerFunc(5, TimerFunction, 1);
 	glutPostRedisplay();
 }
 
