@@ -45,12 +45,17 @@ public:
 class CubeObject : public Object {
 protected:
 	vec3 extent;
+	float alpha;
 public:
 	CubeObject(vec3&, vec3&, float, float, float, float);
 
 	virtual bool CollisionCheck(const CubeObject&);
 
 	virtual void Render();
+
+	void SetAlpha(float a) { alpha = a; }
+
+	float GetAlpha() const { return alpha; }
 };
 
 //동적인 객체란 가정하에 Update함수 생성

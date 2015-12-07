@@ -34,7 +34,7 @@ void StageManager::Init()
 	mapW = root["mw"].asInt();
 	mapH = root["mh"].asInt();
 
-	for (int i = 0; i < data.size(); ++i)
+	for (size_t i = 0; i < data.size(); ++i)
 	{
 		Json::Value& value = data[i];
 		float height = rand() % 250 + 200;
@@ -58,7 +58,9 @@ void StageManager::Init()
 		{
 			for (int j = 0; j < nodeNum; ++j)
 			{
-				fscanf_s(file, "%d", &node[i][j]);
+				int d;
+				fscanf_s(file, "%d", &d);
+				node[i][j] = d;
 				printf("%3d ", node[i][j]);			// 입력 무결성 확인
 			}
 			printf("\n");							// 입력 무결성 확인
