@@ -1,46 +1,19 @@
 from pico2d import *
-import Camera
 import InputManager
+import building
+import ring
+from object import *
+from share import *
 
-WIDTH, HEIGHT = 800, 800
 NODE_NUM = 32
-mapW, mapH = 12000, 12000
 isRunning = True
 isRClick, isMClick = False, False
 ry = 0
 mx, my = 0, 0
-wSize, hSize = 80, 80
-wMin, wMax, hMin, hMax = 50, 80, 50, 80
 objectList = []
 nodeList = None
-building = None
-map = None
-
-
-class Object:
-    def __init__(self, x, y, w, h, img):
-        self.image = img
-        self.x, self.y, self.w, self.h = x, y, w, h
-
-    def draw(self):
-        mul = Camera.GetMul(WIDTH, HEIGHT)
-        cx, cy = Camera.GetCameraPos(self.x, self.y)
-        self.image.draw(cx * mul, cy * mul, self.w * mul, self.h * mul)
-
-
-class Building:
-    def __init__(self, x, y, w, h):
-        self.image = [load_image('building.png'), load_image('building_error.png')]
-        self.x, self.y, self.w, self.h = x, y, w, h
-        self.isAbleToCreate = True
-
-    def draw(self):
-        mul = Camera.GetMul(WIDTH, HEIGHT)
-        cx, cy = Camera.GetCameraPos(self.x, self.y)
-        if self.isAbleToCreate:
-            self.image[0].draw(cx * mul, cy * mul, self.w * mul, self.h * mul)
-        else:
-            self.image[1].draw(cx * mul, cy * mul, self.w * mul, self.h * mul)
+map_data = None
+state = None
 
 
 class Node:
@@ -58,30 +31,34 @@ class Node:
 
 
 def init():
-    global building, nodeList, map
-    print('width : %d, height : %d' % (wSize, hSize))
+    global nodeList, map_data, state
     InputManager.mouseX, InputManager.mouseY = WIDTH / 2, HEIGHT / 2
-    building = Building(900, 900, wSize, hSize)
-    map = Object(mapW / 2, mapH / 2, mapW, mapH, load_image('area.png'))
-    Camera.x, Camera.y = map.w / 2, map.h / 2
+    map_data = Object(mapW / 2, mapH / 2, mapW, mapH, load_image('area.png'))
+    map_data.type = Object.MAP_OBJ
+    Camera.x, Camera.y = map_data.w / 2, map_data.h / 2
     Camera.w, Camera.h = WIDTH * 2, HEIGHT * 2
 
-    w, h = mapW / (NODE_NUM + 1), mapH / (NODE_NUM + 1)
+    building.init()
+    ring.init()
+    state = building
+    print('Building Mode')
+
+    w, h = mapW / (NODE_NUM - 1), mapH / (NODE_NUM - 1)
     if nodeList is None:
         nodeList = []
     for i in range(NODE_NUM):
         l = []
         for j in range(NODE_NUM):
-            n = Node((j + 1) * w, (i + 1) * h)
+            n = Node(j * w, i * h)
             l.append(n)
         nodeList.append(l)
 
 
 def draw():
     global objectList, nodeList
-    global map
+    global map_data
 
-    map.draw()
+    map_data.draw()
 
     for o in objectList:
         o.draw()
@@ -102,11 +79,11 @@ def draw():
                     tx, ty = Camera.GetCameraPos(t.x, t.y)
                     draw_line(nx * mul, ny * mul, tx * mul, ty * mul)
 
-    building.draw()
+    state.draw()
 
 
 def update():
-    global objectList, map, wSize, hSize, wMin, wMax, hMin, hMax
+    global state
 
     if InputManager.GetKeyState(SDLK_a):
         Camera.x -= 10
@@ -117,41 +94,7 @@ def update():
     if InputManager.GetKeyState(SDLK_s):
         Camera.y -= 10
 
-    isSizeChange = False
-    if InputManager.GetKeyState(SDLK_UP) and hSize < hMax:
-        hSize += 1
-        isSizeChange = True
-    if InputManager.GetKeyState(SDLK_DOWN) and hSize > hMin:
-        hSize -= 1
-        isSizeChange = True
-    if InputManager.GetKeyState(SDLK_LEFT) and wSize > wMin:
-        wSize -= 1
-        isSizeChange = True
-    if InputManager.GetKeyState(SDLK_RIGHT) and wSize < wMax:
-        wSize += 1
-        isSizeChange = True
-    if isSizeChange:
-        building.w, building.h = wSize, hSize
-        print('width : %d, height : %d' % (wSize, hSize))
-
-    mul = Camera.GetMul(WIDTH, HEIGHT)
-    wx, wy = Camera.GetWorldPos(InputManager.mouseX / mul, InputManager.mouseY / mul)
-    building.x, building.y = wx, wy
-
-    # 다른 건물과 겹치거나 맵을 벗어날 때 금지
-    if wx - building.w / 2 < 0 or wx + building.w / 2 > map.w or wy - building.h / 2 < 0 or wy + building.h / 2 > map.h:
-        building.isAbleToCreate = False
-    else:
-        isCollision = False
-        for o in objectList:
-            if o.x + o.w / 2 < wx - building.w / 2 or o.x - o.w / 2 > wx + building.w / 2:
-                continue
-            if o.y + o.h / 2 < wy - building.h / 2 or o.y - o.h / 2 > wy + building.h / 2:
-                continue
-            isCollision = True
-            break
-
-        building.isAbleToCreate = not isCollision
+    state.update(objectList)
 
 
 def save(fname='map_data'):
@@ -159,7 +102,10 @@ def save(fname='map_data'):
     saveData = {'data': [], 'mw': mapW, 'mh': mapH}
 
     for o in objectList:
-        saveData['data'].append({'x': o.x, 'y': o.y, 'w': o.w, 'h': o.h})
+        if o.type == Object.BUILDING:
+            saveData['data'].append({'type': 'building', 'x': o.x, 'y': o.y, 'w': o.w, 'd': o.d, 'h': o.h})
+        elif o.type == Object.RING:
+            saveData['data'].append({'type': 'ring', 'x': o.x, 'y': o.y, 'z': o.z,'w': o.w, 'd': o.d, 'h': o.h})
 
     with open(fname + '.json', 'w') as f:
         json.dump(saveData, f, sort_keys=True, indent=4, separators=(',', ': '))
@@ -184,30 +130,33 @@ def save(fname='map_data'):
                     link_data |= 1 << 1
                 if i > 0 and nodeList[i - 1][j].link & 4:
                     link_data |= 1 << 2
-                if i > 0 and j > 0 and nodeList[i-1][j-1].link & 8:
+                if i > 0 and j > 0 and nodeList[i - 1][j - 1].link & 8:
                     link_data |= 1 << 3
-                if j > 0 and nodeList[i][j-1].link & 1:
+                if j > 0 and nodeList[i][j - 1].link & 1:
                     link_data |= 1 << 4
                 line += str(link_data) + ' '
-            f.write(line+'\n')
+            f.write(line + '\n')
 
 
 def load(fname='map_data.json'):
-    global objectList, imageBuilding, mapW, mapH, map
+    global objectList, imageBuilding, mapW, mapH, map_data
 
     with open(fname, 'r') as f:
         loadData = json.load(f)
 
         mapW = loadData['mw']
         mapH = loadData['mh']
-        map.w = mapW
-        map.h = mapH
-        map.x = mapW / 2
-        map.y = mapH / 2
+        map_data.w = mapW
+        map_data.h = mapH
+        map_data.x = mapW / 2
+        map_data.y = mapH / 2
 
         objectList.clear()
         for d in loadData['data']:
-            objectList.append(Object(d['x'], d['y'], d['w'], d['h'], building.image[0]))
+            if d['type'] == 'building':
+                objectList.append(building.Building(d['x'], d['y'], building.image))
+            elif d['type'] == 'ring':
+                objectList.append(ring.Ring(d['x'], d['y'], d['z'], ring.image))
 
 
 def dot(v1, v2):
@@ -245,62 +194,36 @@ def link_node():
                 if j + 1 < NODE_NUM:
                     n.link |= 8
 
-    bw, bh = mapW / (NODE_NUM + 1), mapH / (NODE_NUM + 1)
+    bw, bh = mapW / (NODE_NUM - 1), mapH / (NODE_NUM - 1)
     for obj in objectList:
-        ox, oy = int(obj.x / bw) - 1, int(obj.y / bh) - 1
+        ox, oy = int(obj.x / bw), int(obj.y / bh)
         for i in range(-1, 2):
-            if oy+i < 0 or oy+i >= NODE_NUM: continue
+            if oy + i < 0 or oy + i >= NODE_NUM: continue
             for j in range(-1, 3):
-                if ox+j < 0 or ox+j >= NODE_NUM: continue
+                if ox + j < 0 or ox + j >= NODE_NUM: continue
                 if ox + j + 1 < NODE_NUM:
                     n1, n2 = nodeList[oy + i][ox + j], nodeList[oy + i][ox + j + 1]
-                    if line_point_length(n1.x, n1.y, n2.x, n2.y, obj.x, obj.y) <= 100:
+                    if line_point_length(n1.x, n1.y, n2.x, n2.y, obj.x, obj.y) <= 70:
                         n1.link &= ~1
                 if oy + i + 1 < NODE_NUM:
                     n1, n2 = nodeList[oy + i][ox + j], nodeList[oy + i + 1][ox + j]
-                    if line_point_length(n1.x, n1.y, n2.x, n2.y, obj.x, obj.y) <= 100:
+                    if line_point_length(n1.x, n1.y, n2.x, n2.y, obj.x, obj.y) <= 70:
                         n1.link &= ~4
 
                     if ox + j > 0:
                         n1, n2 = nodeList[oy + i][ox + j], nodeList[oy + i + 1][ox + j - 1]
-                        if line_point_length(n1.x, n1.y, n2.x, n2.y, obj.x, obj.y) <= 100:
+                        if line_point_length(n1.x, n1.y, n2.x, n2.y, obj.x, obj.y) <= 70:
                             n1.link &= ~2
                     if ox + j + 1 < NODE_NUM:
                         n1, n2 = nodeList[oy + i][ox + j], nodeList[oy + i + 1][ox + j + 1]
-                        if line_point_length(n1.x, n1.y, n2.x, n2.y, obj.x, obj.y) <= 100:
+                        if line_point_length(n1.x, n1.y, n2.x, n2.y, obj.x, obj.y) <= 70:
                             n1.link &= ~8
 
     return
-    # for i in range(NODE_NUM):
-    #     for j in range(NODE_NUM):
-    #         if j + 1 < NODE_NUM:
-    #             n1, n2 = nodeList[i][j], nodeList[i][j + 1]
-    #             if line_point_length(n1.x, n1.y, n2.x, n2.y, obj.x, obj.y) <= 100:
-    #                 n1.link &= ~1
-    #         if i + 1 < NODE_NUM:
-    #             n1, n2 = nodeList[i][j], nodeList[i + 1][j]
-    #             if line_point_length(n1.x, n1.y, n2.x, n2.y, obj.x, obj.y) <= 100:
-    #                 n1.link &= ~4
-    #
-    #             if j > 0:
-    #                 n1, n2 = nodeList[i][j], nodeList[i + 1][j - 1]
-    #                 if line_point_length(n1.x, n1.y, n2.x, n2.y, obj.x, obj.y) <= 100:
-    #                     n1.link &= ~2
-    #             if j < NODE_NUM - 1:
-    #                 n1, n2 = nodeList[i][j], nodeList[i + 1][j + 1]
-    #                 if line_point_length(n1.x, n1.y, n2.x, n2.y, obj.x, obj.y) <= 100:
-    #                     n1.link &= ~8
-
-
-def add_building():
-    global objectList, nodeList
-    mul = Camera.GetMul(WIDTH, HEIGHT)
-    wx, wy = Camera.GetWorldPos(InputManager.mouseX / mul, InputManager.mouseY / mul)
-    objectList.append(Object(wx, wy, wSize, hSize, building.image[0]))
 
 
 def handle_events():
-    global objectList, isRunning, isRClick, isMClick, ry, mx, my, building, map, wSize, hSize
+    global objectList, isRunning, isRClick, isMClick, ry, mx, my, map_data, wSize, hSize, state
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -321,6 +244,12 @@ def handle_events():
                     objectList.pop()
             elif event.key == SDLK_c:
                 objectList.clear()
+            elif event.key == SDLK_1:
+                state = building
+                print('Building Mode')
+            elif event.key == SDLK_2:
+                state = ring
+                print('Ring Mode')
             else:
                 InputManager.KeyDown(event.key)
         elif event.type == SDL_KEYUP:
@@ -332,8 +261,8 @@ def handle_events():
             elif event.button == SDL_BUTTON_MIDDLE:
                 isMClick = True
                 mx, my = event.x, HEIGHT - event.y - 1
-            elif building.isAbleToCreate:
-                add_building()
+            else:
+                state.add(objectList)
         elif event.type == SDL_MOUSEBUTTONUP:
             if event.button == SDL_BUTTON_RIGHT:
                 isRClick = False
