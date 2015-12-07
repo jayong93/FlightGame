@@ -33,7 +33,9 @@ public:
 
 	virtual void Rotate(float, float, float);
 
-	virtual void Update() { }
+	virtual void Update(float frameTime) { }
+
+	virtual void SetDes() { }
 
 	const vec3& GetPos() const;
 
@@ -52,6 +54,8 @@ public:
 	virtual bool CollisionCheck(const CubeObject&);
 
 	virtual void Render();
+
+	virtual bool CollisionCheckRay(const vec3& starat, const vec3& end, float& intersection_distance);
 
 	void SetAlpha(float a) { alpha = a; }
 
