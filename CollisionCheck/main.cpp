@@ -1,16 +1,31 @@
 #include "std.h"
 #include "Unit.h"
 #include "Player.h"
+#include "Road.h"
 #include "text.h"
+#include "StageManager.h"
+#include "InputManager.h"
 #include <time.h>
 
-const int width = 800, height = 600;
+static const int width = 1024, height = width/16.0*9;
+
+int GetWindowWidth()
+{
+	return width;
+}
+
+int GetWindowHeight()
+{
+	return height;
+}
 
 void DrawScene();
 void Reshape(int, int);
 void TimerFunction(int);
 void ProcessKeyInput(unsigned char, int, int);
 void ProcessSpeciaKeyInput(int, int, int);
+void ProcessKeyRelease(unsigned char, int, int);
+extern void ProcessSpeciaKeyRelease(int, int, int);
 
 
 class CCamera {
@@ -39,7 +54,7 @@ public:
 			dir = dir.MultMatrix(mat);
 			up = up.MultMatrix(mat);
 
-			vec3 cPos = pPos + (up * 20) - (dir * 40);
+			vec3 cPos = pPos + (up * 20) - (dir * 50);
 			vec3 at = cPos + dir;
 			gluLookAt(cPos.x, cPos.y, cPos.z, at.x, at.y, at.z, up.x, up.y, up.z);
 		}
@@ -86,7 +101,7 @@ public:
 		target = p;
 	}
 
-} Camera(0.0f, 0.0f, 100.0f, 0.0f, 0.0f, 0.0f);
+} Camera(0.0f, 60.0f, 0.0f, -10.0f, 0.0f, 0.0f);
 
 std::vector<Object*> objList;
 
@@ -99,28 +114,42 @@ int main() {
 
 	glutDisplayFunc(DrawScene);
 	glutReshapeFunc(Reshape);
-	glutTimerFunc(17, TimerFunction, 1);
+	glutTimerFunc(5, TimerFunction, 1);
 	glutKeyboardFunc(ProcessKeyInput);
+	glutKeyboardUpFunc(ProcessKeyRelease);
 	glutSpecialFunc(ProcessSpeciaKeyInput);
+	glutSpecialUpFunc(ProcessSpeciaKeyRelease);
 
-	objList.push_back(new Building(vec3(5, 3, 5), vec3(0, 10, 0), GetDistance(vec3(0.0f, 0.0f, 0.0f), vec3(5, 3, 5)), 0.0f, 0.0f, 0.0f));
-	objList.push_back(new Drone(vec3(0, 0, 0)));
-	objList.push_back(new Player(0, 0, 100));
+	srand(time(NULL));
 
-	Camera.SetTarget((Player*)objList[2]);
-
-	glEnable(GL_CULL_FACE);
-	glFrontFace(GL_CCW);
-	glCullFace(GL_BACK);
+	// OpenGL Setting
+	//glEnable(GL_CULL_FACE);
+	//glFrontFace(GL_CCW);
+	//glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	float lightValue[] = { 1,1,1,1 };
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightValue);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, lightValue);
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
-	float globalAmbient[] = { 0.5, 0.5, 0.5, 1 };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
+	//float globalAmbient[] = { 0.35, 0.35, 0.35, 1 };
+	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
+
+	// Object Init
+	objList.push_back(new Building(vec3(40, 10, 5), vec3(0, 0, 0), vec3(5, 3, 5).GetSize(), 0.0f, 45.0f, 0.0f));
+	((Building*)objList[0])->SetColor(1, 0, 1);
+	objList.push_back(new Drone(vec3(0, 0, 0), 5.0f));
+	objList.push_back(new Road(0, 0, 3000, 500, 6000, 0, 0, 0));
+	objList.push_back(new Player(0, 3, 5000));
+
+	Camera.SetTarget((Player*)objList.back());
+
+	StageManager* stm = StageManager::Instance();
+	stm->Init();
 
 	t3dInit();
 
@@ -135,7 +164,7 @@ void Reshape(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//Clip공간 설정
-	gluPerspective(90.0, w / h, 1.0, 1000.0);
+	gluPerspective(60.0, w / float(h), 1.0, 2000.0);
 
 	//ModelView
 	glMatrixMode(GL_MODELVIEW);
@@ -146,18 +175,25 @@ void DrawScene() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 	glPushMatrix();
 
-	//	CameraTransform
+	glScalef(0.3, 0.3, 0.3);
+
+	// Camera Transform
 	Camera.CameraTransform();
 
 	float lightPos[4] = { 0,1,1,0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-	for (unsigned int i = 0; i < objList.size(); ++i)
-	{
-		objList[i]->Render();
-	}
+	BulletManager* bulletmger = BulletManager::Instance();
+	bulletmger->Render();
+
+	StageManager* stm = StageManager::Instance();
+	stm->Render();
+
+	for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
+
 	glPopMatrix();
 
 	glutSwapBuffers();
@@ -166,81 +202,32 @@ void DrawScene() {
 void TimerFunction(int value) {
 	static clock_t prevClock = 0;
 	clock_t nowClock = clock();
-	printf("FPS : %f\n", 1 / ((nowClock - prevClock) / float(CLOCKS_PER_SEC)));
+	float frameTime = (nowClock - prevClock) / float(CLOCKS_PER_SEC);
+	//printf("FPS : %f\n", 1 / frameTime);
 	prevClock = nowClock;
 
-	static_cast<Player*>(objList[2])->Update();
-	glutTimerFunc(17, TimerFunction, 1);
+	static_cast<Player*>(objList.back())->Update(frameTime);
+	glutTimerFunc(5, TimerFunction, 1);
 	glutPostRedisplay();
 }
 
-void ProcessKeyInput(unsigned char key, int x, int y) {
-	switch (key)
-	{
-	case 'y':
-		Camera.YawRotate(2.0f);
-		break;
-	case 'Y':
-		Camera.YawRotate(-2.0f);
-		break;
-	case 'x':
-		Camera.PitchRotate(2.0f);
-		break;
-	case 'X':
-		Camera.PitchRotate(-2.0f);
-		break;
-	case 'z': {
-		vec3 vShift;
-		vShift.z = -10.0f;
-		Camera.Move(vShift);;
-		break;
-	}
-	case 'Z':
-	{
-		vec3 vShift;
-		vShift.z = 10.0f;
-		Camera.Move(vShift);;
-		break;
-	}
-
-	case 'a':
-		objList[2]->Rotate(0.0f, 10.0f, 0.0f);
-		break;
-	case 's':
-		objList[1]->Rotate(0.0f, 2.0f, 0.0f);
-		break;
-	case 'd':
-		objList[2]->Rotate(0.0f, -10.0f, 0.0f);
-		break;
-	case 'w':
-		objList[1]->Move(vec3(0.0f, 2.0f, 0.0f));
-		break;
-	default:
-		break;
-	}
-
-	glutPostRedisplay();
+void ProcessKeyInput(unsigned char key, int x, int y)
+{
+	InputManager::GetInstance()->PushKey(key);
 }
 
 void ProcessSpeciaKeyInput(int key, int x, int y)
 {
-	float mat[16], tmp[16];
-	switch (key)
-	{
-	case GLUT_KEY_LEFT:
-		objList[2]->Rotate(0, 0, 10);
-		break;
-	case GLUT_KEY_RIGHT:
-		objList[2]->Rotate(0, 0, -10);
-		break;
-	case GLUT_KEY_DOWN:
-		objList[2]->Rotate(10, 0, 0);
-		break;
-	case GLUT_KEY_UP:
-		objList[2]->Rotate(-10, 0, 0);
-		break;
-	default:
-		break;
-	}
+	InputManager::GetInstance()->PushKey(key+300);
+}
+
+void ProcessKeyRelease(unsigned char key, int x, int y)
+{
+	InputManager::GetInstance()->ReleaseKey(key);
+}
+
+void ProcessSpeciaKeyRelease(int key, int x, int y)
+{
+	InputManager::GetInstance()->ReleaseKey(key+300);
 }
 
