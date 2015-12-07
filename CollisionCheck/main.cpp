@@ -206,6 +206,9 @@ void TimerFunction(int value) {
 	//printf("FPS : %f\n", 1 / frameTime);
 	prevClock = nowClock;
 
+	BulletManager* bm = BulletManager::Instance();
+	bm->Update();
+
 	static_cast<Player*>(objList.back())->Update(frameTime);
 	glutTimerFunc(5, TimerFunction, 1);
 	glutPostRedisplay();

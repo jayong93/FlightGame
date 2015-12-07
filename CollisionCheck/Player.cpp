@@ -269,7 +269,7 @@ void Player::Update(float frameTime)
 	// 무기 발사
 	if (im->GetKeyState(' ') && fireTimer < 0)
 	{
-		arm.Shot(true, matrix);
+		arm.Shot(true, matrix, direction);
 		fireTimer = 0;
 	}
 
