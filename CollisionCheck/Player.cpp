@@ -164,9 +164,9 @@ void Player::Update(float frameTime)
 		else
 			boostTimer += frameTime;
 		float inc = 160 * frameTime;
-		float limit = 420;
+		float limit = 350;
 		float speed = velocity.GetSize();
-		if (boostTimer >= 5)
+		if (boostTimer >= 3)
 		{
 			isBoost = false;
 		}
