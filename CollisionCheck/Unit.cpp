@@ -171,8 +171,25 @@ void Drone::ChangeState(State * st)
 void Drone::SetDirection(vec3 & v)
 {
 	//if (v.y != 0.0f) roll = (atan2f(v.y, v.x) / 3.14f)*180.0f;
-	if (v.x != 0.0f) yaw = (atan2f(v.x, v.z) / 3.14f)*180.0f;
-	if (v.y != 0.0f) pitch = -(atan2f(v.y, v.z) / 3.14f)*180.0f;
+	//if (abs(v.x) > 0.1f) yaw = (atan2f(v.x, v.z) / 3.14f)*180.0f;
+	//if (abs(v.y) > 0.1f) pitch = -(atan2f(v.y, v.z) / 3.14f)*180.0f;
+	vec3 unit(0, 0, 1);
+	vec3 yv(v.x, 0, v.z);
+	vec3 xv(0, v.y, sqrt(v.x*v.x + v.z*v.z));
+
+	yv.Normalize(); xv.Normalize();
+	yaw = acosf(unit.Dot(yv)) / 3.14f * 180.0f;
+	pitch = -acosf(unit.Dot(xv)) / 3.14f * 180.0f;
+	if (v.x < 0)
+	{
+		yaw *= -1;
+	}
+	if (v.y < 0)
+	{
+		pitch *= -1;
+	}
+	//printf("Pitch : %f, Yaw : %f\n", pitch, yaw);
+	this->Object::GenMatrix();
 }
 
 TempTarget::TempTarget(vec3 & pos, float rad, float p, float y, float r) : Unit(pos, rad, p, y, r)

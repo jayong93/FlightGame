@@ -155,8 +155,8 @@ void StageManager::Render()
 
 Node & StageManager::GetNearestNode(float x, float z)
 {
-	int row = int((z + 6000.0f) / 387.1f + 0.5f);
-	int col = int((x + 6000.0f) / 387.1f + 0.5f);
+	int row = int((z + 6000.0f) / 387.1f + 0.51f);
+	int col = int((x + 6000.0f) / 387.1f + 0.51f);
 	int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
 	int k = 0;
 	int r = row, c = col;
