@@ -2,6 +2,7 @@
 #include "Unit.h"
 #include "Player.h"
 #include "Road.h"
+#include "Ring.h"
 #include "text.h"
 #include "StageManager.h"
 #include "InputManager.h"
@@ -26,7 +27,7 @@ void TimerFunction(int);
 void ProcessKeyInput(unsigned char, int, int);
 void ProcessSpeciaKeyInput(int, int, int);
 void ProcessKeyRelease(unsigned char, int, int);
-extern void ProcessSpeciaKeyRelease(int, int, int);
+void ProcessSpeciaKeyRelease(int, int, int);
 
 
 class CCamera {
@@ -185,9 +186,6 @@ int main() {
 	srand(time(NULL));
 
 	// OpenGL Setting
-	//glEnable(GL_CULL_FACE);
-	//glFrontFace(GL_CCW);
-	//glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
 
 	glEnable(GL_LIGHTING);
@@ -198,21 +196,17 @@ int main() {
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
-	//float globalAmbient[] = { 0.35, 0.35, 0.35, 1 };
-	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
-
 	// Object Init
-	objList.push_back(new Building(vec3(40, 10, 5), vec3(0, 0, 0), vec3(5, 3, 5).GetSize(), 0.0f, 45.0f, 0.0f));
-	((Building*)objList[0])->SetColor(1, 0, 1);
-
 	objList.push_back(new Road(0, 0, 3000, 500, 6000, 0, 0, 0));
 	objList.push_back(new Player(0, 3, 100));
 
 	Camera.SetTarget((Player*)objList.back());
 
+	objList.push_back(new Ring(0,100,0,80,80,5));
+
 	StageManager* stm = StageManager::Instance();
 	stm->Init();
-	objList.push_back(new Drone((Unit*)objList[2], vec3(0, 5, 0), 12.5f));
+	objList.push_back(new Drone((Unit*)objList[1], vec3(0, 5, 0), 12.5f));
 	objList.back()->SetDes();
 
 	t3dInit();
@@ -229,8 +223,8 @@ void Reshape(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//Clip공간 설정
-	//gluPerspective(60.0, w / float(h), 1.0, 2000.0);
-	glOrtho((-size / 2.0f), (size / 2.0f), (-size / 2.0f), (size / 2.0f), 10.0f, 10000.0f);
+	gluPerspective(60.0, w / float(h), 1.0, 2000.0);
+	//glOrtho((-size / 2.0f), (size / 2.0f), (-size / 2.0f), (size / 2.0f), 10.0f, 10000.0f);
 
 	//ModelView
 	glMatrixMode(GL_MODELVIEW);
@@ -275,8 +269,7 @@ void TimerFunction(int value) {
 	BulletManager* bm = BulletManager::Instance();
 	bm->Update();
 
-	static_cast<Player*>(objList[2])->Update(frameTime);
-	for (int i = 3; i < objList.size(); ++i) objList[i]->Update(frameTime);
+	for (int i = 0; i < objList.size(); ++i) objList[i]->Update(frameTime);
 	glutTimerFunc(16, TimerFunction, 1);
 	glutPostRedisplay();
 }
