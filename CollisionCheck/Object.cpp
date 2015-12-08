@@ -6,7 +6,7 @@ float DotProduct(const vec3& v1, const vec3& v2) { return (v1.x*v2.x + v1.y*v2.y
 
 float GetDistance(const vec3& v1, const vec3& v2) { return sqrt((v2.x - v1.x)*(v2.x - v1.x) + (v2.y - v1.y)*(v2.y - v1.y) + (v2.z - v1.z)*(v2.z - v1.z)); }
 
-Object::Object(vec3& pos,float boundingRadius ,float p = 0.0f, float y = 0.0f, float r = 0.0f) : position(pos), boundingRad(boundingRadius), pitch(p), yaw(y), roll(r) {
+Object::Object(vec3& pos, float boundingRadius, float p = 0.0f, float y = 0.0f, float r = 0.0f) : position(pos), boundingRad(boundingRadius), pitch(p), yaw(y), roll(r) {
 	Object::GenMatrix();
 }
 
@@ -18,9 +18,9 @@ void Object::GenMatrix()
 	glLoadIdentity();
 
 	glTranslatef(position.x, position.y, position.z);
-	glRotatef(pitch, 1.0f, 0.0f, 0.0f);
-	glRotatef(yaw, 0.0f, 1.0f, 0.0f);
 	glRotatef(roll, 0.0f, 0.0f, 1.0f);
+	glRotatef(yaw, 0.0f, 1.0f, 0.0f);
+	glRotatef(pitch, 1.0f, 0.0f, 0.0f);
 	glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
 
 	glLoadIdentity();
@@ -205,6 +205,80 @@ bool CubeObject::CollisionCheck(const CubeObject& box2)
 	return false;
 }
 
+bool CubeObject::CollisionCheckRay(const vec3 & start, const vec3 & end, float& intersection_distance)
+{
+	if (GetDistance(position, start) <= GetDistance(start, end)) {
+
+		vec3 ray_direction = end - start;
+		vec3 aabb_min = -extent;
+		vec3 aabb_max = extent;
+
+		float Min = 0.0f;		//	현재 까지 구해진 것 중 Greatest min
+		float Max = 100000.0f;		//	Smallest max 
+
+		vec3 OOBpos = position;
+		vec3 delta = OOBpos - start;
+
+		//OOB's X axis
+		{
+			vec3 xaxis(matrix[0], matrix[1], matrix[2]);
+			xaxis.Normalize();
+			float e = DotProduct(xaxis, delta);
+			float f = DotProduct(xaxis, ray_direction);
+
+			if (fabs(f) > 0.001f) {
+				float t1 = (e + aabb_min.x) / f;
+				float t2 = (e + aabb_max.x) / f;
+				if (t1 > t2) { float tmp = t1; t1 = t2; t2 = tmp; }
+				if (t2 < Max) Max = t2;
+				if (t1 > Min) Min = t1;
+				if (Max < Min) return false;
+			}
+			else {	//	레이가 x축에 거의 수직인상태
+				if (-e + aabb_min.x > 0.0f || -e + aabb_max.x < 0.0f)  return false;
+			}
+		}
+		//OOB's Y axis
+		{
+			vec3 yaxis = vec3(matrix[4], matrix[5], matrix[6]);
+			float e = DotProduct(yaxis, delta);
+			float f = DotProduct(yaxis, ray_direction);
+			if (fabs(f) > 0.001f) {
+				float t1 = (e + aabb_min.y) / f;
+				float t2 = (e + aabb_max.y) / f;
+				if (t1 > t2) { float tmp = t1; t1 = t2; t2 = tmp; }
+				if (t2 < Max) Max = t2;
+				if (t1 > Min) Min = t1;
+				if (Max < Min) return false;
+			}
+			else {
+				if (-e + aabb_min.y > 0.0f || -e + aabb_max.y < 0.0f) return false;
+			}
+		}
+		//OOB's Z axis
+		{
+			vec3 zaxis(matrix[8], matrix[9], matrix[10]);
+			float e = DotProduct(zaxis, delta);
+			float f = DotProduct(zaxis, ray_direction);
+			if (fabs(f) > 0.001f) {
+				float t1 = (e + aabb_min.z) / f;
+				float t2 = (e + aabb_max.z) / f;
+				if (t1 > t2) { float tmp = t1; t1 = t2; t2 = tmp; }
+				if (t2 < Max) Max = t2;
+				if (t1 > Min) Min = t1;
+				if (Max < Min) return false;
+			}
+			else {
+				if (-e + aabb_min.z > 0.0f || -e + aabb_max.z < 0.0f) return false;
+			}
+		}
+
+		intersection_distance = Min;
+		return true;
+	}
+	return false;
+}
+
 void CubeObject::Render()
 {
 	glMatrixMode(GL_MODELVIEW);
@@ -212,7 +286,7 @@ void CubeObject::Render()
 	glMultMatrixf(matrix);
 	glColor3f(0.2f, 0.2f, 0.2f);
 	glutWireSphere(boundingRad, 10, 10);
-	glScalef(2 *extent.x, 2 * extent.y, 2 * extent.z);
+	glScalef(2 * extent.x, 2 * extent.y, 2 * extent.z);
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glutWireCube(1.0f);
 	glPopMatrix();
@@ -222,7 +296,7 @@ Building::Building(vec3 & ext, vec3 & pos, float boundingRadius, float p, float 
 {
 }
 
-void Building::SetColor(float r, float g , float b)
+void Building::SetColor(float r, float g, float b)
 {
 	color.x = r; color.y = g; color.z = b;
 }

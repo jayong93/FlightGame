@@ -164,9 +164,9 @@ void Player::Update(float frameTime)
 		else
 			boostTimer += frameTime;
 		float inc = 160 * frameTime;
-		float limit = 420;
+		float limit = 350;
 		float speed = velocity.GetSize();
-		if (boostTimer >= 5)
+		if (boostTimer >= 3)
 		{
 			isBoost = false;
 		}
@@ -269,7 +269,7 @@ void Player::Update(float frameTime)
 	// 무기 발사
 	if (im->GetKeyState(' ') && fireTimer < 0)
 	{
-		arm.Shot(true, matrix);
+		arm.Shot(true, matrix, direction);
 		fireTimer = 0;
 	}
 

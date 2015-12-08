@@ -1,6 +1,8 @@
 #include "Unit.h"
 #include "std.h"
 #include "text.h"
+#include "StageManager.h"
+#include "AIState.h"
 
 
 
@@ -17,7 +19,7 @@ void Unit::Move(const vec3 & shift)
 		cubeList[i]->Object::Move(shift);
 		cubeList[i]->Object::GenMatrix();
 	}
-	
+
 }
 
 void Unit::Rotate(float pdel, float ydel, float rdel)
@@ -31,9 +33,31 @@ void Unit::Rotate(float pdel, float ydel, float rdel)
 }
 
 
-Drone::Drone(vec3 & pos, float rad, float p, float y, float r) : Unit(pos, rad, p, y, r)
+Drone::Drone(Unit* target, vec3 & pos, float rad, float p, float y, float r) : Unit(pos, rad, p, y, r), target(target), shotTimer(0)
 {
 	cubeList.push_back(new CubeObject(vec3(2.5f*sqrt(2), 2.5f * sqrt(2), 2.5f * sqrt(2)), pos, rad, p, y, r));
+	cubeList.shrink_to_fit();
+	state = Patrol::Instance();
+}
+
+void Drone::SetDes()
+{
+	StageManager* stm = StageManager::Instance();
+	desNode = stm->GetNearestNode(position.x, position.z);
+	velocity.x = (desNode.col*387.1f - 6000.0f) - position.x;
+	velocity.y = 0.0f;
+	velocity.z = (desNode.row*387.1f - 6000.0f) - position.z;
+	velocity.Normalize();
+	SetDirection(velocity);
+}
+
+void Drone::SetDes(int row, int col)
+{
+	desNode.row = row; desNode.col = col;
+	velocity.x = (desNode.col*387.1f - 6000.0f) - position.x;
+	velocity.y = 0.0f;
+	velocity.z = (desNode.row*387.1f - 6000.0f) - position.z;
+	velocity.Normalize();
 }
 
 void Drone::Render()
@@ -46,16 +70,16 @@ void Drone::Render()
 		glutSolidSphere(boundingRad, 32, 32);
 
 		glPushMatrix(); {
-			glTranslatef(0.0f, 0.0f, boundingRad - boundingRad / 2.0f + 0.5f);
-			glColor3f(0.5f, 0.5f, 0.5f);
-			glutSolidCube(boundingRad - 1.0f);
+			glTranslatef(0.0f, 0.0f, boundingRad - boundingRad / 2.0f);
+			glColor3f(0.3f, 0.3f, 0.3f);
+			glutSolidCube(boundingRad + 1.0f);
 
-			
-			glTranslatef(0.0f, 0.0f, boundingRad - boundingRad / 2.0f - (boundingRad / 10.0f)*1.5f);
+
+			glTranslatef(0.0f, 0.0f, boundingRad - boundingRad / 2.0f);
 			glPushMatrix(); {
 				glColor3f(0.8f, 0.8f, 0.8f);
 				glTranslatef(0.0f, 0.0f, boundingRad / 30.0f);
-				glScalef(1.2f, 1.2f, 1.2f);
+				glScalef(3.0f, 3.0f, 3.0f);
 				t3dDraw3D("A166", 0, 0, 0.2f);
 			}glPopMatrix();
 			glPushMatrix(); {
@@ -74,28 +98,27 @@ void Drone::Render()
 		glPushMatrix(); {
 			glTranslatef(-boundingRad + 0.5f, 0.0f, 0.0f);
 			glPushMatrix();
-			glTranslatef(0.0f, 0.0f, boundingRad );
+			glTranslatef(1.0f, 0.0f, boundingRad);
 			arm.Render();
 			glPopMatrix();
-			glScalef(0.3f, 1.0f, 1.0f);
+			glScalef(0.2f, 1.0f, 1.0f);
 			glColor3f(0.6f, 0.6f, 0.6f);
-			glutSolidSphere(boundingRad - 2.0f, 32, 32);
+			glutSolidSphere(boundingRad - 3.0f, 32, 32);
 		}glPopMatrix();
 		glPushMatrix(); {
 			glTranslatef(boundingRad - 0.5f, 0.0f, 0.0f);
 			glPushMatrix();
-			glTranslatef(0.0f, 0.0f, boundingRad);
+			glTranslatef(-1.0f, 0.0f, boundingRad);
 			arm.Render();
 			glPopMatrix();
-			glScalef(0.3f, 1.0f, 1.0f);
+			glScalef(0.2f, 1.0f, 1.0f);
 			glColor3f(0.6f, 0.6f, 0.6f);
-			glutSolidSphere(boundingRad - 2.0f, 32, 32);
+			glutSolidSphere(boundingRad - 3.0f, 32, 32);
 		}glPopMatrix();
 	}glPopMatrix();
 }
 
-void Drone::Update()
-{
+void Drone::Shot() {
 	float bulletmtx[16];
 	float tmpmtx[16];
 	glMatrixMode(GL_MODELVIEW);
@@ -106,7 +129,7 @@ void Drone::Update()
 	glRotatef(pitch, 1.0f, 0.0f, 0.0f);
 	glRotatef(yaw, 0.0f, 1.0f, 0.0f);
 	glRotatef(roll, 0.0f, 0.0f, 1.0f);
-	glTranslatef(-boundingRad + 0.5f, 0.0f, boundingRad);
+	glTranslatef(-boundingRad + 3.0f, 0.0f, boundingRad);
 	glGetFloatv(GL_MODELVIEW_MATRIX, bulletmtx);
 	arm.Shot(false, bulletmtx);
 
@@ -121,15 +144,77 @@ void Drone::Update()
 	glRotatef(pitch, 1.0f, 0.0f, 0.0f);
 	glRotatef(yaw, 0.0f, 1.0f, 0.0f);
 	glRotatef(roll, 0.0f, 0.0f, 1.0f);
-	glTranslatef(boundingRad - 0.5f, 0.0f, boundingRad);
+	glTranslatef(boundingRad - 3.0f, 0.0f, boundingRad);
 	glGetFloatv(GL_MODELVIEW_MATRIX, bulletmtx);
 	arm.Shot(false, bulletmtx);
 
 	glLoadIdentity();
 	glLoadMatrixf(tmpmtx);
+}
+
+void Drone::Update(float frameTime)
+{
+	state->Update(*this, frameTime);
 
 	this->Object::GenMatrix();
 	for (unsigned int i = 0; i < cubeList.size(); ++i) {
 		cubeList[i]->Object::GenMatrix();
 	}
+	shotTimer = (shotTimer + 1) % 5;
 }
+
+void Drone::ChangeState(State * st)
+{
+	state = st;
+}
+
+void Drone::SetDirection(vec3 & v)
+{
+	//if (v.y != 0.0f) roll = (atan2f(v.y, v.x) / 3.14f)*180.0f;
+	//if (abs(v.x) > 0.1f) yaw = (atan2f(v.x, v.z) / 3.14f)*180.0f;
+	//if (abs(v.y) > 0.1f) pitch = -(atan2f(v.y, v.z) / 3.14f)*180.0f;
+	vec3 unit(0, 0, 1);
+	vec3 yv(v.x, 0, v.z);
+	vec3 xv(0, v.y, sqrt(v.x*v.x + v.z*v.z));
+
+	yv.Normalize(); xv.Normalize();
+	yaw = acosf(unit.Dot(yv)) / 3.14f * 180.0f;
+	pitch = -acosf(unit.Dot(xv)) / 3.14f * 180.0f;
+	if (v.x < 0)
+	{
+		yaw *= -1;
+	}
+	if (v.y < 0)
+	{
+		pitch *= -1;
+	}
+	//printf("Pitch : %f, Yaw : %f\n", pitch, yaw);
+	this->Object::GenMatrix();
+}
+
+TempTarget::TempTarget(vec3 & pos, float rad, float p, float y, float r) : Unit(pos, rad, p, y, r)
+{
+}
+
+void TempTarget::Render()
+{
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix(); {
+		glMultMatrixf(matrix);
+
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glutSolidSphere(10, 32, 32);
+
+	}glPopMatrix();
+}
+
+void TempTarget::CameraTransform()
+{
+	glMatrixMode(GL_MODELVIEW);
+	glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+	glRotatef(-roll, 0.0f, 0.0f, 1.0f);
+	glRotatef(-yaw, 0.0f, 1.0f, 0.0f);
+	glRotatef(-pitch, 1.0f, 0.0f, 0.0f);
+	glTranslatef(-position.x, -position.y, -position.z);
+}
+
