@@ -246,7 +246,6 @@ void StageManager::Init(Unit* target)
 	//	드론 생성
 	droneList.push_back(new Drone(target, vec3(0, 3.0f, 500.0f), 12.5f));
 	droneList.back()->SetDes();
-
 	for (int i = 0; i < 2; ++i) {
 		carList.push_back(new Car(vec3(-3000.0f, 3.0f, -3000.0f), 1.0f));
 		carList.push_back(new Car(vec3(-3000.0f, 3.0f, 3000.0f), 1.0f));
@@ -254,6 +253,16 @@ void StageManager::Init(Unit* target)
 		carList.push_back(new Car(vec3(3000.0f, 3.0f, -3000.0f), 1.0f));
 		carList.push_back(new Car(vec3(3000.0f, 3.0f, 3000.0f), 1.0f));
 	}
+}
+
+void StageManager::Restart(Unit* target)
+{
+	for (auto& d : droneList) delete d;
+	droneList.clear();
+	droneList.push_back(new Drone(target, vec3(0, 3.0f, 500.0f), 12.5f));
+	droneList.back()->SetDes();
+
+	for (auto& r : ringList) r->SetItem(true);
 }
 
 void StageManager::Render()

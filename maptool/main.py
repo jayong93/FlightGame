@@ -105,7 +105,8 @@ def save(fname='map_data'):
         if o.type == Object.BUILDING:
             saveData['data'].append({'type': 'building', 'x': o.x, 'y': o.y, 'w': o.w, 'd': o.d, 'h': o.h})
         elif o.type == Object.RING:
-            saveData['data'].append({'type': 'ring', 'x': o.x, 'y': o.y, 'z': o.z,'w': o.w, 'd': o.d, 'h': o.h})
+            saveData['data'].append({'type': 'ring', 'x': o.x, 'y': o.y, 'z': o.z,'w': o.w, 'd': o.d, 'h': o.h,
+                                     'is_rotate': o.rotate, 'angle': o.angle})
 
     with open(fname + '.json', 'w') as f:
         json.dump(saveData, f, sort_keys=True, indent=4, separators=(',', ': '))
@@ -156,7 +157,7 @@ def load(fname='map_data.json'):
             if d['type'] == 'building':
                 objectList.append(building.Building(d['x'], d['y'], building.image))
             elif d['type'] == 'ring':
-                objectList.append(ring.Ring(d['x'], d['y'], d['z'], ring.image))
+                objectList.append(ring.Ring(d['x'], d['y'], d['z'], ring.image, d['angle'], d['is_rotate']))
 
 
 def dot(v1, v2):
@@ -196,6 +197,7 @@ def link_node():
 
     bw, bh = mapW / (NODE_NUM - 1), mapH / (NODE_NUM - 1)
     for obj in objectList:
+        if obj.type == Object.RING: continue
         ox, oy = int(obj.x / bw), int(obj.y / bh)
         for i in range(-1, 2):
             if oy + i < 0 or oy + i >= NODE_NUM: continue
