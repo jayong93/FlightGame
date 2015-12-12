@@ -3,6 +3,13 @@
 #include "Unit.h"
 #include "Player.h"
 #include "StageManager.h"
+#include <fmod.hpp>
+
+using namespace FMOD;
+
+extern System* fSystem;
+extern Sound* sound[3];
+extern Channel* channel;
 
 void Arm::Shot(bool isAlly, float* mtx)
 {
