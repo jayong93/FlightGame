@@ -36,7 +36,7 @@ void Player::Render()
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glMultMatrixf(matrix);
-		for (auto c : cubeList)
+		for (auto& c : cubeList)
 		{
 			c->Render();
 		}
@@ -164,9 +164,9 @@ void Player::Update(float frameTime)
 		else
 			boostTimer += frameTime;
 		float inc = 160 * frameTime;
-		float limit = 420;
+		float limit = 350;
 		float speed = velocity.GetSize();
-		if (boostTimer >= 5)
+		if (boostTimer >= 3)
 		{
 			isBoost = false;
 		}
@@ -292,10 +292,6 @@ void PlayerBody::Render()
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	{
-		float spec[] = { 0,0,0,1 };
-		glMaterialfv(GL_FRONT, GL_SPECULAR, spec);
-		glMateriali(GL_FRONT, GL_SHININESS, 128);
-
 		glTranslatef(relativePos.x, relativePos.y, relativePos.z);
 		glScalef(extent.x * 2, extent.y * 2, extent.z * 2);
 		glColor4f(1, 1, 1, alpha);

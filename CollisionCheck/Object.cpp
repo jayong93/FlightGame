@@ -18,9 +18,9 @@ void Object::GenMatrix()
 	glLoadIdentity();
 
 	glTranslatef(position.x, position.y, position.z);
-	glRotatef(pitch, 1.0f, 0.0f, 0.0f);
-	glRotatef(yaw, 0.0f, 1.0f, 0.0f);
 	glRotatef(roll, 0.0f, 0.0f, 1.0f);
+	glRotatef(yaw, 0.0f, 1.0f, 0.0f);
+	glRotatef(pitch, 1.0f, 0.0f, 0.0f);
 	glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
 
 	glLoadIdentity();

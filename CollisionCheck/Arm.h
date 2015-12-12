@@ -25,7 +25,7 @@ public:
 
 	void Render();
 
-	void Update();
+	void Update(float frameTime);
 
 	bool GetIsAlive() { return isAlive; }
 };
@@ -43,5 +43,5 @@ public:
 
 	void Render();
 
-	void Update();
+	void Update(float frameTime);
 };
