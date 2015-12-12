@@ -158,7 +158,7 @@ void Drone::Update(float frameTime)
 	for (unsigned int i = 0; i < cubeList.size(); ++i) {
 		cubeList[i]->Object::GenMatrix();
 	}
-	shotTimer = (shotTimer + 1) % 5;
+	shotTimer = (shotTimer + 1) % 7;
 }
 
 void Drone::ChangeState(State * st)

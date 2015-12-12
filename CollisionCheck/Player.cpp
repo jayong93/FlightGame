@@ -3,6 +3,14 @@
 #include "InputManager.h"
 #include "Ring.h"
 #include "StageManager.h"
+#include <fmod.hpp>
+
+using namespace FMOD;
+
+extern System* fSystem;
+extern Sound* sound[3];
+extern Channel* channel;
+extern Channel* bgmChan;
 
 Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), direction(0, 0, -1), isBoost(false), boostTimer(-1), stelthTimer(-1), alpha(1), mana(100), fireTimer(-1), deathTimer(-1), hp(200)
 {
@@ -116,6 +124,7 @@ void Player::ProcessPlayerDeath()
 	stm->CallEffenct(EFFECT::FLAME, position, vec3((rand() % 9) / 10.0f + 0.1f, (rand() % 9) / 10.0f + 0.1f, (rand() % 9) / 10.0f + 0.1f));
 	isAlive = false;
 	deathTimer = 0;
+	fSystem->playSound(sound[1], 0, false, &channel);
 }
 
 void Player::Render()
@@ -404,6 +413,7 @@ void Player::Update(float frameTime)
 			*ss = INTRO;
 			float* fov = GetFovValue();
 			*fov = 60;
+			bgmChan->setPaused(true);
 		}
 	}
 }
