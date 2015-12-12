@@ -36,10 +36,7 @@ bool Player::ColiisionCheck_Ring(const Ring* ring) const
 	{
 		for (auto& c : cubeList)
 		{
-<<<<<<< HEAD
-=======
 			ring->ItemCollisionCheck(c);
->>>>>>> refs/remotes/origin/JaeYong
 			if (ring->CollisionCheck(c))
 				return true;
 		}
