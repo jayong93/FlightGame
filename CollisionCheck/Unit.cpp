@@ -187,6 +187,22 @@ void Drone::Polling()
 	}
 }
 
+bool Drone::CollisionCheck(const CubeObject * obj)
+{
+
+	for (auto& c : cubeList)
+	{
+		if (obj->CollisionCheck(c)) {
+			std::cout << "CollisionDrone" << std::endl;
+			StageManager* stm = StageManager::Instance();
+			stm->CallEffenct(EFFECT::FLAME, position, vec3((rand() % 9) / 10.0f + 0.1f, (rand() % 9) / 10.0f + 0.1f, (rand() % 9) / 10.0f + 0.1f));
+			isAlive = false;
+			return true;
+		}
+	}
+	return false;
+}
+
 void Drone::SetDirection(vec3 & v)
 {
 	//if (v.y != 0.0f) roll = (atan2f(v.y, v.x) / 3.14f)*180.0f;

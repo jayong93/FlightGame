@@ -2,6 +2,7 @@
 #include "Unit.h"
 
 class Ring;
+class Building;
 
 class Player : public Unit
 {
@@ -9,12 +10,21 @@ public:
 	Player(float x, float y, float z);
 
 	virtual bool ColiisionCheck(const Object* obj) const;
+	bool ColiisionCheck_Cube(const CubeObject * obj) const;
 	virtual void Render();
 	virtual void Move(const vec3 &);
 	virtual void Rotate(float, float, float);
+<<<<<<< HEAD
 	virtual void Update(float frameTime);
 	float GetHp() const { return hp; }
 	bool ColiisionCheck_Ring(const Ring * ring) const;
+=======
+	void Update(float frameTime);
+	bool ColiisionCheck_Ring(const Ring * ring);
+	bool CollisionCheck_Building();
+	bool CollisionCheck_Drone(Drone* drone);
+	void ProcessPlayerDeath();
+>>>>>>> refs/remotes/origin/SoYun
 
 private:
 	vec3 direction;

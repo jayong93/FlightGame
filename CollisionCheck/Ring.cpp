@@ -48,6 +48,7 @@ bool Ring::CollisionCheck(const CubeObject * obj) const
 	{
 		for (auto& c : cubeList)
 		{
+<<<<<<< HEAD
 			if (obj->CollisionCheck(c))
 			{
 				std::cout << "CollisionWithRing" << std::endl;
@@ -67,6 +68,12 @@ bool Ring::ItemCollisionCheck(const CubeObject * obj) const
 			isItemExist = false;
 			std::cout << "CollisionWithItem" << std::endl;
 			return true;
+=======
+			if (obj->CollisionCheck(c)) {
+				std::cout << "CollisionWithRing" << std::endl;
+				return true;
+			}
+>>>>>>> refs/remotes/origin/SoYun
 		}
 	}
 	return false;
