@@ -42,11 +42,6 @@ void ProcessSpeciaKeyInput(int, int, int);
 void ProcessKeyRelease(unsigned char, int, int);
 extern void ProcessSpeciaKeyRelease(int, int, int);
 
-<<<<<<< HEAD
-=======
-enum StageState {INTRO, MAIN, ENDING};
-
->>>>>>> refs/remotes/origin/SoYun
 class CCamera {
 	vec3 vPositon;
 
@@ -234,11 +229,6 @@ void DrawScene() {
 		StageManager* stm = StageManager::Instance();
 		stm->Render();
 
-<<<<<<< HEAD
-=======
-		for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
-
->>>>>>> refs/remotes/origin/SoYun
 		// 경계 반구 그리기
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -263,22 +253,10 @@ void DrawScene() {
 	glLoadIdentity();
 	glPushMatrix();
 	{
-<<<<<<< HEAD
 		char str[40];
 		if (stageState == MAIN)
-=======
-		char str[20];
-		sprintf_s(str, 20, "HP : %d", (int)((Player*)objList.front())->GetHp());
-
-		glColor3f(1, 1, 1);
-		glRasterPos2f(0, height - 20);
-		int len = strlen(str);
-		for (int i = 0; i < len; ++i)
->>>>>>> refs/remotes/origin/SoYun
 		{
 			sprintf_s(str, 40, "HP : %d", (int)((Player*)objList.front())->GetHp());
-
-<<<<<<< HEAD
 			glColor3f(1, 1, 1);
 			glRasterPos2f(0, height - 20);
 			int len = strlen(str);
@@ -305,21 +283,6 @@ void DrawScene() {
 			}
 		}
 		else if (stageState == INTRO)
-=======
-		sprintf_s(str, 20, "MANA : %d", (int)((Player*)objList.front())->GetMana());
-		glRasterPos2f(0, height - 40);
-		len = strlen(str);
-		for (int i = 0; i < len; ++i)
-		{
-			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str[i]);
-		}
-
-		StageManager* stm = StageManager::Instance();
-		sprintf_s(str, 20, "REMAIN ITEM : %d", stm->GetItemCount());
-		glRasterPos2f(0, height - 60);
-		len = strlen(str);
-		for (int i = 0; i < len; ++i)
->>>>>>> refs/remotes/origin/SoYun
 		{
 			int size = 0, len;
 			sprintf_s(str, 40, "PRESS SPACE BAR TO START");
@@ -340,7 +303,6 @@ void DrawScene() {
 	glPopMatrix();
 	if (stageState == MAIN)
 	{
-<<<<<<< HEAD
 		// 미니맵 뷰
 		glViewport(width - mapWidth, 0, mapWidth, mapHeight);
 		glEnable(GL_LIGHTING);
@@ -352,37 +314,14 @@ void DrawScene() {
 		glOrtho(-mapWidth * 4, mapWidth * 4, -mapHeight * 4, mapHeight * 4, 0.0, 8000.0f);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-=======
-		// 플레이어 위치
-		vec3 camPos = objList.front()->GetPos();
-
-		glRotatef(90, 1, 0, 0);
-		glTranslatef(-camPos.x, -700, -camPos.z);
-
-		float mapLightPos[4] = { 0,1,0,0 };
-		glLightfv(GL_LIGHT0, GL_POSITION, mapLightPos);
->>>>>>> refs/remotes/origin/SoYun
 
 		glPushMatrix();
 		{
 			// 플레이어 위치
 			vec3 camPos = objList.front()->GetPos();
 
-<<<<<<< HEAD
 			glRotatef(90, 1, 0, 0);
 			glTranslatef(-camPos.x, -700, -camPos.z);
-=======
-		StageManager* stm = StageManager::Instance();
-		stm->MinimapRender();
-
-		// 플레이어 마크 그리기
-		glPushMatrix();
-		{
-			float mat[16];
-			vec3 dir, unit(0, 0, -1);
-			objList.front()->GetMatrix(mat);
-			dir = unit.MultMatrix(mat);
->>>>>>> refs/remotes/origin/SoYun
 
 			float mapLightPos[4] = { 0,1,0,0 };
 			glLightfv(GL_LIGHT0, GL_POSITION, mapLightPos);
@@ -474,14 +413,7 @@ void TimerFunction(int value) {
 
 			objList.push_back(new Player(0, 3, 100));
 
-<<<<<<< HEAD
 			Camera.SetTarget((Player*)objList.front());
-=======
-	for (int i = 0; i < objList.size(); ++i) objList[i]->Update(frameTime);
-	//	지울 코드
-	sm->CollisionCheck((Player*)objList.front());
-	bm->CollisionCheck((Player*)objList.front());
->>>>>>> refs/remotes/origin/SoYun
 
 			StageManager* sm = StageManager::Instance();
 			sm->Restart((Unit*)objList.front());

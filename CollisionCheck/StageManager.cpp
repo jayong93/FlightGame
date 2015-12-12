@@ -246,7 +246,13 @@ void StageManager::Init(Unit* target)
 	//	드론 생성
 	droneList.push_back(new Drone(target, vec3(0, 3.0f, 500.0f), 12.5f));
 	droneList.back()->SetDes();
-<<<<<<< HEAD
+	for (int i = 0; i < 2; ++i) {
+		carList.push_back(new Car(vec3(-3000.0f, 3.0f, -3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(-3000.0f, 3.0f, 3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(0.0f, 3.0f, 0.0f), 1.0f));
+		carList.push_back(new Car(vec3(3000.0f, 3.0f, -3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(3000.0f, 3.0f, 3000.0f), 1.0f));
+	}
 }
 
 void StageManager::Restart(Unit* target)
@@ -257,16 +263,6 @@ void StageManager::Restart(Unit* target)
 	droneList.back()->SetDes();
 
 	for (auto& r : ringList) r->SetItem(true);
-=======
-
-	for (int i = 0; i < 2; ++i) {
-		carList.push_back(new Car(vec3(-3000.0f, 3.0f, -3000.0f), 1.0f));
-		carList.push_back(new Car(vec3(-3000.0f, 3.0f, 3000.0f), 1.0f));
-		carList.push_back(new Car(vec3(0.0f, 3.0f, 0.0f), 1.0f));
-		carList.push_back(new Car(vec3(3000.0f, 3.0f, -3000.0f), 1.0f));
-		carList.push_back(new Car(vec3(3000.0f, 3.0f, 3000.0f), 1.0f));
-	}
->>>>>>> refs/remotes/origin/SoYun
 }
 
 void StageManager::Render()
@@ -276,10 +272,7 @@ void StageManager::Render()
 	for (auto& d : droneList) d->Render();
 	for (auto& e : effectList) e->Render();
 	for (auto& road : roadList) road->Render();
-<<<<<<< HEAD
-=======
 	for (auto& c : carList) c->Render();
->>>>>>> refs/remotes/origin/SoYun
 
 	//int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
 
