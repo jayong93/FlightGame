@@ -36,7 +36,10 @@ bool Player::ColiisionCheck_Cube(const CubeObject* obj) const
 	for (auto& c : cubeList)
 	{
 		if (obj->CollisionCheck(c))
+		{
+			hp -= 1;
 			return true;
+		}
 	}
 	return false;
 }
@@ -283,7 +286,7 @@ void Player::Update(float frameTime)
 	// 스텔스 적용
 	if (isStelth)
 	{
-		mana -= 20 * frameTime;
+		mana -= 10 * frameTime;
 		if (mana <= 0)
 		{
 			mana = 0;
@@ -291,11 +294,12 @@ void Player::Update(float frameTime)
 			stelthTimer = 0;
 		}
 	}
-	else if (mana < 100)
+	// 마나 자동 충전
+	else if (mana < 200)
 	{
 		mana += 5 * frameTime;
-		if (mana > 100)
-			mana = 100;
+		if (mana > 200)
+			mana = 200;
 	}
 
 	if (stelthTimer >= 0)
@@ -333,7 +337,7 @@ void Player::Update(float frameTime)
 	}
 
 	// 스텔스 On/Off
-	if (im->GetKeyState('e') && stelthTimer < 0 && mana > 0)
+	if (im->GetKeyState('e') && stelthTimer < 0 && mana > 10)
 	{
 		isStelth = !isStelth;
 		im->ReleaseKey('e');
@@ -364,6 +368,16 @@ void Player::Update(float frameTime)
 	glMatrixMode(GL_MODELVIEW);
 
 	this->Move(velocity*frameTime);
+
+	if (isAlive && position.GetSize() >= 5800)
+	{
+		ProcessPlayerDeath();
+	}
+
+	if (isAlive && position.y < 0)
+	{
+		ProcessPlayerDeath();
+	}
 }
 
 PlayerBody::PlayerBody(const vec3& oPos, const vec3& rPos) : CubeObject(vec3(2, 1.25, 7), oPos + rPos, 7, 0, 0, 0), relativePos(rPos)
