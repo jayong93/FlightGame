@@ -15,6 +15,7 @@ protected:
 	std::vector<CubeObject*> cubeList;
 
 	Arm arm;
+	bool isStelth;
 public:
 	Unit(vec3& pos, float rad, float p, float y, float r);
 
@@ -28,6 +29,7 @@ public:
 
 	void SetAlive(bool alive) { isAlive = alive; }
 	bool GetAlive() { return isAlive; }
+	bool GetIsStelth() { return isStelth; }
 
 	friend class Patrol;
 	friend class Trace;
