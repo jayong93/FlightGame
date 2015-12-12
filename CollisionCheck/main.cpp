@@ -219,7 +219,10 @@ void DrawScene() {
 
 		for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
 
+<<<<<<< HEAD
 		// 경계 반구 그리기
+=======
+>>>>>>> refs/remotes/origin/SoYun
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glColor4f(0.7, 0.7, 1.0, 0.5);
@@ -242,7 +245,11 @@ void DrawScene() {
 	glPushMatrix();
 	{
 		char str[20];
+<<<<<<< HEAD
 		sprintf_s(str, 20, "HP : %d", (int)((Player*)objList.front())->GetHp());
+=======
+		sprintf_s(str, 20, "HP : %d", (int)((Player*)objList[1])->GetHp());
+>>>>>>> refs/remotes/origin/SoYun
 
 		glColor3f(1, 1, 1);
 		glRasterPos2f(0, height - 20);
@@ -252,6 +259,7 @@ void DrawScene() {
 			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str[i]);
 		}
 
+<<<<<<< HEAD
 		sprintf_s(str, 20, "MANA : %d", (int)((Player*)objList.front())->GetMana());
 		glRasterPos2f(0, height - 40);
 		len = strlen(str);
@@ -263,6 +271,11 @@ void DrawScene() {
 		StageManager* stm = StageManager::Instance();
 		sprintf_s(str, 20, "REMAIN ITEM : %d", stm->GetItemCount());
 		glRasterPos2f(0, height - 60);
+=======
+		StageManager* stm = StageManager::Instance();
+		sprintf_s(str, 20, "REMAIN ITEM : %d", stm->GetItemCount());
+		glRasterPos2f(0, height - 40);
+>>>>>>> refs/remotes/origin/SoYun
 		len = strlen(str);
 		for (int i = 0; i < len; ++i)
 		{
