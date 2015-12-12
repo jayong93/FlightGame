@@ -228,7 +228,11 @@ void StageManager::Init(Unit* target)
 	else throw "No Map Node Data";
 
 	//	드론 생성
+<<<<<<< HEAD
 	droneList.push_back(new Drone(target, vec3(0, 500, 2000), 12.5f));
+=======
+	droneList.push_back(new Drone(target, vec3(0, 3.0f, 500.0f), 12.5f));
+>>>>>>> refs/remotes/origin/SoYun
 	droneList.back()->SetDes();
 }
 
