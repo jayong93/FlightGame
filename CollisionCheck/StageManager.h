@@ -25,6 +25,8 @@ public:
 
 	void Render();
 
+	void Update(float frameTime);
+
 	Node& GetNearestNode(float x, float z);
 
 	Node& GetNearestNode(float x, float z, Node& des);

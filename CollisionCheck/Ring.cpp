@@ -19,7 +19,14 @@ void Ring::Update(float frameTime)
 {
 	if (isRotate)
 	{
-		this->Rotate(0, 0, 60 * frameTime);
+		float tmp[16];
+		glMatrixMode(GL_MODELVIEW);
+		glGetFloatv(GL_MODELVIEW_MATRIX, tmp);
+		glLoadMatrixf(matrix);
+		glRotatef(60 * frameTime, 0, 0, 1);
+		glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
+		glLoadMatrixf(tmp);
+
 		for (auto& c : cubeList)
 		{
 			c->UpdateMatrix(matrix);
