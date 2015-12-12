@@ -184,8 +184,7 @@ void Reshape(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//Clip공간 설정
-	gluPerspective(60.0, w / float(h), 0.01, 8000.0);
-	//glOrtho((-size / 2.0f), (size / 2.0f), (-size / 2.0f), (size / 2.0f), 10.0f, 10000.0f);
+	gluPerspective(fov, w / float(h), 0.01, 8000.0);
 
 	//ModelView
 	glMatrixMode(GL_MODELVIEW);
@@ -195,6 +194,7 @@ void DrawScene() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// 메인 뷰
 	glViewport(0, 0, width, height);
 
 	//Projenction
@@ -205,26 +205,26 @@ void DrawScene() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glPushMatrix();
+	{
+		glScalef(0.5, 0.5, 0.5);
 
-	glScalef(0.5, 0.5, 0.5);
+		// Camera Transform
+		Camera.CameraTransform();
 
-	// Camera Transform
-	Camera.CameraTransform();
+		float lightPos[4] = { 0,2,1,0 };
+		glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-	float lightPos[4] = { 0,2,1,0 };
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+		BulletManager* bulletmger = BulletManager::Instance();
+		bulletmger->Render();
 
-	BulletManager* bulletmger = BulletManager::Instance();
-	bulletmger->Render();
+		StageManager* stm = StageManager::Instance();
+		stm->Render();
 
-	StageManager* stm = StageManager::Instance();
-	stm->Render();
-
-	for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
-
+		for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
+	}
 	glPopMatrix();
 
-
+	// 미니맵 뷰
 	glViewport(width - mapWidth, 0, mapWidth, mapHeight);
 
 	//Projenction
@@ -234,60 +234,64 @@ void DrawScene() {
 	glOrtho(-mapWidth * 3, mapWidth * 3, -mapHeight * 3, mapHeight * 3, 0.0, 1000.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glPushMatrix();
-
-	vec3 camPos = objList[1]->GetPos();
-
-	glRotatef(90, 1, 0, 0);
-	glTranslatef(-camPos.x, -700, -camPos.z);
-
-	float mapLightPos[4] = { 0,1,0,0 };
-	glLightfv(GL_LIGHT0, GL_POSITION, mapLightPos);
 
 	glPushMatrix();
 	{
-		glTranslatef(0, -10, 0);
-		glRotatef(-90, 1, 0, 0);
-		glColor3f(0, 0, 0);
-		glRectf(-6000, -6000, 6000, 6000);
+		// 플레이어 위치
+		vec3 camPos = objList[1]->GetPos();
+
+		glRotatef(90, 1, 0, 0);
+		glTranslatef(-camPos.x, -700, -camPos.z);
+
+		float mapLightPos[4] = { 0,1,0,0 };
+		glLightfv(GL_LIGHT0, GL_POSITION, mapLightPos);
+
+		// 검은 배경
+		glPushMatrix();
+		{
+			glTranslatef(0, -10, 0);
+			glRotatef(-90, 1, 0, 0);
+			glColor3f(0, 0, 0);
+			glRectf(-6000, -6000, 6000, 6000);
+		}
+		glPopMatrix();
+
+		StageManager* stm = StageManager::Instance();
+		stm->Render();
+
+		// 플레이어 마크 그리기
+		glPushMatrix();
+		{
+			float mat[16];
+			vec3 dir, unit(0, 0, -1);
+			objList[1]->GetMatrix(mat);
+			dir = unit.MultMatrix(mat);
+
+			dir.y = 0;
+			dir.Normalize();
+
+			glTranslatef(camPos.x, 500, camPos.z);
+			if (dir.x < 0)
+			{
+				glRotatef(acosf(dir.Dot(unit)) * 180 / 3.14, 0, 1, 0);
+			}
+			else
+			{
+				glRotatef(-acosf(dir.Dot(unit)) * 180 / 3.14, 0, 1, 0);
+			}
+			glColor3f(1, 0.0, 0.0);
+			glNormal3f(0, 1, 0);
+			glBegin(GL_POLYGON);
+			{
+				glVertex3f(0, 0, -30);
+				glVertex3f(-30, 0, 30);
+				glVertex3f(0, 0, 15);
+				glVertex3f(30, 0, 30);
+			}
+			glEnd();
+		}
+		glPopMatrix();
 	}
-	glPopMatrix();
-
-	stm = StageManager::Instance();
-	stm->Render();
-
-	glPushMatrix();
-	{
-		float mat[16];
-		vec3 dir, unit(0, 0, -1);
-		objList[1]->GetMatrix(mat);
-		dir = unit.MultMatrix(mat);
-
-		dir.y = 0;
-		dir.Normalize();
-
-		glTranslatef(camPos.x, 500, camPos.z);
-		if (dir.x < 0)
-		{
-			glRotatef(acosf(dir.Dot(unit)) * 180 / 3.14, 0, 1, 0);
-		}
-		else
-		{
-			glRotatef(-acosf(dir.Dot(unit)) * 180 / 3.14, 0, 1, 0);
-		}
-		glColor3f(1, 0.0, 0.0);
-		glNormal3f(0, 1, 0);
-		glBegin(GL_POLYGON);
-		{
-			glVertex3f(0, 0, -30);
-			glVertex3f(-30, 0, 30);
-			glVertex3f(0, 0, 15);
-			glVertex3f(30, 0, 30);
-		}
-		glEnd();
-	}
-	glPopMatrix();
-
 	glPopMatrix();
 
 	glutSwapBuffers();
