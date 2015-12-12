@@ -26,6 +26,9 @@ public:
 
 	virtual void CameraTransform() { }
 
+	void SetAlive(bool alive) { isAlive = alive; }
+	bool GetAlive() { return isAlive; }
+
 	friend class Patrol;
 	friend class Trace;
 };
@@ -61,6 +64,8 @@ public:
 	void SetDirection(vec3&);
 
 	void Polling();
+
+	virtual bool CollisionCheck(const CubeObject* obj);
 
 	friend class Patrol;
 	friend class Trace;

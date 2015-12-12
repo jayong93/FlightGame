@@ -166,9 +166,7 @@ int main() {
 	Camera.SetTarget((Player*)objList.back());
 
 	StageManager* stm = StageManager::Instance();
-	stm->Init();
-	objList.push_back(new Drone((Unit*)objList[1], vec3(0, 5, 0), 12.5f));
-	objList.back()->SetDes();
+	stm->Init((Unit*)objList[1]);
 
 	t3dInit();
 
@@ -295,10 +293,14 @@ void DrawScene() {
 		// 드론 마크 그리기
 		glPushMatrix();
 		{
-			vec3 dronePos = objList.back()->GetPos();
-			glTranslatef(dronePos.x, 500, dronePos.z);
-			glColor3f(1, 1, 1);
-			glutSolidSphere(30, 30, 30);
+			StageManager* stm = StageManager::Instance();
+			std::vector<Drone*>* dronelist = stm->GetDroneList();
+			for (int i = 0; i < dronelist->size(); ++i) {
+				vec3 dronePos = (*dronelist)[i]->GetPos();
+				glTranslatef(dronePos.x, 500, dronePos.z);
+				glColor3f(1, 1, 1);
+				glutSolidSphere(30, 30, 30);
+			}
 		}
 		glPopMatrix();
 	}
@@ -321,7 +323,10 @@ void TimerFunction(int value) {
 	sm->Update(frameTime);
 
 	for (int i = 0; i < objList.size(); ++i) objList[i]->Update(frameTime);
+	//	지울 코드
 	sm->CollisionCheck((Player*)objList[1]);
+	bm->CollisionCheck((Player*)objList[1]);
+
 
 	glutTimerFunc(16, TimerFunction, 1);
 	glutPostRedisplay();
