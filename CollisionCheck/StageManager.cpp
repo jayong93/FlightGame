@@ -66,7 +66,7 @@ float heuristic_cost_estimate(int sdx, int ddx) {
 
 StageManager* StageManager::instance = nullptr;
 
-StageManager::StageManager() {
+StageManager::StageManager() :carTimer(0.0f) {
 	quadTree[0].isLeafNode = false;
 	quadTree[0].pObjectList.shrink_to_fit();
 	quadTree[0].vPoint1 = vec3(-6000.0f, 0.0f, -6000.0f);
@@ -246,6 +246,13 @@ void StageManager::Init(Unit* target)
 	//	드론 생성
 	droneList.push_back(new Drone(target, vec3(0, 3.0f, 500.0f), 12.5f));
 	droneList.back()->SetDes();
+	for (int i = 0; i < 2; ++i) {
+		carList.push_back(new Car(vec3(-3000.0f, 3.0f, -3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(-3000.0f, 3.0f, 3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(0.0f, 3.0f, 0.0f), 1.0f));
+		carList.push_back(new Car(vec3(3000.0f, 3.0f, -3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(3000.0f, 3.0f, 3000.0f), 1.0f));
+	}
 }
 
 void StageManager::Restart(Unit* target)
@@ -265,6 +272,7 @@ void StageManager::Render()
 	for (auto& d : droneList) d->Render();
 	for (auto& e : effectList) e->Render();
 	for (auto& road : roadList) road->Render();
+	for (auto& c : carList) c->Render();
 
 	//int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
 
@@ -300,9 +308,19 @@ void StageManager::Update(float frameTime)
 	for (auto& r : ringList) r->Update(frameTime);
 	for (auto& d : droneList) d->Update(frameTime);
 	for (auto& e : effectList) e->Update(frameTime);
+	for (auto& c : carList) c->Update(frameTime);
 	for (auto i = effectList.begin(); i != effectList.end(); ) {
 		if (!(*i)->GetAlive()) i = effectList.erase(i);
 		else ++i;
+	}
+	carTimer += frameTime;
+	if (carTimer > 0.5f && carList.size()<100) {
+		carList.push_back(new Car(vec3(-3000.0f, 3.0f, -3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(-3000.0f, 3.0f, 3000.0f), 1.0f)); 
+		carList.push_back(new Car(vec3(0.0f, 3.0f, 0.0f), 1.0f));
+		carList.push_back(new Car(vec3(3000.0f, 3.0f, -3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(3000.0f, 3.0f, 3000.0f), 1.0f));
+		carTimer = 0.0f; 
 	}
 }
 

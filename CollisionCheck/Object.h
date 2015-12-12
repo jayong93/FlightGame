@@ -73,3 +73,17 @@ public:
 	void SetColor(float, float, float);
 	void Render();
 };
+
+class Car : public Object {
+	vec3 color;
+	vec3 velocity;
+	Node desNode;
+	float car_size;
+public:
+	Car(vec3&, float);
+	void Render();
+	void SetDes(int row, int col);
+	void SetDirection(vec3 & v);
+	void Update(float frameTime);
+	void SetDes();
+};
