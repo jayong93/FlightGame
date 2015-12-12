@@ -16,6 +16,7 @@ public:
 	virtual void Rotate(float, float, float);
 	virtual void Update(float frameTime);
 	float GetHp() const { return hp; }
+	float GetMana() const { return mana; }
 	bool ColiisionCheck_Ring(const Ring * ring);
 	bool CollisionCheck_Building();
 	bool CollisionCheck_Drone(Drone* drone);
@@ -24,8 +25,9 @@ public:
 private:
 	vec3 direction;
 	bool isBoost, isStelth;
-	float boostTimer, stelthTimer, alpha, mana, hp;
+	float boostTimer, stelthTimer, alpha, mana;
 	float fireTimer;
+	mutable float hp;
 };
 
 class PlayerBody : public CubeObject
