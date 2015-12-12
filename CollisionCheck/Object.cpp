@@ -1,5 +1,6 @@
 #include "Object.h"
 #include "std.h"
+#include "StageManager.h"
 
 
 float DotProduct(const vec3& v1, const vec3& v2) { return (v1.x*v2.x + v1.y*v2.y + v1.z*v2.z); }
@@ -313,4 +314,105 @@ void Building::Render()
 	glScalef(2 * extent.x, 2 * extent.y, 2 * extent.z);
 	glutSolidCube(1.0f);
 	glPopMatrix();
+}
+
+Car::Car(vec3& pos, float boundingRadius) : Object::Object(pos, boundingRadius)
+, color((rand() % 9) / 10.0f + 0.1f, (rand() % 9) / 10.0f + 0.1f, (rand() % 9) / 10.0f + 0.1f), car_size(rand()%10 + 5.0f)
+{
+	SetDes();
+}
+
+void Car::Render()
+{
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glMultMatrixf(matrix);
+
+	const float wheel_radius = 1.0f;
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glTranslatef(0.0f, wheel_radius, 0.0f);
+	glColor3f(color.x, color.y, color.z);
+	glutSolidCube(car_size);
+
+	glTranslatef(0.0f, -(car_size / 2.0f + wheel_radius), 0.0f);
+
+	glColor3f(0.3f, 0.3f, 0.3f);
+	glPushMatrix();
+	glTranslatef(-car_size / 4.0f, 0.0f, -car_size / 4.0f);
+	glutSolidSphere(wheel_radius, 16, 16);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(car_size / 4.0f, 0.0f, -car_size / 4.0f);
+	glutSolidSphere(wheel_radius, 16, 16);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(car_size / 4.0f, 0.0f, car_size / 4.0f);
+	glutSolidSphere(wheel_radius, 16, 16);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(-car_size / 4.0f, 0.0f, car_size / 4.0f);
+	glutSolidSphere(wheel_radius, 16, 16);
+	glPopMatrix();
+
+	glPopMatrix();
+	glPopMatrix();
+}
+
+void Car::SetDes(int row, int col)
+{
+	desNode.row = row; desNode.col = col;
+	velocity.x = (desNode.col*387.1f - 6000.0f) - position.x;
+	velocity.y = 0.0f;
+	velocity.z = (desNode.row*387.1f - 6000.0f) - position.z;
+	velocity.Normalize();
+}
+
+void Car::SetDirection(vec3 & v)
+{
+	vec3 unit(0, 0, 1);
+	vec3 yv(v.x, 0, v.z);
+	vec3 xv(0, v.y, sqrt(v.x*v.x + v.z*v.z));
+
+	yv.Normalize(); xv.Normalize();
+	yaw = acosf(unit.Dot(yv)) / 3.14f * 180.0f;
+	pitch = -acosf(unit.Dot(xv)) / 3.14f * 180.0f;
+	if (v.x < 0)
+	{
+		yaw *= -1;
+	}
+	if (v.y < 0)
+	{
+		pitch *= -1;
+	}
+	this->Object::GenMatrix();
+}
+
+
+void Car::Update(float frameTime)
+{
+	Move(velocity*(100 * frameTime));
+	if (sqrt(((desNode.col * 387.1f - 6000.0f) - position.x)*((desNode.col * 387.1f - 6000.0f) - position.x)
+		+ ((desNode.row * 387.1f - 6000.0f) - position.z)*((desNode.row * 387.1f - 6000.0f) - position.z)) < 10.0f) {
+		StageManager* stm = StageManager::Instance();
+		Node c = desNode;
+		unsigned char data = stm->GetNodeDate(c.row, c.col);
+		int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
+		int n = rand() % 8;
+		while (!(data & (1 << n))) { n = ++n % 8; }
+		Car::SetDes(c.row + d[n][1], c.col + d[n][0]);
+		SetDirection(velocity);
+	}
+}
+
+void Car::SetDes()
+{
+	StageManager* stm = StageManager::Instance();
+	desNode = stm->GetNearestNode(position.x, position.z);
+	velocity.x = (desNode.col*387.1f - 6000.0f) - position.x;
+	velocity.y = 0.0f;
+	velocity.z = (desNode.row*387.1f - 6000.0f) - position.z;
+	velocity.Normalize();
+	SetDirection(velocity);
 }
