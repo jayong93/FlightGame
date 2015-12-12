@@ -39,6 +39,8 @@ Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx) :CubeObject::CubeObject(ext,
 
 	velocity = vec3(matrix[8], matrix[9], matrix[10]);
 	velocity.Normalize();
+
+	position = position + (velocity * 10);
 }
 
 Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir) : CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(1000.0f), speedRate(2.0f)
@@ -77,6 +79,10 @@ void Bullet::Render()
 
 void Bullet::SetAlive(bool alive)
 {
+	if (!alive) {
+		StageManager* stm = StageManager::Instance();
+		stm->CallEffenct(EFFECT::SPARK, position, vec3(1.0f, (rand() % 5) / 10.0f + 0.1f, 0.3f));
+	}
 	isAlive = alive;
 }
 
@@ -86,7 +92,7 @@ void Bullet::Update(float frameTime)
 		vec3 d = target->GetPos() - position;
 		float distance = d.GetSize();
 		d.Normalize();
-		if (distance > 30.0f && DotProduct(d, velocity)>0 && !target->GetIsStelth()) {
+		if (distance > 50.0f && DotProduct(d, velocity)>0 && !target->GetIsStelth()) {
 			velocity = target->GetPos() - position;
 			velocity.Normalize();
 			vec3 unit(0, 0, 1);
@@ -122,7 +128,6 @@ void Bullet::CollisionCheck_Building()
 	StageManager* stm = StageManager::Instance();
 	std::vector<std::vector<Building>*> buildingList = stm->GetBuildingList(position.x, position.z, boundingRad);
 	for (int n = 0; n < buildingList.size(); ++n) {
-
 		for (int i = 0; i < buildingList[n]->size(); ++i) {
 			if (CubeObject::CollisionCheck(&(*buildingList[n])[i])) isAlive = false;
 		}
