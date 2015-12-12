@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "std.h"
 #include "InputManager.h"
+#include "Ring.h"
 
 Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), direction(0, 0, -1), isBoost(false), isStelth(false), boostTimer(-1), stelthTimer(-1), alpha(1), mana(100), fireTimer(-1)
 {
@@ -16,15 +17,29 @@ Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), di
 	velocity = vec3(0, 0, 0);
 }
 
-bool Player::ColiisionCheck(const Object & obj)
+bool Player::ColiisionCheck(const Object* obj) const
 {
-	//if (Object::CollisionCheck(obj))
-	//{
-	//	for (auto& c : cubeList)
-	//	{
-	//		c->CollisionCheck(obj);
-	//	}
-	//}
+	if (Object::CollisionCheck(obj))
+	{
+		for (auto& c : cubeList)
+		{
+			if (obj->CollisionCheck(c))
+				return true;
+		}
+	}
+	return false;
+}
+
+bool Player::ColiisionCheck_Ring(const Ring* ring) const
+{
+	if (Object::CollisionCheck(ring))
+	{
+		for (auto& c : cubeList)
+		{
+			if (ring->CollisionCheck(c))
+				return true;
+		}
+	}
 	return false;
 }
 
@@ -284,11 +299,10 @@ void Player::Update(float frameTime)
 	glLoadIdentity();
 	float speed = velocity.GetSize();
 	float* fov = GetFovValue();
-	*fov = 60 + (30 / 420.0 * speed);
+	*fov = 60 + (40 / 420.0 * speed);
 	glMatrixMode(GL_MODELVIEW);
 
 	this->Move(velocity*frameTime);
-	printf("x: %f, y: %f, z: %f\n", position.x, position.y, position.z);
 }
 
 PlayerBody::PlayerBody(const vec3& oPos, const vec3& rPos) : CubeObject(vec3(2, 1.25, 7), oPos + rPos, 7, 0, 0, 0), relativePos(rPos)

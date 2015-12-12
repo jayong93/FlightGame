@@ -119,7 +119,7 @@ void Bullet::CollisionCheck_Building()
 	for (int n = 0; n < buildingList.size(); ++n) {
 
 		for (int i = 0; i < buildingList[n]->size(); ++i) {
-			if (CubeObject::CollisionCheck((*buildingList[n])[i])) isAlive = false;
+			if (CubeObject::CollisionCheck(&(*buildingList[n])[i])) isAlive = false;
 		}
 	}
 }
