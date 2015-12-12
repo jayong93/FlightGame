@@ -246,6 +246,10 @@ void StageManager::Init(Unit* target)
 	//	드론 생성
 	droneList.push_back(new Drone(target, vec3(0, 3.0f, 500.0f), 12.5f));
 	droneList.back()->SetDes();
+	droneList.push_back(new Drone(target, vec3(-4000.0f, 500.0f, 500.0f), 12.5f));
+	droneList.back()->SetDes();
+	droneList.push_back(new Drone(target, vec3(3000.0f, 100.0f, 4000.0f), 12.5f));
+	droneList.back()->SetDes();
 	for (int i = 0; i < 2; ++i) {
 		carList.push_back(new Car(vec3(-3000.0f, 3.0f, -3000.0f), 1.0f));
 		carList.push_back(new Car(vec3(-3000.0f, 3.0f, 3000.0f), 1.0f));
