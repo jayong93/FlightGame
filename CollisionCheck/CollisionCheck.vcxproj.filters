@@ -51,6 +51,12 @@
     <ClCompile Include="AIState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Ring.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+>>>>>>> refs/remotes/origin/JaeYong
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object.h">
@@ -84,6 +90,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Ring.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

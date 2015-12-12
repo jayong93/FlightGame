@@ -11,6 +11,7 @@ class StageManager {
 	float mapW, mapH;
 
 	std::vector<Building> buildingList;
+	std::vector<Object*> objectList;
 
 	StageManager();
 public:
@@ -24,6 +25,11 @@ public:
 
 	void Render();
 
+<<<<<<< HEAD
+=======
+	void Update(float frameTime);
+
+>>>>>>> refs/remotes/origin/JaeYong
 	Node& GetNearestNode(float x, float z);
 
 	Node& GetNearestNode(float x, float z, Node& des);

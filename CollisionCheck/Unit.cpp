@@ -126,9 +126,12 @@ void Drone::Shot() {
 	glLoadIdentity();
 
 	glTranslatef(position.x, position.y, position.z);
-	glRotatef(pitch, 1.0f, 0.0f, 0.0f);
-	glRotatef(yaw, 0.0f, 1.0f, 0.0f);
 	glRotatef(roll, 0.0f, 0.0f, 1.0f);
+<<<<<<< HEAD
+=======
+	glRotatef(yaw, 0.0f, 1.0f, 0.0f);
+	glRotatef(pitch, 1.0f, 0.0f, 0.0f);
+>>>>>>> refs/remotes/origin/JaeYong
 	glTranslatef(-boundingRad + 3.0f, 0.0f, boundingRad);
 	glGetFloatv(GL_MODELVIEW_MATRIX, bulletmtx);
 	arm.Shot(false, bulletmtx);
@@ -141,9 +144,12 @@ void Drone::Shot() {
 	glLoadIdentity();
 
 	glTranslatef(position.x, position.y, position.z);
-	glRotatef(pitch, 1.0f, 0.0f, 0.0f);
-	glRotatef(yaw, 0.0f, 1.0f, 0.0f);
 	glRotatef(roll, 0.0f, 0.0f, 1.0f);
+<<<<<<< HEAD
+=======
+	glRotatef(yaw, 0.0f, 1.0f, 0.0f);
+	glRotatef(pitch, 1.0f, 0.0f, 0.0f);
+>>>>>>> refs/remotes/origin/JaeYong
 	glTranslatef(boundingRad - 3.0f, 0.0f, boundingRad);
 	glGetFloatv(GL_MODELVIEW_MATRIX, bulletmtx);
 	arm.Shot(false, bulletmtx);
@@ -190,12 +196,21 @@ void Drone::SetDirection(vec3 & v)
 	}
 	//printf("Pitch : %f, Yaw : %f\n", pitch, yaw);
 	this->Object::GenMatrix();
+<<<<<<< HEAD
 }
 
 TempTarget::TempTarget(vec3 & pos, float rad, float p, float y, float r) : Unit(pos, rad, p, y, r)
 {
 }
 
+=======
+}
+
+TempTarget::TempTarget(vec3 & pos, float rad, float p, float y, float r) : Unit(pos, rad, p, y, r)
+{
+}
+
+>>>>>>> refs/remotes/origin/JaeYong
 void TempTarget::Render()
 {
 	glMatrixMode(GL_MODELVIEW);

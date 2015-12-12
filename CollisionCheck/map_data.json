@@ -1,7 +1,11 @@
 {
     "data": [
         {
+<<<<<<< HEAD
             "d": 212,
+=======
+            "d": 207,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -9,7 +13,11 @@
             "y": 916
         },
         {
+<<<<<<< HEAD
             "d": 260,
+=======
+            "d": 208,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -17,7 +25,11 @@
             "y": 791
         },
         {
+<<<<<<< HEAD
             "d": 131,
+=======
+            "d": 317,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -25,7 +37,11 @@
             "y": 869
         },
         {
+<<<<<<< HEAD
             "d": 291,
+=======
+            "d": 100,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -33,7 +49,11 @@
             "y": 1384
         },
         {
+<<<<<<< HEAD
             "d": 242,
+=======
+            "d": 140,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -41,7 +61,11 @@
             "y": 1774
         },
         {
+<<<<<<< HEAD
             "d": 165,
+=======
+            "d": 271,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -49,7 +73,11 @@
             "y": 2023
         },
         {
+<<<<<<< HEAD
             "d": 257,
+=======
+            "d": 149,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -57,7 +85,11 @@
             "y": 1680
         },
         {
+<<<<<<< HEAD
             "d": 244,
+=======
+            "d": 128,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -65,7 +97,11 @@
             "y": 2117
         },
         {
+<<<<<<< HEAD
             "d": 125,
+=======
+            "d": 323,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -73,7 +109,11 @@
             "y": 1087
         },
         {
+<<<<<<< HEAD
             "d": 240,
+=======
+            "d": 345,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -81,7 +121,11 @@
             "y": 1290
         },
         {
+<<<<<<< HEAD
             "d": 218,
+=======
+            "d": 147,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -89,7 +133,11 @@
             "y": 1602
         },
         {
+<<<<<<< HEAD
             "d": 293,
+=======
+            "d": 242,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -97,7 +145,11 @@
             "y": 1883
         },
         {
+<<<<<<< HEAD
             "d": 188,
+=======
+            "d": 121,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -105,7 +157,11 @@
             "y": 2273
         },
         {
+<<<<<<< HEAD
             "d": 241,
+=======
+            "d": 121,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -113,7 +169,11 @@
             "y": 2601
         },
         {
+<<<<<<< HEAD
             "d": 212,
+=======
+            "d": 249,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -121,7 +181,11 @@
             "y": 3178
         },
         {
+<<<<<<< HEAD
             "d": 331,
+=======
+            "d": 145,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -129,7 +193,11 @@
             "y": 2788
         },
         {
+<<<<<<< HEAD
             "d": 349,
+=======
+            "d": 342,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -137,7 +205,11 @@
             "y": 2398
         },
         {
+<<<<<<< HEAD
             "d": 251,
+=======
+            "d": 206,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -145,7 +217,11 @@
             "y": 1743
         },
         {
+<<<<<<< HEAD
             "d": 236,
+=======
+            "d": 104,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -153,7 +229,11 @@
             "y": 1883
         },
         {
+<<<<<<< HEAD
             "d": 337,
+=======
+            "d": 171,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -161,7 +241,11 @@
             "y": 1914
         },
         {
+<<<<<<< HEAD
             "d": 322,
+=======
+            "d": 210,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -169,7 +253,11 @@
             "y": 1945
         },
         {
+<<<<<<< HEAD
             "d": 168,
+=======
+            "d": 113,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -177,7 +265,11 @@
             "y": 1899
         },
         {
+<<<<<<< HEAD
             "d": 261,
+=======
+            "d": 125,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -185,7 +277,11 @@
             "y": 2601
         },
         {
+<<<<<<< HEAD
             "d": 347,
+=======
+            "d": 113,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -193,7 +289,11 @@
             "y": 2585
         },
         {
+<<<<<<< HEAD
             "d": 250,
+=======
+            "d": 332,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -201,7 +301,11 @@
             "y": 2881
         },
         {
+<<<<<<< HEAD
             "d": 220,
+=======
+            "d": 188,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -209,7 +313,11 @@
             "y": 3022
         },
         {
+<<<<<<< HEAD
             "d": 186,
+=======
+            "d": 350,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -217,7 +325,11 @@
             "y": 2975
         },
         {
+<<<<<<< HEAD
             "d": 301,
+=======
+            "d": 241,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -225,7 +337,11 @@
             "y": 3162
         },
         {
+<<<<<<< HEAD
             "d": 261,
+=======
+            "d": 214,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -233,7 +349,11 @@
             "y": 3162
         },
         {
+<<<<<<< HEAD
             "d": 184,
+=======
+            "d": 266,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -241,7 +361,11 @@
             "y": 3802
         },
         {
+<<<<<<< HEAD
             "d": 228,
+=======
+            "d": 318,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -249,7 +373,11 @@
             "y": 3739
         },
         {
+<<<<<<< HEAD
             "d": 219,
+=======
+            "d": 152,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -257,7 +385,11 @@
             "y": 4441
         },
         {
+<<<<<<< HEAD
             "d": 331,
+=======
+            "d": 131,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -265,7 +397,11 @@
             "y": 4363
         },
         {
+<<<<<<< HEAD
             "d": 217,
+=======
+            "d": 121,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -273,7 +409,11 @@
             "y": 4301
         },
         {
+<<<<<<< HEAD
             "d": 166,
+=======
+            "d": 240,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -281,7 +421,11 @@
             "y": 4239
         },
         {
+<<<<<<< HEAD
             "d": 107,
+=======
+            "d": 278,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -289,7 +433,11 @@
             "y": 4114
         },
         {
+<<<<<<< HEAD
             "d": 328,
+=======
+            "d": 214,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -297,7 +445,11 @@
             "y": 4067
         },
         {
+<<<<<<< HEAD
             "d": 293,
+=======
+            "d": 243,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -305,7 +457,11 @@
             "y": 4894
         },
         {
+<<<<<<< HEAD
             "d": 165,
+=======
+            "d": 302,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -313,7 +469,11 @@
             "y": 4800
         },
         {
+<<<<<<< HEAD
             "d": 195,
+=======
+            "d": 307,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -321,7 +481,11 @@
             "y": 4878
         },
         {
+<<<<<<< HEAD
             "d": 138,
+=======
+            "d": 270,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -329,7 +493,11 @@
             "y": 4894
         },
         {
+<<<<<<< HEAD
             "d": 263,
+=======
+            "d": 118,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -337,7 +505,11 @@
             "y": 5237
         },
         {
+<<<<<<< HEAD
             "d": 118,
+=======
+            "d": 326,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -345,7 +517,11 @@
             "y": 5253
         },
         {
+<<<<<<< HEAD
             "d": 220,
+=======
+            "d": 190,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -353,7 +529,11 @@
             "y": 4769
         },
         {
+<<<<<<< HEAD
             "d": 194,
+=======
+            "d": 198,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -361,7 +541,11 @@
             "y": 4800
         },
         {
+<<<<<<< HEAD
             "d": 228,
+=======
+            "d": 212,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -369,7 +553,11 @@
             "y": 4769
         },
         {
+<<<<<<< HEAD
             "d": 205,
+=======
+            "d": 326,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -377,7 +565,11 @@
             "y": 4769
         },
         {
+<<<<<<< HEAD
             "d": 190,
+=======
+            "d": 137,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -385,7 +577,11 @@
             "y": 4816
         },
         {
+<<<<<<< HEAD
             "d": 328,
+=======
+            "d": 154,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -393,7 +589,11 @@
             "y": 5050
         },
         {
+<<<<<<< HEAD
             "d": 189,
+=======
+            "d": 270,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -401,7 +601,11 @@
             "y": 5065
         },
         {
+<<<<<<< HEAD
             "d": 299,
+=======
+            "d": 291,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -409,7 +613,11 @@
             "y": 5050
         },
         {
+<<<<<<< HEAD
             "d": 103,
+=======
+            "d": 132,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -417,7 +625,11 @@
             "y": 5050
         },
         {
+<<<<<<< HEAD
             "d": 239,
+=======
+            "d": 328,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -425,7 +637,11 @@
             "y": 5253
         },
         {
+<<<<<<< HEAD
             "d": 319,
+=======
+            "d": 247,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -433,7 +649,11 @@
             "y": 5315
         },
         {
+<<<<<<< HEAD
             "d": 196,
+=======
+            "d": 234,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -441,7 +661,11 @@
             "y": 5268
         },
         {
+<<<<<<< HEAD
             "d": 155,
+=======
+            "d": 160,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -449,7 +673,11 @@
             "y": 5268
         },
         {
+<<<<<<< HEAD
             "d": 238,
+=======
+            "d": 252,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -457,7 +685,11 @@
             "y": 5268
         },
         {
+<<<<<<< HEAD
             "d": 281,
+=======
+            "d": 106,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -465,7 +697,11 @@
             "y": 6532
         },
         {
+<<<<<<< HEAD
             "d": 115,
+=======
+            "d": 137,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -473,7 +709,11 @@
             "y": 6423
         },
         {
+<<<<<<< HEAD
             "d": 209,
+=======
+            "d": 104,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -481,7 +721,11 @@
             "y": 6282
         },
         {
+<<<<<<< HEAD
             "d": 257,
+=======
+            "d": 121,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -489,7 +733,11 @@
             "y": 6204
         },
         {
+<<<<<<< HEAD
             "d": 339,
+=======
+            "d": 140,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -497,7 +745,11 @@
             "y": 6345
         },
         {
+<<<<<<< HEAD
             "d": 105,
+=======
+            "d": 121,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -505,7 +757,11 @@
             "y": 6547
         },
         {
+<<<<<<< HEAD
             "d": 188,
+=======
+            "d": 119,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -513,7 +769,11 @@
             "y": 6859
         },
         {
+<<<<<<< HEAD
             "d": 218,
+=======
+            "d": 227,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -521,7 +781,11 @@
             "y": 7093
         },
         {
+<<<<<<< HEAD
             "d": 290,
+=======
+            "d": 273,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -529,7 +793,11 @@
             "y": 7468
         },
         {
+<<<<<<< HEAD
             "d": 166,
+=======
+            "d": 187,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -537,7 +805,11 @@
             "y": 7312
         },
         {
+<<<<<<< HEAD
             "d": 189,
+=======
+            "d": 331,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -545,7 +817,11 @@
             "y": 7109
         },
         {
+<<<<<<< HEAD
             "d": 118,
+=======
+            "d": 193,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -553,7 +829,11 @@
             "y": 7000
         },
         {
+<<<<<<< HEAD
             "d": 287,
+=======
+            "d": 309,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -561,7 +841,11 @@
             "y": 8045
         },
         {
+<<<<<<< HEAD
             "d": 220,
+=======
+            "d": 142,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -569,7 +853,11 @@
             "y": 8295
         },
         {
+<<<<<<< HEAD
             "d": 294,
+=======
+            "d": 142,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -577,7 +865,11 @@
             "y": 8419
         },
         {
+<<<<<<< HEAD
             "d": 269,
+=======
+            "d": 140,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -585,7 +877,11 @@
             "y": 8263
         },
         {
+<<<<<<< HEAD
             "d": 167,
+=======
+            "d": 163,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -593,7 +889,11 @@
             "y": 8092
         },
         {
+<<<<<<< HEAD
             "d": 341,
+=======
+            "d": 162,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -601,7 +901,11 @@
             "y": 7889
         },
         {
+<<<<<<< HEAD
             "d": 193,
+=======
+            "d": 290,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -609,7 +913,11 @@
             "y": 7561
         },
         {
+<<<<<<< HEAD
             "d": 105,
+=======
+            "d": 168,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -617,7 +925,11 @@
             "y": 7296
         },
         {
+<<<<<<< HEAD
             "d": 115,
+=======
+            "d": 275,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -625,7 +937,11 @@
             "y": 7717
         },
         {
+<<<<<<< HEAD
             "d": 217,
+=======
+            "d": 255,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -633,7 +949,11 @@
             "y": 7546
         },
         {
+<<<<<<< HEAD
             "d": 172,
+=======
+            "d": 217,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -641,7 +961,11 @@
             "y": 7125
         },
         {
+<<<<<<< HEAD
             "d": 268,
+=======
+            "d": 197,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -649,7 +973,11 @@
             "y": 6844
         },
         {
+<<<<<<< HEAD
             "d": 106,
+=======
+            "d": 112,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -657,7 +985,11 @@
             "y": 6735
         },
         {
+<<<<<<< HEAD
             "d": 239,
+=======
+            "d": 349,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -665,7 +997,11 @@
             "y": 6563
         },
         {
+<<<<<<< HEAD
             "d": 144,
+=======
+            "d": 347,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -673,7 +1009,11 @@
             "y": 6282
         },
         {
+<<<<<<< HEAD
             "d": 175,
+=======
+            "d": 216,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -681,7 +1021,11 @@
             "y": 6017
         },
         {
+<<<<<<< HEAD
             "d": 221,
+=======
+            "d": 136,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -689,7 +1033,11 @@
             "y": 5830
         },
         {
+<<<<<<< HEAD
             "d": 180,
+=======
+            "d": 125,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -697,7 +1045,11 @@
             "y": 5970
         },
         {
+<<<<<<< HEAD
             "d": 349,
+=======
+            "d": 154,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -705,7 +1057,11 @@
             "y": 5752
         },
         {
+<<<<<<< HEAD
             "d": 228,
+=======
+            "d": 248,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -713,7 +1069,11 @@
             "y": 6033
         },
         {
+<<<<<<< HEAD
             "d": 120,
+=======
+            "d": 304,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -721,7 +1081,11 @@
             "y": 7343
         },
         {
+<<<<<<< HEAD
             "d": 188,
+=======
+            "d": 120,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -729,7 +1093,11 @@
             "y": 7125
         },
         {
+<<<<<<< HEAD
             "d": 347,
+=======
+            "d": 164,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -737,7 +1105,11 @@
             "y": 7093
         },
         {
+<<<<<<< HEAD
             "d": 341,
+=======
+            "d": 199,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -745,7 +1117,11 @@
             "y": 6813
         },
         {
+<<<<<<< HEAD
             "d": 112,
+=======
+            "d": 313,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -753,7 +1129,11 @@
             "y": 6688
         },
         {
+<<<<<<< HEAD
             "d": 337,
+=======
+            "d": 270,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -761,7 +1141,11 @@
             "y": 6469
         },
         {
+<<<<<<< HEAD
             "d": 109,
+=======
+            "d": 106,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -769,7 +1153,11 @@
             "y": 6329
         },
         {
+<<<<<<< HEAD
             "d": 235,
+=======
+            "d": 159,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -777,7 +1165,11 @@
             "y": 6282
         },
         {
+<<<<<<< HEAD
             "d": 347,
+=======
+            "d": 268,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -785,7 +1177,11 @@
             "y": 6469
         },
         {
+<<<<<<< HEAD
             "d": 253,
+=======
+            "d": 159,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -793,7 +1189,11 @@
             "y": 6672
         },
         {
+<<<<<<< HEAD
             "d": 139,
+=======
+            "d": 312,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -801,7 +1201,11 @@
             "y": 7951
         },
         {
+<<<<<<< HEAD
             "d": 110,
+=======
+            "d": 137,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -809,7 +1213,11 @@
             "y": 8107
         },
         {
+<<<<<<< HEAD
             "d": 193,
+=======
+            "d": 328,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -817,7 +1225,11 @@
             "y": 8014
         },
         {
+<<<<<<< HEAD
             "d": 329,
+=======
+            "d": 122,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -825,7 +1237,11 @@
             "y": 9012
         },
         {
+<<<<<<< HEAD
             "d": 101,
+=======
+            "d": 300,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -833,7 +1249,11 @@
             "y": 8809
         },
         {
+<<<<<<< HEAD
             "d": 105,
+=======
+            "d": 165,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -841,7 +1261,11 @@
             "y": 8544
         },
         {
+<<<<<<< HEAD
             "d": 302,
+=======
+            "d": 272,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -849,7 +1273,11 @@
             "y": 8310
         },
         {
+<<<<<<< HEAD
             "d": 109,
+=======
+            "d": 254,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -857,7 +1285,11 @@
             "y": 8201
         },
         {
+<<<<<<< HEAD
             "d": 150,
+=======
+            "d": 141,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -865,7 +1297,11 @@
             "y": 8497
         },
         {
+<<<<<<< HEAD
             "d": 210,
+=======
+            "d": 215,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -873,7 +1309,11 @@
             "y": 8778
         },
         {
+<<<<<<< HEAD
             "d": 207,
+=======
+            "d": 145,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -881,7 +1321,11 @@
             "y": 8965
         },
         {
+<<<<<<< HEAD
             "d": 142,
+=======
+            "d": 329,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -889,7 +1333,11 @@
             "y": 9246
         },
         {
+<<<<<<< HEAD
             "d": 146,
+=======
+            "d": 138,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -897,7 +1345,11 @@
             "y": 9543
         },
         {
+<<<<<<< HEAD
             "d": 297,
+=======
+            "d": 336,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -905,7 +1357,11 @@
             "y": 9293
         },
         {
+<<<<<<< HEAD
             "d": 315,
+=======
+            "d": 124,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -913,7 +1369,11 @@
             "y": 9215
         },
         {
+<<<<<<< HEAD
             "d": 101,
+=======
+            "d": 236,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -921,7 +1381,11 @@
             "y": 8950
         },
         {
+<<<<<<< HEAD
             "d": 347,
+=======
+            "d": 142,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -929,7 +1393,11 @@
             "y": 8731
         },
         {
+<<<<<<< HEAD
             "d": 177,
+=======
+            "d": 227,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -937,7 +1405,11 @@
             "y": 8529
         },
         {
+<<<<<<< HEAD
             "d": 202,
+=======
+            "d": 103,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -945,7 +1417,11 @@
             "y": 8685
         },
         {
+<<<<<<< HEAD
             "d": 201,
+=======
+            "d": 248,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -953,7 +1429,11 @@
             "y": 8856
         },
         {
+<<<<<<< HEAD
             "d": 154,
+=======
+            "d": 119,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -961,7 +1441,11 @@
             "y": 8997
         },
         {
+<<<<<<< HEAD
             "d": 200,
+=======
+            "d": 338,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -969,7 +1453,11 @@
             "y": 9246
         },
         {
+<<<<<<< HEAD
             "d": 289,
+=======
+            "d": 180,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -977,7 +1465,11 @@
             "y": 9449
         },
         {
+<<<<<<< HEAD
             "d": 282,
+=======
+            "d": 171,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -985,7 +1477,11 @@
             "y": 9870
         },
         {
+<<<<<<< HEAD
             "d": 118,
+=======
+            "d": 182,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -993,7 +1489,11 @@
             "y": 9917
         },
         {
+<<<<<<< HEAD
             "d": 123,
+=======
+            "d": 128,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1001,7 +1501,11 @@
             "y": 10026
         },
         {
+<<<<<<< HEAD
             "d": 324,
+=======
+            "d": 177,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1009,7 +1513,11 @@
             "y": 10510
         },
         {
+<<<<<<< HEAD
             "d": 340,
+=======
+            "d": 284,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1017,7 +1525,11 @@
             "y": 10619
         },
         {
+<<<<<<< HEAD
             "d": 129,
+=======
+            "d": 205,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1025,7 +1537,11 @@
             "y": 10759
         },
         {
+<<<<<<< HEAD
             "d": 147,
+=======
+            "d": 234,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1033,7 +1549,11 @@
             "y": 10650
         },
         {
+<<<<<<< HEAD
             "d": 230,
+=======
+            "d": 169,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1041,7 +1561,11 @@
             "y": 10479
         },
         {
+<<<<<<< HEAD
             "d": 348,
+=======
+            "d": 212,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1049,7 +1573,11 @@
             "y": 10245
         },
         {
+<<<<<<< HEAD
             "d": 214,
+=======
+            "d": 159,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1057,7 +1585,11 @@
             "y": 10947
         },
         {
+<<<<<<< HEAD
             "d": 307,
+=======
+            "d": 280,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1065,7 +1597,11 @@
             "y": 11087
         },
         {
+<<<<<<< HEAD
             "d": 321,
+=======
+            "d": 179,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1073,7 +1609,11 @@
             "y": 11337
         },
         {
+<<<<<<< HEAD
             "d": 308,
+=======
+            "d": 158,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1081,7 +1621,11 @@
             "y": 11337
         },
         {
+<<<<<<< HEAD
             "d": 271,
+=======
+            "d": 246,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1089,7 +1633,11 @@
             "y": 11087
         },
         {
+<<<<<<< HEAD
             "d": 248,
+=======
+            "d": 124,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1097,7 +1645,11 @@
             "y": 10900
         },
         {
+<<<<<<< HEAD
             "d": 306,
+=======
+            "d": 311,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1105,7 +1657,11 @@
             "y": 10697
         },
         {
+<<<<<<< HEAD
             "d": 231,
+=======
+            "d": 193,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1113,7 +1669,11 @@
             "y": 10447
         },
         {
+<<<<<<< HEAD
             "d": 163,
+=======
+            "d": 138,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1121,7 +1681,11 @@
             "y": 10151
         },
         {
+<<<<<<< HEAD
             "d": 331,
+=======
+            "d": 321,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1129,7 +1693,11 @@
             "y": 9870
         },
         {
+<<<<<<< HEAD
             "d": 111,
+=======
+            "d": 241,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1137,7 +1705,11 @@
             "y": 9621
         },
         {
+<<<<<<< HEAD
             "d": 184,
+=======
+            "d": 123,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1145,7 +1717,11 @@
             "y": 9449
         },
         {
+<<<<<<< HEAD
             "d": 130,
+=======
+            "d": 267,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1153,7 +1729,11 @@
             "y": 9402
         },
         {
+<<<<<<< HEAD
             "d": 307,
+=======
+            "d": 348,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1161,7 +1741,11 @@
             "y": 9527
         },
         {
+<<<<<<< HEAD
             "d": 293,
+=======
+            "d": 199,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1169,7 +1753,11 @@
             "y": 9745
         },
         {
+<<<<<<< HEAD
             "d": 225,
+=======
+            "d": 101,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1177,7 +1765,11 @@
             "y": 9933
         },
         {
+<<<<<<< HEAD
             "d": 142,
+=======
+            "d": 140,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1185,7 +1777,11 @@
             "y": 9184
         },
         {
+<<<<<<< HEAD
             "d": 227,
+=======
+            "d": 271,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1193,7 +1789,11 @@
             "y": 8934
         },
         {
+<<<<<<< HEAD
             "d": 146,
+=======
+            "d": 309,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1201,7 +1801,11 @@
             "y": 8700
         },
         {
+<<<<<<< HEAD
             "d": 108,
+=======
+            "d": 242,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1209,7 +1813,11 @@
             "y": 8419
         },
         {
+<<<<<<< HEAD
             "d": 250,
+=======
+            "d": 300,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1217,7 +1825,11 @@
             "y": 8092
         },
         {
+<<<<<<< HEAD
             "d": 238,
+=======
+            "d": 181,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1225,7 +1837,11 @@
             "y": 7795
         },
         {
+<<<<<<< HEAD
             "d": 312,
+=======
+            "d": 272,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1233,7 +1849,11 @@
             "y": 7593
         },
         {
+<<<<<<< HEAD
             "d": 255,
+=======
+            "d": 254,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1241,7 +1861,11 @@
             "y": 7468
         },
         {
+<<<<<<< HEAD
             "d": 311,
+=======
+            "d": 113,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1249,7 +1873,11 @@
             "y": 7405
         },
         {
+<<<<<<< HEAD
             "d": 323,
+=======
+            "d": 175,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1257,7 +1885,11 @@
             "y": 7296
         },
         {
+<<<<<<< HEAD
             "d": 161,
+=======
+            "d": 162,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1265,7 +1897,11 @@
             "y": 7296
         },
         {
+<<<<<<< HEAD
             "d": 160,
+=======
+            "d": 232,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1273,7 +1909,11 @@
             "y": 7249
         },
         {
+<<<<<<< HEAD
             "d": 134,
+=======
+            "d": 100,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1281,7 +1921,11 @@
             "y": 7608
         },
         {
+<<<<<<< HEAD
             "d": 333,
+=======
+            "d": 133,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1289,7 +1933,11 @@
             "y": 8029
         },
         {
+<<<<<<< HEAD
             "d": 259,
+=======
+            "d": 260,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1297,7 +1945,11 @@
             "y": 8310
         },
         {
+<<<<<<< HEAD
             "d": 337,
+=======
+            "d": 162,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1305,7 +1957,11 @@
             "y": 8653
         },
         {
+<<<<<<< HEAD
             "d": 230,
+=======
+            "d": 273,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1313,7 +1969,11 @@
             "y": 9028
         },
         {
+<<<<<<< HEAD
             "d": 314,
+=======
+            "d": 321,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1321,7 +1981,11 @@
             "y": 9293
         },
         {
+<<<<<<< HEAD
             "d": 336,
+=======
+            "d": 258,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1329,7 +1993,11 @@
             "y": 9418
         },
         {
+<<<<<<< HEAD
             "d": 163,
+=======
+            "d": 333,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1337,7 +2005,11 @@
             "y": 9589
         },
         {
+<<<<<<< HEAD
             "d": 244,
+=======
+            "d": 285,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1345,7 +2017,11 @@
             "y": 9465
         },
         {
+<<<<<<< HEAD
             "d": 328,
+=======
+            "d": 147,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1353,7 +2029,11 @@
             "y": 6688
         },
         {
+<<<<<<< HEAD
             "d": 125,
+=======
+            "d": 126,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1361,7 +2041,11 @@
             "y": 6407
         },
         {
+<<<<<<< HEAD
             "d": 135,
+=======
+            "d": 184,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1369,7 +2053,11 @@
             "y": 6111
         },
         {
+<<<<<<< HEAD
             "d": 241,
+=======
+            "d": 289,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1377,7 +2065,11 @@
             "y": 5861
         },
         {
+<<<<<<< HEAD
             "d": 306,
+=======
+            "d": 257,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1385,7 +2077,11 @@
             "y": 5611
         },
         {
+<<<<<<< HEAD
             "d": 256,
+=======
+            "d": 232,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1393,7 +2089,11 @@
             "y": 5377
         },
         {
+<<<<<<< HEAD
             "d": 106,
+=======
+            "d": 138,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1401,7 +2101,11 @@
             "y": 5175
         },
         {
+<<<<<<< HEAD
             "d": 210,
+=======
+            "d": 145,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1409,7 +2113,11 @@
             "y": 4987
         },
         {
+<<<<<<< HEAD
             "d": 158,
+=======
+            "d": 256,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1417,7 +2125,11 @@
             "y": 4722
         },
         {
+<<<<<<< HEAD
             "d": 181,
+=======
+            "d": 266,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1425,7 +2137,11 @@
             "y": 5034
         },
         {
+<<<<<<< HEAD
             "d": 170,
+=======
+            "d": 198,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1433,7 +2149,11 @@
             "y": 5253
         },
         {
+<<<<<<< HEAD
             "d": 347,
+=======
+            "d": 122,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1441,7 +2161,11 @@
             "y": 5611
         },
         {
+<<<<<<< HEAD
             "d": 344,
+=======
+            "d": 336,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1449,7 +2173,11 @@
             "y": 5986
         },
         {
+<<<<<<< HEAD
             "d": 350,
+=======
+            "d": 318,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1457,7 +2185,11 @@
             "y": 6547
         },
         {
+<<<<<<< HEAD
             "d": 236,
+=======
+            "d": 214,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1465,7 +2197,11 @@
             "y": 6969
         },
         {
+<<<<<<< HEAD
             "d": 169,
+=======
+            "d": 229,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1473,7 +2209,11 @@
             "y": 7000
         },
         {
+<<<<<<< HEAD
             "d": 119,
+=======
+            "d": 140,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1481,7 +2221,11 @@
             "y": 7015
         },
         {
+<<<<<<< HEAD
             "d": 319,
+=======
+            "d": 131,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1489,7 +2233,11 @@
             "y": 6906
         },
         {
+<<<<<<< HEAD
             "d": 310,
+=======
+            "d": 233,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1497,7 +2245,11 @@
             "y": 6875
         },
         {
+<<<<<<< HEAD
             "d": 121,
+=======
+            "d": 312,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1505,7 +2257,11 @@
             "y": 6781
         },
         {
+<<<<<<< HEAD
             "d": 299,
+=======
+            "d": 254,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1513,7 +2269,11 @@
             "y": 6688
         },
         {
+<<<<<<< HEAD
             "d": 287,
+=======
+            "d": 225,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1521,7 +2281,11 @@
             "y": 10416
         },
         {
+<<<<<<< HEAD
             "d": 135,
+=======
+            "d": 117,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1529,7 +2293,11 @@
             "y": 10588
         },
         {
+<<<<<<< HEAD
             "d": 279,
+=======
+            "d": 134,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1537,7 +2305,11 @@
             "y": 10728
         },
         {
+<<<<<<< HEAD
             "d": 129,
+=======
+            "d": 203,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1545,7 +2317,11 @@
             "y": 10915
         },
         {
+<<<<<<< HEAD
             "d": 168,
+=======
+            "d": 100,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1553,7 +2329,11 @@
             "y": 10837
         },
         {
+<<<<<<< HEAD
             "d": 236,
+=======
+            "d": 248,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1561,7 +2341,11 @@
             "y": 10962
         },
         {
+<<<<<<< HEAD
             "d": 139,
+=======
+            "d": 229,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1569,7 +2353,11 @@
             "y": 11118
         },
         {
+<<<<<<< HEAD
             "d": 102,
+=======
+            "d": 224,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1577,7 +2365,11 @@
             "y": 11446
         },
         {
+<<<<<<< HEAD
             "d": 179,
+=======
+            "d": 290,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1585,7 +2377,11 @@
             "y": 11680
         },
         {
+<<<<<<< HEAD
             "d": 253,
+=======
+            "d": 252,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1593,7 +2389,11 @@
             "y": 11851
         },
         {
+<<<<<<< HEAD
             "d": 247,
+=======
+            "d": 146,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1601,7 +2401,11 @@
             "y": 11836
         },
         {
+<<<<<<< HEAD
             "d": 287,
+=======
+            "d": 193,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1609,7 +2413,11 @@
             "y": 11664
         },
         {
+<<<<<<< HEAD
             "d": 224,
+=======
+            "d": 267,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1617,7 +2425,11 @@
             "y": 11477
         },
         {
+<<<<<<< HEAD
             "d": 177,
+=======
+            "d": 223,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1625,7 +2437,11 @@
             "y": 11243
         },
         {
+<<<<<<< HEAD
             "d": 336,
+=======
+            "d": 142,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1633,7 +2449,11 @@
             "y": 11649
         },
         {
+<<<<<<< HEAD
             "d": 156,
+=======
+            "d": 244,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1641,7 +2461,11 @@
             "y": 11851
         },
         {
+<<<<<<< HEAD
             "d": 277,
+=======
+            "d": 331,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1649,7 +2473,11 @@
             "y": 9886
         },
         {
+<<<<<<< HEAD
             "d": 123,
+=======
+            "d": 251,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1657,7 +2485,11 @@
             "y": 10073
         },
         {
+<<<<<<< HEAD
             "d": 244,
+=======
+            "d": 127,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1665,7 +2497,11 @@
             "y": 10245
         },
         {
+<<<<<<< HEAD
             "d": 309,
+=======
+            "d": 264,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1673,7 +2509,11 @@
             "y": 10572
         },
         {
+<<<<<<< HEAD
             "d": 267,
+=======
+            "d": 223,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1681,7 +2521,11 @@
             "y": 10681
         },
         {
+<<<<<<< HEAD
             "d": 179,
+=======
+            "d": 171,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1689,7 +2533,11 @@
             "y": 10791
         },
         {
+<<<<<<< HEAD
             "d": 331,
+=======
+            "d": 113,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1697,7 +2545,11 @@
             "y": 10432
         },
         {
+<<<<<<< HEAD
             "d": 124,
+=======
+            "d": 245,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1705,7 +2557,11 @@
             "y": 10541
         },
         {
+<<<<<<< HEAD
             "d": 109,
+=======
+            "d": 193,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1713,7 +2569,11 @@
             "y": 10650
         },
         {
+<<<<<<< HEAD
             "d": 235,
+=======
+            "d": 154,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1721,7 +2581,11 @@
             "y": 11165
         },
         {
+<<<<<<< HEAD
             "d": 241,
+=======
+            "d": 167,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1729,7 +2593,11 @@
             "y": 11321
         },
         {
+<<<<<<< HEAD
             "d": 174,
+=======
+            "d": 105,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1737,7 +2605,11 @@
             "y": 11493
         },
         {
+<<<<<<< HEAD
             "d": 176,
+=======
+            "d": 316,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1745,7 +2617,11 @@
             "y": 10775
         },
         {
+<<<<<<< HEAD
             "d": 192,
+=======
+            "d": 210,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1753,7 +2629,11 @@
             "y": 10713
         },
         {
+<<<<<<< HEAD
             "d": 106,
+=======
+            "d": 313,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1761,7 +2641,11 @@
             "y": 10416
         },
         {
+<<<<<<< HEAD
             "d": 317,
+=======
+            "d": 120,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1769,7 +2653,11 @@
             "y": 10135
         },
         {
+<<<<<<< HEAD
             "d": 109,
+=======
+            "d": 142,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1777,7 +2665,11 @@
             "y": 9839
         },
         {
+<<<<<<< HEAD
             "d": 167,
+=======
+            "d": 323,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1785,7 +2677,11 @@
             "y": 10057
         },
         {
+<<<<<<< HEAD
             "d": 217,
+=======
+            "d": 269,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1793,7 +2689,11 @@
             "y": 9948
         },
         {
+<<<<<<< HEAD
             "d": 277,
+=======
+            "d": 336,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1801,7 +2701,11 @@
             "y": 9730
         },
         {
+<<<<<<< HEAD
             "d": 241,
+=======
+            "d": 283,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1809,7 +2713,11 @@
             "y": 9355
         },
         {
+<<<<<<< HEAD
             "d": 346,
+=======
+            "d": 309,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1817,7 +2725,11 @@
             "y": 9184
         },
         {
+<<<<<<< HEAD
             "d": 178,
+=======
+            "d": 307,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1825,7 +2737,11 @@
             "y": 9012
         },
         {
+<<<<<<< HEAD
             "d": 321,
+=======
+            "d": 281,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1833,7 +2749,11 @@
             "y": 8965
         },
         {
+<<<<<<< HEAD
             "d": 263,
+=======
+            "d": 284,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1841,7 +2761,11 @@
             "y": 9090
         },
         {
+<<<<<<< HEAD
             "d": 257,
+=======
+            "d": 268,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1849,7 +2773,11 @@
             "y": 9262
         },
         {
+<<<<<<< HEAD
             "d": 350,
+=======
+            "d": 199,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1857,7 +2785,11 @@
             "y": 9075
         },
         {
+<<<<<<< HEAD
             "d": 163,
+=======
+            "d": 105,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1865,7 +2797,11 @@
             "y": 7998
         },
         {
+<<<<<<< HEAD
             "d": 115,
+=======
+            "d": 157,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1873,7 +2809,11 @@
             "y": 7983
         },
         {
+<<<<<<< HEAD
             "d": 280,
+=======
+            "d": 307,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1881,7 +2821,11 @@
             "y": 7936
         },
         {
+<<<<<<< HEAD
             "d": 165,
+=======
+            "d": 298,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1889,7 +2833,11 @@
             "y": 8154
         },
         {
+<<<<<<< HEAD
             "d": 179,
+=======
+            "d": 335,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1897,7 +2845,11 @@
             "y": 8092
         },
         {
+<<<<<<< HEAD
             "d": 107,
+=======
+            "d": 331,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1905,7 +2857,11 @@
             "y": 7780
         },
         {
+<<<<<<< HEAD
             "d": 128,
+=======
+            "d": 210,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1913,7 +2869,11 @@
             "y": 7686
         },
         {
+<<<<<<< HEAD
             "d": 230,
+=======
+            "d": 349,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1921,7 +2881,11 @@
             "y": 7593
         },
         {
+<<<<<<< HEAD
             "d": 295,
+=======
+            "d": 288,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1929,7 +2893,11 @@
             "y": 5736
         },
         {
+<<<<<<< HEAD
             "d": 136,
+=======
+            "d": 124,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1937,7 +2905,11 @@
             "y": 5674
         },
         {
+<<<<<<< HEAD
             "d": 100,
+=======
+            "d": 172,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1945,7 +2917,11 @@
             "y": 5533
         },
         {
+<<<<<<< HEAD
             "d": 283,
+=======
+            "d": 142,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1953,7 +2929,11 @@
             "y": 5611
         },
         {
+<<<<<<< HEAD
             "d": 266,
+=======
+            "d": 306,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1961,7 +2941,11 @@
             "y": 5721
         },
         {
+<<<<<<< HEAD
             "d": 115,
+=======
+            "d": 293,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1969,7 +2953,11 @@
             "y": 5845
         },
         {
+<<<<<<< HEAD
             "d": 145,
+=======
+            "d": 324,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1977,7 +2965,11 @@
             "y": 5861
         },
         {
+<<<<<<< HEAD
             "d": 303,
+=======
+            "d": 159,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1985,7 +2977,11 @@
             "y": 5705
         },
         {
+<<<<<<< HEAD
             "d": 170,
+=======
+            "d": 123,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -1993,7 +2989,11 @@
             "y": 5533
         },
         {
+<<<<<<< HEAD
             "d": 262,
+=======
+            "d": 298,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2001,7 +3001,11 @@
             "y": 5518
         },
         {
+<<<<<<< HEAD
             "d": 275,
+=======
+            "d": 232,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2009,7 +3013,11 @@
             "y": 5299
         },
         {
+<<<<<<< HEAD
             "d": 242,
+=======
+            "d": 111,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2017,7 +3025,11 @@
             "y": 5143
         },
         {
+<<<<<<< HEAD
             "d": 229,
+=======
+            "d": 193,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2025,7 +3037,11 @@
             "y": 4878
         },
         {
+<<<<<<< HEAD
             "d": 237,
+=======
+            "d": 248,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2033,7 +3049,11 @@
             "y": 4644
         },
         {
+<<<<<<< HEAD
             "d": 164,
+=======
+            "d": 224,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2041,7 +3061,11 @@
             "y": 4878
         },
         {
+<<<<<<< HEAD
             "d": 206,
+=======
+            "d": 189,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2049,7 +3073,11 @@
             "y": 4691
         },
         {
+<<<<<<< HEAD
             "d": 103,
+=======
+            "d": 307,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2057,7 +3085,11 @@
             "y": 4223
         },
         {
+<<<<<<< HEAD
             "d": 265,
+=======
+            "d": 216,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2065,7 +3097,11 @@
             "y": 4005
         },
         {
+<<<<<<< HEAD
             "d": 125,
+=======
+            "d": 128,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2073,7 +3109,11 @@
             "y": 3724
         },
         {
+<<<<<<< HEAD
             "d": 218,
+=======
+            "d": 276,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2081,7 +3121,11 @@
             "y": 3568
         },
         {
+<<<<<<< HEAD
             "d": 295,
+=======
+            "d": 325,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2089,7 +3133,11 @@
             "y": 3739
         },
         {
+<<<<<<< HEAD
             "d": 178,
+=======
+            "d": 159,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2097,7 +3145,11 @@
             "y": 4005
         },
         {
+<<<<<<< HEAD
             "d": 336,
+=======
+            "d": 236,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2105,7 +3157,11 @@
             "y": 4426
         },
         {
+<<<<<<< HEAD
             "d": 345,
+=======
+            "d": 242,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2113,7 +3169,11 @@
             "y": 3193
         },
         {
+<<<<<<< HEAD
             "d": 158,
+=======
+            "d": 167,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2121,7 +3181,11 @@
             "y": 3115
         },
         {
+<<<<<<< HEAD
             "d": 131,
+=======
+            "d": 286,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2129,7 +3193,11 @@
             "y": 2913
         },
         {
+<<<<<<< HEAD
             "d": 307,
+=======
+            "d": 313,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2137,7 +3205,11 @@
             "y": 2694
         },
         {
+<<<<<<< HEAD
             "d": 143,
+=======
+            "d": 183,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2145,7 +3217,11 @@
             "y": 2507
         },
         {
+<<<<<<< HEAD
             "d": 144,
+=======
+            "d": 350,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2153,7 +3229,11 @@
             "y": 2632
         },
         {
+<<<<<<< HEAD
             "d": 341,
+=======
+            "d": 240,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2161,7 +3241,11 @@
             "y": 2991
         },
         {
+<<<<<<< HEAD
             "d": 242,
+=======
+            "d": 240,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2169,7 +3253,11 @@
             "y": 3287
         },
         {
+<<<<<<< HEAD
             "d": 294,
+=======
+            "d": 272,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2177,7 +3265,11 @@
             "y": 2367
         },
         {
+<<<<<<< HEAD
             "d": 328,
+=======
+            "d": 305,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2185,7 +3277,11 @@
             "y": 2195
         },
         {
+<<<<<<< HEAD
             "d": 137,
+=======
+            "d": 120,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2193,7 +3289,11 @@
             "y": 1961
         },
         {
+<<<<<<< HEAD
             "d": 131,
+=======
+            "d": 170,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2201,7 +3301,11 @@
             "y": 1555
         },
         {
+<<<<<<< HEAD
             "d": 161,
+=======
+            "d": 182,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2209,7 +3313,11 @@
             "y": 1290
         },
         {
+<<<<<<< HEAD
             "d": 110,
+=======
+            "d": 331,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2217,7 +3325,11 @@
             "y": 885
         },
         {
+<<<<<<< HEAD
             "d": 349,
+=======
+            "d": 314,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2225,7 +3337,11 @@
             "y": 978
         },
         {
+<<<<<<< HEAD
             "d": 253,
+=======
+            "d": 337,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
@@ -2233,12 +3349,192 @@
             "y": 1134
         },
         {
+<<<<<<< HEAD
             "d": 237,
+=======
+            "d": 164,
+>>>>>>> refs/remotes/origin/JaeYong
             "h": 80,
             "type": "building",
             "w": 80,
             "x": 11804,
             "y": 1275
+        },
+        {
+            "angle": 0,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 4956,
+            "y": 6012,
+            "z": 389
+        },
+        {
+            "angle": -10,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 4963,
+            "y": 6150,
+            "z": 389
+        },
+        {
+            "angle": -26,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5032,
+            "y": 6280,
+            "z": 389
+        },
+        {
+            "angle": -51,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5122,
+            "y": 6345,
+            "z": 396
+        },
+        {
+            "angle": -70,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5244,
+            "y": 6396,
+            "z": 404
+        },
+        {
+            "angle": -92,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5403,
+            "y": 6420,
+            "z": 413
+        },
+        {
+            "angle": -110,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5620,
+            "y": 6393,
+            "z": 422
+        },
+        {
+            "angle": -135,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5806,
+            "y": 6253,
+            "z": 432
+        },
+        {
+            "angle": -165,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5885,
+            "y": 6062,
+            "z": 432
+        },
+        {
+            "angle": -200,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5871,
+            "y": 5886,
+            "z": 449
+        },
+        {
+            "angle": -224,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5769,
+            "y": 5722,
+            "z": 474
+        },
+        {
+            "angle": -247,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5611,
+            "y": 5654,
+            "z": 495
+        },
+        {
+            "angle": -274,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5419,
+            "y": 5636,
+            "z": 516
+        },
+        {
+            "angle": -296,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5249,
+            "y": 5678,
+            "z": 537
+        },
+        {
+            "angle": -311,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 5089,
+            "y": 5778,
+            "z": 516
+        },
+        {
+            "angle": -331,
+            "d": 80,
+            "h": 5,
+            "is_rotate": false,
+            "type": "ring",
+            "w": 80,
+            "x": 4993,
+            "y": 5886,
+            "z": 501
         }
     ],
     "mh": 12000,

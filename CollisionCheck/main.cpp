@@ -2,13 +2,20 @@
 #include "Unit.h"
 #include "Player.h"
 #include "Road.h"
+#include "Ring.h"
 #include "text.h"
 #include "StageManager.h"
 #include "InputManager.h"
 #include <time.h>
 
+<<<<<<< HEAD
 static const int width = 1024, height = width/16.0*9;
 const int size = 1000;
+=======
+static const int width = 1024, height = width / 16.0 * 9;
+const float mapWidth = 200, mapHeight = 200;
+static float fov = 60;
+>>>>>>> refs/remotes/origin/JaeYong
 
 int GetWindowWidth()
 {
@@ -18,6 +25,11 @@ int GetWindowWidth()
 int GetWindowHeight()
 {
 	return height;
+}
+
+float* GetFovValue()
+{
+	return &fov;
 }
 
 void DrawScene();
@@ -40,7 +52,9 @@ class CCamera {
 
 public:
 	CCamera(float px = 0.0f, float py = 0.0f, float pz = 300.0f, float fP = 0.0f, float fY = 0.0f, float fR = 0.0f) :
-		vPositon(px, py, pz), fPitch(fP), fYaw(fY), fRoll(fR), target(nullptr) {}
+		vPositon(px, py, pz), fPitch(fP), fYaw(fY), fRoll(fR), target(nullptr), isLookBack(false) {}
+
+	bool isLookBack;
 
 	void CameraTransform() {
 		glMatrixMode(GL_MODELVIEW);
@@ -55,8 +69,23 @@ public:
 			dir = dir.MultMatrix(mat);
 			up = up.MultMatrix(mat);
 
+<<<<<<< HEAD
 			vec3 cPos = pPos + (up * 20) + (dir * 50);
 			vec3 at = cPos - dir;
+=======
+			vec3 cPos, at;
+			if (isLookBack)
+			{
+				cPos = pPos + (up * 20) + (dir * 50);
+				at = cPos - dir;
+			}
+			else
+			{
+				cPos = pPos + (up * 20) - (dir * 50);
+				at = cPos + dir;
+
+			}
+>>>>>>> refs/remotes/origin/JaeYong
 			gluLookAt(cPos.x, cPos.y, cPos.z, at.x, at.y, at.z, up.x, up.y, up.z);
 		}
 
@@ -102,6 +131,7 @@ public:
 		target = p;
 	}
 
+<<<<<<< HEAD
 } Camera(0.0f, 100.0f, 500.0f, -10.0f, 0.0f, 0.0f);
 
 //class CCamera {
@@ -164,6 +194,9 @@ public:
 //	vec3 GetCameraPos() { return(vPositon); }
 //
 //} Camera(0.0f, 200.0f, 1000.0f, -7.0f, 0.0f, 0.0f);
+=======
+} Camera(0.0f, 500.0f, 2000.0f, -10.0f, 0.0f, 0.0f);
+>>>>>>> refs/remotes/origin/JaeYong
 
 std::vector<Object*> objList;
 Unit* target;
@@ -190,29 +223,38 @@ int main() {
 	//glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
 
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
 	float lightValue[] = { 1,1,1,1 };
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightValue);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, lightValue);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
-	//float globalAmbient[] = { 0.35, 0.35, 0.35, 1 };
-	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
+	float globalAmbient[] = { 0.3, 0.3, 0.3, 1 };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
 	// Object Init
+<<<<<<< HEAD
 	objList.push_back(new Building(vec3(40, 10, 5), vec3(0, 0, 0), vec3(5, 3, 5).GetSize(), 0.0f, 45.0f, 0.0f));
 	((Building*)objList[0])->SetColor(1, 0, 1);
 
 	objList.push_back(new Road(0, 0, 3000, 500, 6000, 0, 0, 0));
+=======
+
+	objList.push_back(new Road(0, 0, 3000, 400, 6000, 0, 0, 0));
+>>>>>>> refs/remotes/origin/JaeYong
 	objList.push_back(new Player(0, 3, 100));
 
 	Camera.SetTarget((Player*)objList.back());
 
 	StageManager* stm = StageManager::Instance();
 	stm->Init();
+<<<<<<< HEAD
 	objList.push_back(new Drone((Unit*)objList[2], vec3(0, 5, 0), 12.5f));
+=======
+	objList.push_back(new Drone((Unit*)objList[1], vec3(0, 5, 0), 12.5f));
+>>>>>>> refs/remotes/origin/JaeYong
 	objList.back()->SetDes();
 
 	t3dInit();
@@ -229,8 +271,12 @@ void Reshape(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//Clip공간 설정
+<<<<<<< HEAD
 	//gluPerspective(60.0, w / float(h), 1.0, 2000.0);
 	glOrtho((-size / 2.0f), (size / 2.0f), (-size / 2.0f), (size / 2.0f), 10.0f, 10000.0f);
+=======
+	gluPerspective(fov, w / float(h), 0.01, 8000.0);
+>>>>>>> refs/remotes/origin/JaeYong
 
 	//ModelView
 	glMatrixMode(GL_MODELVIEW);
@@ -240,26 +286,104 @@ void DrawScene() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// 메인 뷰
+	glViewport(0, 0, width, height);
+
+	//Projenction
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//Clip공간 설정
+	gluPerspective(fov, width / float(height), 0.01, 8000.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glPushMatrix();
+	{
+		glScalef(0.5, 0.5, 0.5);
 
-	glScalef(0.3, 0.3, 0.3);
+		// Camera Transform
+		Camera.CameraTransform();
 
-	// Camera Transform
-	Camera.CameraTransform();
+		float lightPos[4] = { 0,2,1,0 };
+		glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-	float lightPos[4] = { 0,1,1,0 };
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+		BulletManager* bulletmger = BulletManager::Instance();
+		bulletmger->Render();
 
-	BulletManager* bulletmger = BulletManager::Instance();
-	bulletmger->Render();
+		StageManager* stm = StageManager::Instance();
+		stm->Render();
 
-	StageManager* stm = StageManager::Instance();
-	stm->Render();
+		for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
+	}
+	glPopMatrix();
 
-	for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
+	// 미니맵 뷰
+	glViewport(width - mapWidth, 0, mapWidth, mapHeight);
 
+	//Projenction
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//Clip공간 설정
+	glOrtho(-mapWidth * 3, mapWidth * 3, -mapHeight * 3, mapHeight * 3, 0.0, 1000.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glPushMatrix();
+	{
+		// 플레이어 위치
+		vec3 camPos = objList[1]->GetPos();
+
+		glRotatef(90, 1, 0, 0);
+		glTranslatef(-camPos.x, -700, -camPos.z);
+
+		float mapLightPos[4] = { 0,1,0,0 };
+		glLightfv(GL_LIGHT0, GL_POSITION, mapLightPos);
+
+		// 검은 배경
+		glPushMatrix();
+		{
+			glTranslatef(0, -10, 0);
+			glRotatef(-90, 1, 0, 0);
+			glColor3f(0, 0, 0);
+			glRectf(-6000, -6000, 6000, 6000);
+		}
+		glPopMatrix();
+
+		StageManager* stm = StageManager::Instance();
+		stm->Render();
+
+		// 플레이어 마크 그리기
+		glPushMatrix();
+		{
+			float mat[16];
+			vec3 dir, unit(0, 0, -1);
+			objList[1]->GetMatrix(mat);
+			dir = unit.MultMatrix(mat);
+
+			dir.y = 0;
+			dir.Normalize();
+
+			glTranslatef(camPos.x, 500, camPos.z);
+			if (dir.x < 0)
+			{
+				glRotatef(acosf(dir.Dot(unit)) * 180 / 3.14, 0, 1, 0);
+			}
+			else
+			{
+				glRotatef(-acosf(dir.Dot(unit)) * 180 / 3.14, 0, 1, 0);
+			}
+			glColor3f(1, 0.0, 0.0);
+			glNormal3f(0, 1, 0);
+			glBegin(GL_POLYGON);
+			{
+				glVertex3f(0, 0, -30);
+				glVertex3f(-30, 0, 30);
+				glVertex3f(0, 0, 15);
+				glVertex3f(30, 0, 30);
+			}
+			glEnd();
+		}
+		glPopMatrix();
+	}
 	glPopMatrix();
 
 	glutSwapBuffers();
@@ -275,29 +399,41 @@ void TimerFunction(int value) {
 	BulletManager* bm = BulletManager::Instance();
 	bm->Update();
 
+<<<<<<< HEAD
 	static_cast<Player*>(objList[2])->Update(frameTime);
 	for (int i = 3; i < objList.size(); ++i) objList[i]->Update(frameTime);
+=======
+	StageManager* sm = StageManager::Instance();
+	sm->Update(frameTime);
+
+	for (int i = 0; i < objList.size(); ++i) objList[i]->Update(frameTime);
+
+>>>>>>> refs/remotes/origin/JaeYong
 	glutTimerFunc(16, TimerFunction, 1);
 	glutPostRedisplay();
 }
 
 void ProcessKeyInput(unsigned char key, int x, int y)
 {
+	if (key == 'f')
+		Camera.isLookBack = true;
 	InputManager::GetInstance()->PushKey(key);
 }
 
 void ProcessSpeciaKeyInput(int key, int x, int y)
 {
-	InputManager::GetInstance()->PushKey(key+300);
+	InputManager::GetInstance()->PushKey(key + 300);
 }
 
 void ProcessKeyRelease(unsigned char key, int x, int y)
 {
+	if (key == 'f')
+		Camera.isLookBack = false;
 	InputManager::GetInstance()->ReleaseKey(key);
 }
 
 void ProcessSpeciaKeyRelease(int key, int x, int y)
 {
-	InputManager::GetInstance()->ReleaseKey(key+300);
+	InputManager::GetInstance()->ReleaseKey(key + 300);
 }
 
