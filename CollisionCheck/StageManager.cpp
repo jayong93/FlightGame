@@ -2,6 +2,7 @@
 #include "Ring.h"
 #include "std.h"
 #include "Arm.h"
+#include "Player.h"
 #include <fstream>
 #include <json.h>
 
@@ -191,7 +192,7 @@ void StageManager::Init()
 		{
 			// 링 회전 테스트
 			Ring* ring = new Ring(value["x"].asInt() - mapW / 2, value["z"].asInt(), -(value["y"].asInt() - mapH / 2), value["w"].asInt(), value["d"].asInt(), value["h"].asInt(), value["angle"].asInt(), true);
-			objectList.push_back(ring);
+			ringList.push_back(ring);
 		}
 	}
 
@@ -210,7 +211,9 @@ void StageManager::Init()
 		{
 			for (int j = 0; j < nodeNum; ++j)
 			{
-				fscanf_s(file, "%d", &node[i][j]);
+				int tmp;
+				fscanf_s(file, "%d", &tmp);
+				node[i][j] = tmp;
 			}
 		}
 
@@ -222,7 +225,7 @@ void StageManager::Init()
 void StageManager::Render()
 {
 	for (int i = 21; i < 85; ++i) quadTree[i].Draw();
-	for (auto& o : objectList) o->Render();
+	for (auto& r : ringList) r->Render();
 
 	int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
 
@@ -249,10 +252,10 @@ void StageManager::Render()
 
 void StageManager::Update(float frameTime)
 {
-	for (auto& o : objectList) o->Update(frameTime);
+	for (auto& r : ringList) r->Update(frameTime);
 }
 
-Node & StageManager::GetNearestNode(float x, float z)
+Node StageManager::GetNearestNode(float x, float z)
 {
 	int row = int((z + 6000.0f) / 387.1f + 0.51f);
 	int col = int((x + 6000.0f) / 387.1f + 0.51f);
@@ -267,7 +270,7 @@ Node & StageManager::GetNearestNode(float x, float z)
 	return Node(r, c);
 }
 
-Node & StageManager::GetNearestNode(float x, float z, Node & des)
+Node StageManager::GetNearestNode(float x, float z, Node & des)
 {
 	float minH = 1000.0f;
 	int d[4][2] = { { 1,0 },{ 0,-1 },{ -1,0 },{ 0,1 } };
@@ -358,6 +361,11 @@ bool StageManager::GetAStarRoute(Node & start, Node & destiny, std::vector<Node>
 		return true;
 	}
 	return false;
+}
+
+void StageManager::CollisionCheck(Player * player)
+{
+	for (auto& r : ringList) player->ColiisionCheck_Ring(r);
 }
 
 void StageManager::CollisonCheck_Bullet(std::vector<Bullet>* bulletList)

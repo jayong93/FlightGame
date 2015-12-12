@@ -1,8 +1,10 @@
 #pragma once
 #include "Object.h"
+#include "Ring.h"
 #include <vector>
 
 class Bullet;
+class Player;
 
 class StageManager {
 	struct Rect {
@@ -37,6 +39,7 @@ class StageManager {
 	float mapW, mapH;
 
 	std::vector<Object*> objectList;
+	std::vector<Ring*> ringList;
 
 	StageManager();
 public:
@@ -52,13 +55,15 @@ public:
 
 	void Update(float frameTime);
 
-	Node& GetNearestNode(float x, float z);
+	Node GetNearestNode(float x, float z);
 
-	Node& GetNearestNode(float x, float z, Node& des);
+	Node GetNearestNode(float x, float z, Node& des);
 
 	unsigned char GetNodeDate(int row, int col);
 
 	bool GetAStarRoute(Node& start, Node& destiny, std::vector<Node>& routeList);
+
+	void CollisionCheck(Player* player);
 
 	void CollisonCheck_Bullet(std::vector<Bullet>* bulletList);
 };
