@@ -8,6 +8,7 @@
 #include "InputManager.h"
 #include <time.h>
 
+
 static const int width = 1024, height = width / 16.0 * 9;
 const float mapWidth = 200, mapHeight = 200;
 static float fov = 60;
@@ -120,8 +121,7 @@ public:
 	{
 		target = p;
 	}
-
-} Camera(0.0f, 500.0f, 2000.0f, -10.0f, 0.0f, 0.0f);
+} Camera(0.0f, 100.0f, 500.0f, -10.0f, 0.0f, 0.0f);
 
 std::vector<Object*> objList;
 Unit* target;
@@ -160,7 +160,6 @@ int main() {
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
 	// Object Init
-
 	objList.push_back(new Road(0, 0, 3000, 400, 6000, 0, 0, 0));
 	objList.push_back(new Player(0, 3, 100));
 
@@ -173,6 +172,7 @@ int main() {
 
 	t3dInit();
 
+	clock();
 	glutMainLoop();
 }
 
@@ -305,7 +305,7 @@ void TimerFunction(int value) {
 	prevClock = nowClock;
 
 	BulletManager* bm = BulletManager::Instance();
-	bm->Update();
+	bm->Update(frameTime);
 
 	StageManager* sm = StageManager::Instance();
 	sm->Update(frameTime);
