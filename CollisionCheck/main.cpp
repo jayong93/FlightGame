@@ -349,4 +349,3 @@ void ProcessSpeciaKeyRelease(int key, int x, int y)
 {
 	InputManager::GetInstance()->ReleaseKey(key + 300);
 }
-
