@@ -4,7 +4,7 @@
 #include "Ring.h"
 #include "StageManager.h"
 
-Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), direction(0, 0, -1), isBoost(false), isStelth(false), boostTimer(-1), stelthTimer(-1), alpha(1), mana(100), fireTimer(-1), hp(200)
+Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), direction(0, 0, -1), isBoost(false), boostTimer(-1), stelthTimer(-1), alpha(1), mana(100), fireTimer(-1), hp(200)
 {
 	cubeList.push_back(new PlayerBody(position, vec3(0, 0, -2)));
 	vec3 pos = position;
@@ -50,7 +50,10 @@ bool Player::ColiisionCheck_Ring(const Ring* ring)
 	{
 		for (auto& c : cubeList)
 		{
-			ring->ItemCollisionCheck(c);
+			if (ring->ItemCollisionCheck(c))
+			{
+				hp += 5;
+			}
 			if (ring->CollisionCheck(c)) {
 				ProcessPlayerDeath();
 				return true;
