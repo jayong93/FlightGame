@@ -223,6 +223,7 @@ void DrawScene() {
 		for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
 	}
 	glPopMatrix();
+<<<<<<< HEAD
 
 	// 미니맵 뷰
 	glViewport(width - mapWidth, 0, mapWidth, mapHeight);
@@ -246,6 +247,31 @@ void DrawScene() {
 		float mapLightPos[4] = { 0,1,0,0 };
 		glLightfv(GL_LIGHT0, GL_POSITION, mapLightPos);
 
+=======
+
+	// 미니맵 뷰
+	glViewport(width - mapWidth, 0, mapWidth, mapHeight);
+
+	//Projenction
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//Clip공간 설정
+	glOrtho(-mapWidth * 4, mapWidth * 4, -mapHeight * 4, mapHeight * 4, 0.0, 1000.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glPushMatrix();
+	{
+		// 플레이어 위치
+		vec3 camPos = objList[1]->GetPos();
+
+		glRotatef(90, 1, 0, 0);
+		glTranslatef(-camPos.x, -700, -camPos.z);
+
+		float mapLightPos[4] = { 0,1,0,0 };
+		glLightfv(GL_LIGHT0, GL_POSITION, mapLightPos);
+
+>>>>>>> refs/remotes/origin/SoYun
 		// 검은 배경
 		glPushMatrix();
 		{
@@ -321,6 +347,10 @@ void TimerFunction(int value) {
 	sm->Update(frameTime);
 
 	for (int i = 0; i < objList.size(); ++i) objList[i]->Update(frameTime);
+<<<<<<< HEAD
+=======
+	sm->CollisionCheck((Player*)objList[1]);
+>>>>>>> refs/remotes/origin/SoYun
 
 	glutTimerFunc(16, TimerFunction, 1);
 	glutPostRedisplay();

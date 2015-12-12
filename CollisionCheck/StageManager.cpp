@@ -2,6 +2,10 @@
 #include "Ring.h"
 #include "std.h"
 #include "Arm.h"
+<<<<<<< HEAD
+=======
+#include "Player.h"
+>>>>>>> refs/remotes/origin/SoYun
 #include <fstream>
 #include <json.h>
 
@@ -191,7 +195,11 @@ void StageManager::Init()
 		{
 			// 링 회전 테스트
 			Ring* ring = new Ring(value["x"].asInt() - mapW / 2, value["z"].asInt(), -(value["y"].asInt() - mapH / 2), value["w"].asInt(), value["d"].asInt(), value["h"].asInt(), value["angle"].asInt(), true);
+<<<<<<< HEAD
 			objectList.push_back(ring);
+=======
+			ringList.push_back(ring);
+>>>>>>> refs/remotes/origin/SoYun
 		}
 	}
 
@@ -224,7 +232,11 @@ void StageManager::Init()
 void StageManager::Render()
 {
 	for (int i = 21; i < 85; ++i) quadTree[i].Draw();
+<<<<<<< HEAD
 	for (auto& o : objectList) o->Render();
+=======
+	for (auto& r : ringList) r->Render();
+>>>>>>> refs/remotes/origin/SoYun
 
 	int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
 
@@ -251,7 +263,11 @@ void StageManager::Render()
 
 void StageManager::Update(float frameTime)
 {
+<<<<<<< HEAD
 	for (auto& o : objectList) o->Update(frameTime);
+=======
+	for (auto& r : ringList) r->Update(frameTime);
+>>>>>>> refs/remotes/origin/SoYun
 }
 
 Node StageManager::GetNearestNode(float x, float z)
@@ -362,6 +378,14 @@ bool StageManager::GetAStarRoute(Node & start, Node & destiny, std::vector<Node>
 	return false;
 }
 
+<<<<<<< HEAD
+=======
+void StageManager::CollisionCheck(Player * player)
+{
+	for (auto& r : ringList) player->ColiisionCheck_Ring(r);
+}
+
+>>>>>>> refs/remotes/origin/SoYun
 void StageManager::CollisonCheck_Bullet(std::vector<Bullet>* bulletList)
 {
 	//for (unsigned int i = 0; i < bulletList->size(); ++i) {

@@ -29,7 +29,13 @@ void Object::GenMatrix()
 
 bool Object::CollisionCheck(const Object* obj) const
 {
+<<<<<<< HEAD
 	float d = GetDistance(this->position, obj->position);
+=======
+	vec3 p(this->matrix[12], this->matrix[13], this->matrix[14]);
+	vec3 o(obj->matrix[12], obj->matrix[13], obj->matrix[14]);
+	float d = GetDistance(p, o);
+>>>>>>> refs/remotes/origin/SoYun
 	if (d < this->boundingRad + obj->boundingRad) return true;
 	return false;
 }
@@ -82,7 +88,11 @@ bool CubeObject::CollisionCheck(const CubeObject* b) const
 	if (Object::CollisionCheck(b)) {		//	바운딩 구가 충돌하면
 		const CubeObject& box2 = *b;
 		const CubeObject& box1 = *this;
+<<<<<<< HEAD
 		vec3 T = vec3(box2.position.x - box1.position.x, box2.position.y - box1.position.y, box2.position.z - box1.position.z);
+=======
+		vec3 T = vec3(box2.matrix[12] - box1.matrix[12], box2.matrix[13] - box1.matrix[13], box2.matrix[14] - box1.matrix[14]);
+>>>>>>> refs/remotes/origin/SoYun
 		float R[3][3];					//	matrix R = A^T * B ,r_{ij} = Dot(A_i,B_j)
 		float absR[3][3];				//	|r_{ij}|
 		float AdT[3];					//	Dot(A_i,D)
