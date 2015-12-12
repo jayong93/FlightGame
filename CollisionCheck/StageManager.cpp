@@ -65,6 +65,7 @@ float heuristic_cost_estimate(int sdx, int ddx) {
 }
 
 StageManager* StageManager::instance = nullptr;
+
 StageManager::StageManager() {
 	quadTree[0].isLeafNode = false;
 	quadTree[0].pObjectList.shrink_to_fit();
@@ -146,6 +147,11 @@ std::vector<std::vector<Building>*> StageManager::GetBuildingList(float x, float
 	return ret;
 }
 
+std::vector<Drone*>* StageManager::GetDroneList()
+{
+	return &droneList;
+}
+
 StageManager::~StageManager()
 {
 	if (node)
@@ -158,7 +164,7 @@ StageManager::~StageManager()
 	}
 }
 
-void StageManager::Init()
+void StageManager::Init(Unit* target)
 {
 	std::ifstream ifs("map_data.json", std::ios::in);
 	Json::Reader reader;
@@ -220,12 +226,18 @@ void StageManager::Init()
 		fclose(file);
 	}
 	else throw "No Map Node Data";
+
+	//	드론 생성
+	droneList.push_back(new Drone(target, vec3(0, 500, 0), 12.5f));
+	droneList.back()->SetDes();
 }
 
 void StageManager::Render()
 {
 	for (int i = 21; i < 85; ++i) quadTree[i].Draw();
 	for (auto& r : ringList) r->Render();
+	for (auto& d : droneList) d->Render();
+	for (auto& e : effectList) e->Render();
 
 	int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
 
@@ -253,6 +265,12 @@ void StageManager::Render()
 void StageManager::Update(float frameTime)
 {
 	for (auto& r : ringList) r->Update(frameTime);
+	for (auto& d : droneList) d->Update(frameTime);
+	for (auto& e : effectList) e->Update(frameTime);
+	for (auto i = effectList.begin(); i != effectList.end(); ) {
+		if (!(*i)->GetAlive()) i = effectList.erase(i);
+		else ++i;
+	}
 }
 
 Node StageManager::GetNearestNode(float x, float z)
@@ -365,7 +383,15 @@ bool StageManager::GetAStarRoute(Node & start, Node & destiny, std::vector<Node>
 
 void StageManager::CollisionCheck(Player * player)
 {
-	for (auto& r : ringList) player->ColiisionCheck_Ring(r);
+	if (player->GetAlive()) {
+		for (auto& r : ringList) player->ColiisionCheck_Ring(r);
+		player->CollisionCheck_Building();
+		for (auto d : droneList) player->CollisionCheck_Drone(d);
+		for (auto i = droneList.begin(); i != droneList.end(); ) {
+			if (!(*i)->GetAlive()) i = droneList.erase(i);
+			else ++i;
+		}
+	}
 }
 
 void StageManager::CollisonCheck_Bullet(std::vector<Bullet>* bulletList)
@@ -374,4 +400,26 @@ void StageManager::CollisonCheck_Bullet(std::vector<Bullet>* bulletList)
 	//	for (unsigned int j = 0; j < buildingList.size(); ++j)
 	//		(*bulletList)[i].CollisionCheck_Building(&buildingList[j]);
 	//}
+}
+
+void StageManager::CallEffenct(int effectname, const vec3 & pos, vec3& color)
+{
+	switch (effectname)
+	{
+	case EFFECT::FLAME: {
+		float z = -4.0f;
+		while (z <= 4.0f) {
+			float raidius = 4.0f*4.0f - z*z;
+			for (float radian = 0.0f; radian <= 2 * 3.14f; radian += 0.4) {
+				vec3 dir(cosf(radian)*raidius, sinf(radian)*raidius, z);
+				dir.Normalize();
+				effectList.push_back(new Flame(pos, dir, color));
+			}
+			z += 0.4f;
+		}
+		break;
+	}
+	default:
+		break;
+	}
 }

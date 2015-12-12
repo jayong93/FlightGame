@@ -40,9 +40,10 @@ bool Ring::CollisionCheck(const CubeObject * obj) const
 	{
 		for (auto& c : cubeList)
 		{
-			if (obj->CollisionCheck(c))
+			if (obj->CollisionCheck(c)) {
 				std::cout << "CollisionWithRing" << std::endl;
 				return true;
+			}
 		}
 	}
 	return false;

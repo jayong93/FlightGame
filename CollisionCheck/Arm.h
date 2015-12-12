@@ -33,6 +33,8 @@ public:
 
 	void Render();
 
+	void SetAlive(bool alive);
+
 	void Update(float frameTime);
 
 	bool GetIsAlive() { return isAlive; }
