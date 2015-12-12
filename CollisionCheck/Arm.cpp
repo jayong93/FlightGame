@@ -79,6 +79,10 @@ void Bullet::Render()
 
 void Bullet::SetAlive(bool alive)
 {
+	if (!alive) {
+		StageManager* stm = StageManager::Instance();
+		stm->CallEffenct(EFFECT::SPARK, position, vec3(1.0f, (rand() % 5) / 10.0f + 0.1f, 0.3f));
+	}
 	isAlive = alive;
 }
 
@@ -88,7 +92,7 @@ void Bullet::Update(float frameTime)
 		vec3 d = target->GetPos() - position;
 		float distance = d.GetSize();
 		d.Normalize();
-		if (distance > 30.0f && DotProduct(d, velocity)>0 && !target->GetIsStelth()) {
+		if (distance > 50.0f && DotProduct(d, velocity)>0 && !target->GetIsStelth()) {
 			velocity = target->GetPos() - position;
 			velocity.Normalize();
 			vec3 unit(0, 0, 1);

@@ -453,6 +453,18 @@ void StageManager::CallEffenct(int effectname, const vec3 & pos, vec3& color)
 		}
 		break;
 	}
+	case EFFECT::SPARK: {
+		float z = -4.0f;
+		while (z <= 0.0f) {
+			float raidius = 4.0f*4.0f - z*z;
+			float radian = (rand() % 628) / 100.0f;
+			vec3 dir(cosf(radian)*raidius, sinf(radian)*raidius, z);
+			dir.Normalize();
+			effectList.push_back(new Spark(pos, dir, color, ((rand()%2))/10.0f));
+			z += 1.0f;
+		}
+		break;
+	}
 	default:
 		break;
 	}

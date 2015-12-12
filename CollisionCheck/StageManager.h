@@ -62,8 +62,11 @@ public:
 
 	void Render();
 
+<<<<<<< HEAD
 	void MinimapRender();
 
+=======
+>>>>>>> refs/remotes/origin/SoYun
 	void Update(float frameTime);
 	Node GetNearestNode(float x, float z);
 	Node GetNearestNode(float x, float z, Node& des);
