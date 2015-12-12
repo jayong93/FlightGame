@@ -6,7 +6,7 @@ class Player : public Unit
 public:
 	Player(float x, float y, float z);
 
-	virtual bool ColiisionCheck(const Object& obj);
+	virtual bool ColiisionCheck(const Object* obj) const;
 	virtual void Render();
 	virtual void Move(const vec3 &);
 	virtual void Rotate(float, float, float);

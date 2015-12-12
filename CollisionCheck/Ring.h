@@ -15,6 +15,7 @@ public:
 
 	virtual void Render();
 	virtual void Update(float frameTime);
+	virtual bool CollisionCheck(const Object* obj) const;
 };
 
 class RotateRing : public Ring
