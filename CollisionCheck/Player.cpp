@@ -61,11 +61,8 @@ bool Player::ColiisionCheck_Ring(const Ring* ring)
 			if (ring->ItemCollisionCheck(c))
 			{
 				hp += 5;
-<<<<<<< HEAD
 				if (hp > 200)
 					hp = 200;
-=======
->>>>>>> refs/remotes/origin/SoYun
 			}
 			if (ring->CollisionCheck(c)) {
 				ProcessPlayerDeath();
