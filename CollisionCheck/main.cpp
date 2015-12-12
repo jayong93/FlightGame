@@ -171,6 +171,7 @@ int main() {
 
 	// Object Init
 	objList.push_back(new Player(0, 3, 100));
+	//objList.push_back(new Road(vec3(-100,0,100), vec3(100,0,-100), 20));
 
 	Camera.SetTarget((Player*)objList.front());
 
@@ -256,7 +257,6 @@ void DrawScene() {
 		if (stageState == MAIN)
 		{
 			sprintf_s(str, 40, "HP : %d", (int)((Player*)objList.front())->GetHp());
-
 			glColor3f(1, 1, 1);
 			glRasterPos2f(0, height - 20);
 			int len = strlen(str);

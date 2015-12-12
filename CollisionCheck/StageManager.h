@@ -48,6 +48,8 @@ class StageManager {
 	std::vector<Drone*> droneList;
 	std::vector<Effect*> effectList;
 	std::vector<Road*> roadList;
+	std::vector<Car*> carList;
+	float carTimer;
 
 	StageManager();
 public:
