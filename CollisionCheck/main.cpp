@@ -16,15 +16,12 @@ static const int width = 1024, height = width / 16.0 * 9;
 const float mapWidth = 200, mapHeight = 200;
 static float fov = 60;
 static StageState stageState;
-<<<<<<< HEAD
 System* fSystem;
 Sound* sound[3];
 Channel* channel;
 Channel* bgmChan;
-=======
 std::vector<Fireworks> fireworksList;
 int fireworkTimer;
->>>>>>> refs/remotes/origin/SoYun
 
 int GetWindowWidth()
 {
