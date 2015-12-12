@@ -38,7 +38,7 @@ public:
 		int ret = heap[0].index;		//반환값 저장
 		int s = 0;						//마지막 힙 노드값을 저장할 위치
 		float v = heap[--count].value;	//마지막 힙 노드의 비교값 저장
-		while (2 * s + 1<count)				//저장할 위치의 왼쪽 자식이 힙에 있는 한
+		while (2 * s + 1 < count)				//저장할 위치의 왼쪽 자식이 힙에 있는 한
 		{
 			int min = 2 * s + 1;		//자식중 최소값 인덱스를 왼쪽 자식이라고 가정
 										//오른쪽 자식의 값이 왼쪽 자식값보다 작은 경우
@@ -66,7 +66,7 @@ float heuristic_cost_estimate(int sdx, int ddx) {
 
 StageManager* StageManager::instance = nullptr;
 
-StageManager::StageManager() {
+StageManager::StageManager() :carTimer(0.0f) {
 	quadTree[0].isLeafNode = false;
 	quadTree[0].pObjectList.shrink_to_fit();
 	quadTree[0].vPoint1 = vec3(-6000.0f, 0.0f, -6000.0f);
@@ -183,7 +183,7 @@ void StageManager::Init(Unit* target)
 			float radius = vec3(value["w"].asInt() / 2.0f, value["d"].asInt() / 2.0f, value["h"].asInt() / 2.0f).GetSize();
 			vec3 pos = vec3(value["x"].asInt() - mapW / 2, value["d"].asInt() / 2.0, -(value["y"].asInt() - mapH / 2));
 			Building building(vec3(value["w"].asInt() / 2.0f, value["d"].asInt() / 2.0f, value["h"].asInt() / 2.0f), pos, radius, 0.0f, (float)(rand() % 360), 0.0f);
-			building.SetColor(rand() / (float)RAND_MAX * 2 + 0.4f, rand() / (float)RAND_MAX * 2 + 0.4f, rand() / (float)RAND_MAX * 2 + 0.4f);
+			building.SetColor(rand() / ((float)RAND_MAX * 10 / 7.0) + 0.7f, rand() / ((float)RAND_MAX * 10 / 7.0) + 0.7f, rand() / ((float)RAND_MAX * 10 / 7.0) + 0.7f);
 
 			for (int z = 0; z < 8; ++z) {
 				for (int x = 0; x < 8; ++x) {
@@ -227,9 +227,33 @@ void StageManager::Init(Unit* target)
 	}
 	else throw "No Map Node Data";
 
+	// 길 생성
+	int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
+
+	for (int i = 0; i < 32; ++i) {
+		for (int j = 0; j < 32; ++j) {
+			for (int k = 0; k < 8; ++k) {
+				if (k >= 1 && k <= 4) continue;
+				if (node[j][i] & (1 << k)) {
+					int nx = d[k][0], nz = d[k][1];
+					if (nx + i < 0 || nx + i >= 32 || nz + j < 0 || nz >= 32) continue;
+					roadList.push_back(new Road(vec3(387.1*i - 6000, 0.0, 387.1*j - 6000), vec3(387.1f*(nx+i) - 6000, 0.0f, 387.1f*(nz+j) - 6000), 50));
+				}
+			}
+		}
+	}
+
 	//	드론 생성
 	droneList.push_back(new Drone(target, vec3(0, 3.0f, 500.0f), 12.5f));
 	droneList.back()->SetDes();
+
+	for (int i = 0; i < 2; ++i) {
+		carList.push_back(new Car(vec3(-3000.0f, 3.0f, -3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(-3000.0f, 3.0f, 3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(0.0f, 3.0f, 0.0f), 1.0f));
+		carList.push_back(new Car(vec3(3000.0f, 3.0f, -3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(3000.0f, 3.0f, 3000.0f), 1.0f));
+	}
 }
 
 void StageManager::Render()
@@ -238,28 +262,36 @@ void StageManager::Render()
 	for (auto& r : ringList) r->Render();
 	for (auto& d : droneList) d->Render();
 	for (auto& e : effectList) e->Render();
+	for (auto& road : roadList) road->Render();
+	for (auto& c : carList) c->Render();
 
-	int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
+	//int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
 
-	for (int i = 0; i < 32; ++i) {
-		for (int j = 0; j < 32; ++j) {
-			glPushMatrix();
-			glColor3f(1.0f, 0.6f, 0.6f);
-			glTranslatef((387.1f*i) - 6000, 0.0f, (387.1f*j) - 6000.0f);
-			for (int k = 0; k < 8; ++k) {
-				if (node[j][i] & (1 << k)) {
-					int nx = d[k][0], nz = d[k][1];
-					if (nx + i < 0 || nx + i >= 32 || nz + j < 0 || nz >= 32) continue;
-					glBegin(GL_LINES); {
-						glVertex3f(0.0f, 0.0f, 0.0f);
-						glVertex3f(387.1f*nx, 0.0f, 387.1f*nz);
-					}glEnd();
-				}
-			}
-			//glutSolidSphere(30.0f, 32, 32);
-			glPopMatrix();
-		}
-	}
+	//for (int i = 0; i < 32; ++i) {
+	//	for (int j = 0; j < 32; ++j) {
+	//		glPushMatrix();
+	//		glColor3f(1.0f, 0.6f, 0.6f);
+	//		glTranslatef((387.1f*i) - 6000, 0.0f, (387.1f*j) - 6000.0f);
+	//		for (int k = 0; k < 8; ++k) {
+	//			if (node[j][i] & (1 << k)) {
+	//				int nx = d[k][0], nz = d[k][1];
+	//				if (nx + i < 0 || nx + i >= 32 || nz + j < 0 || nz >= 32) continue;
+	//				glBegin(GL_LINES); {
+	//					glVertex3f(0.0f, 0.0f, 0.0f);
+	//					glVertex3f(387.1f*nx, 0.0f, 387.1f*nz);
+	//				}glEnd();
+	//			}
+	//		}
+	//		//glutSolidSphere(30.0f, 32, 32);
+	//		glPopMatrix();
+	//	}
+	//}
+}
+
+void StageManager::MinimapRender()
+{
+	for (int i = 21; i < 85; ++i) quadTree[i].Draw();
+	for (auto& r : ringList) r->Render();
 }
 
 void StageManager::Update(float frameTime)
@@ -267,9 +299,19 @@ void StageManager::Update(float frameTime)
 	for (auto& r : ringList) r->Update(frameTime);
 	for (auto& d : droneList) d->Update(frameTime);
 	for (auto& e : effectList) e->Update(frameTime);
+	for (auto& c : carList) c->Update(frameTime);
 	for (auto i = effectList.begin(); i != effectList.end(); ) {
 		if (!(*i)->GetAlive()) i = effectList.erase(i);
 		else ++i;
+	}
+	carTimer += frameTime;
+	if (carTimer > 0.5f && carList.size()<100) {
+		carList.push_back(new Car(vec3(-3000.0f, 3.0f, -3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(-3000.0f, 3.0f, 3000.0f), 1.0f)); 
+		carList.push_back(new Car(vec3(0.0f, 3.0f, 0.0f), 1.0f));
+		carList.push_back(new Car(vec3(3000.0f, 3.0f, -3000.0f), 1.0f));
+		carList.push_back(new Car(vec3(3000.0f, 3.0f, 3000.0f), 1.0f));
+		carTimer = 0.0f; 
 	}
 }
 

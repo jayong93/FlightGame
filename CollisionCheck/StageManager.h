@@ -3,6 +3,7 @@
 #include "Ring.h"
 #include "Unit.h"
 #include "Effect.h"
+#include "Road.h"
 #include <vector>
 
 enum EFFECT { FLAME, SPARK };
@@ -46,6 +47,9 @@ class StageManager {
 	std::vector<Ring*> ringList;
 	std::vector<Drone*> droneList;
 	std::vector<Effect*> effectList;
+	std::vector<Road*> roadList;
+	std::vector<Car*> carList;
+	float carTimer;
 
 	StageManager();
 public:
@@ -59,6 +63,8 @@ public:
 	void Init(Unit*);
 
 	void Render();
+
+	void MinimapRender();
 
 	void Update(float frameTime);
 	Node GetNearestNode(float x, float z);

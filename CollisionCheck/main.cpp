@@ -36,6 +36,7 @@ void ProcessSpeciaKeyInput(int, int, int);
 void ProcessKeyRelease(unsigned char, int, int);
 extern void ProcessSpeciaKeyRelease(int, int, int);
 
+enum StageState {INTRO, MAIN, ENDING};
 
 class CCamera {
 	vec3 vPositon;
@@ -157,13 +158,13 @@ int main() {
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
 	// Object Init
-	objList.push_back(new Road(0, 0, 3000, 400, 6000, 0, 0, 0));
 	objList.push_back(new Player(0, 3, 100));
+	//objList.push_back(new Road(vec3(-100,0,100), vec3(100,0,-100), 20));
 
-	Camera.SetTarget((Player*)objList.back());
+	Camera.SetTarget((Player*)objList.front());
 
 	StageManager* stm = StageManager::Instance();
-	stm->Init((Unit*)objList[1]);
+	stm->Init((Unit*)objList.front());
 
 	t3dInit();
 
@@ -191,6 +192,7 @@ void DrawScene() {
 
 	// 메인 뷰
 	glViewport(0, 0, width, height);
+	glEnable(GL_LIGHTING);
 
 	//Projenction
 	glMatrixMode(GL_PROJECTION);
@@ -217,6 +219,7 @@ void DrawScene() {
 
 		for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
 
+		// 경계 반구 그리기
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glColor4f(0.7, 0.7, 1.0, 0.5);
@@ -239,7 +242,7 @@ void DrawScene() {
 	glPushMatrix();
 	{
 		char str[20];
-		sprintf_s(str, 20, "HP : %d", (int)((Player*)objList[1])->GetHp());
+		sprintf_s(str, 20, "HP : %d", (int)((Player*)objList.front())->GetHp());
 
 		glColor3f(1, 1, 1);
 		glRasterPos2f(0, height - 20);
@@ -249,9 +252,17 @@ void DrawScene() {
 			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str[i]);
 		}
 
+		sprintf_s(str, 20, "MANA : %d", (int)((Player*)objList.front())->GetMana());
+		glRasterPos2f(0, height - 40);
+		len = strlen(str);
+		for (int i = 0; i < len; ++i)
+		{
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str[i]);
+		}
+
 		StageManager* stm = StageManager::Instance();
 		sprintf_s(str, 20, "REMAIN ITEM : %d", stm->GetItemCount());
-		glRasterPos2f(0, height - 40);
+		glRasterPos2f(0, height - 60);
 		len = strlen(str);
 		for (int i = 0; i < len; ++i)
 		{
@@ -275,7 +286,7 @@ void DrawScene() {
 	glPushMatrix();
 	{
 		// 플레이어 위치
-		vec3 camPos = objList[1]->GetPos();
+		vec3 camPos = objList.front()->GetPos();
 
 		glRotatef(90, 1, 0, 0);
 		glTranslatef(-camPos.x, -700, -camPos.z);
@@ -294,14 +305,14 @@ void DrawScene() {
 		glPopMatrix();
 
 		StageManager* stm = StageManager::Instance();
-		stm->Render();
+		stm->MinimapRender();
 
 		// 플레이어 마크 그리기
 		glPushMatrix();
 		{
 			float mat[16];
 			vec3 dir, unit(0, 0, -1);
-			objList[1]->GetMatrix(mat);
+			objList.front()->GetMatrix(mat);
 			dir = unit.MultMatrix(mat);
 
 			dir.y = 0;
@@ -363,8 +374,8 @@ void TimerFunction(int value) {
 
 	for (int i = 0; i < objList.size(); ++i) objList[i]->Update(frameTime);
 	//	지울 코드
-	sm->CollisionCheck((Player*)objList[1]);
-	bm->CollisionCheck((Player*)objList[1]);
+	sm->CollisionCheck((Player*)objList.front());
+	bm->CollisionCheck((Player*)objList.front());
 
 
 	glutTimerFunc(16, TimerFunction, 1);
