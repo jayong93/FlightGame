@@ -34,33 +34,15 @@ void Arm::Render()
 
 Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx) :CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(2.0f), speedRate(2.0f)
 , timer(0), isAlive(true), target(NULL)
-<<<<<<< HEAD
 {
 	for (int i = 0; i < 16; ++i) matrix[i] = mtx[i];
 
 	velocity = vec3(matrix[8], matrix[9], matrix[10]);
-	velocity.Normalize();
-}
-
-Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir) : CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(1000.0f), speedRate(2.0f)
-, timer(0), isAlive(true), target(NULL)
-{
-	for (int i = 0; i < 16; ++i) matrix[i] = mtx[i];
-
-	velocity = dir;
-=======
-{
-	for (int i = 0; i < 16; ++i) matrix[i] = mtx[i];
-
-	velocity = vec3(matrix[8], matrix[9], matrix[10]);
->>>>>>> refs/remotes/origin/SoYun
 	velocity.Normalize();
 
 	position = position + (velocity * 10);
 }
 
-<<<<<<< HEAD
-=======
 Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir) : CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(1000.0f), speedRate(2.0f)
 , timer(0), isAlive(true), target(NULL)
 {
@@ -72,7 +54,6 @@ Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir) : CubeObjec
 	position = position + (velocity * 10);
 }
 
->>>>>>> refs/remotes/origin/SoYun
 Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir, Unit* unit)
 	:CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(1000.0f), speedRate(2.0f)
 	, timer(0), isAlive(true), target(unit)
@@ -138,10 +119,6 @@ void Bullet::CollisionCheck_Building()
 	StageManager* stm = StageManager::Instance();
 	std::vector<std::vector<Building>*> buildingList = stm->GetBuildingList(position.x, position.z, boundingRad);
 	for (int n = 0; n < buildingList.size(); ++n) {
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/SoYun
 		for (int i = 0; i < buildingList[n]->size(); ++i) {
 			if (CubeObject::CollisionCheck(&(*buildingList[n])[i])) isAlive = false;
 		}

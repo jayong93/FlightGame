@@ -6,10 +6,7 @@ void Ring::Render()
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	{
-<<<<<<< HEAD
 		item.Render();
-=======
->>>>>>> refs/remotes/origin/SoYun
 		glMultMatrixf(matrix);
 		for (auto& c : cubeList)
 		{
@@ -36,37 +33,26 @@ void Ring::Update(float frameTime)
 			c->UpdateMatrix(matrix);
 		}
 	}
-<<<<<<< HEAD
 	item.Update(frameTime);
 }
 
-bool Ring::CollisionCheck(const Object * obj) const
-=======
-}
-
 bool Ring::CollisionCheck(const CubeObject * obj) const
->>>>>>> refs/remotes/origin/SoYun
 {
 	if (Object::CollisionCheck(obj))
 	{
 		for (auto& c : cubeList)
 		{
 			if (obj->CollisionCheck(c))
-<<<<<<< HEAD
-=======
+			{
 				std::cout << "CollisionWithRing" << std::endl;
->>>>>>> refs/remotes/origin/SoYun
 				return true;
+			}
 		}
 	}
 	return false;
 }
 
-<<<<<<< HEAD
 Ring::Ring(float x, float y, float z, float w, float h, float d, float angle, bool rotate) : Object(vec3(x, y, z), vec3(w, h, d).GetSize(), 0, angle, 0), isRotate(rotate), item(vec3(w / 6.0, h / 6.0, h / 6.0), vec3(x, y, z), vec3(w / 4.0, h / 4.0, d / 4.0).GetSize(), 0, 0, 0)
-=======
-Ring::Ring(float x, float y, float z, float w, float h, float d, float angle, bool rotate) : Object(vec3(x, y, z), vec3(w, h, d).GetSize(), 0, angle, 0), isRotate(rotate)
->>>>>>> refs/remotes/origin/SoYun
 {
 	// 테두리 생성
 
@@ -135,21 +121,17 @@ Item::Item(vec3 & extent, vec3 & pos, float rad, float p, float y, float r) : Cu
 {
 }
 
-<<<<<<< HEAD
 float Item::pointColor[8][3] = 
 {
 	{0,0,0}, {1,0,0}, {0,1,0}, {0,0,1},
 	{1,0,1}, {1,1,0}, {0,1,1}, {1,1,1}
 };
 
-=======
->>>>>>> refs/remotes/origin/SoYun
 void Item::Render()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	{
-<<<<<<< HEAD
 		glMultMatrixf(matrix);
 		glScalef(extent.x*2, extent.y*2, extent.z*2);
 		glBegin(GL_QUADS);
@@ -215,21 +197,15 @@ void Item::Render()
 			glVertex3f(0.5, 0.5, -0.5);
 		}
 		glEnd();
-=======
-
->>>>>>> refs/remotes/origin/SoYun
 	}
 	glPopMatrix();
 }
 
-<<<<<<< HEAD
 void Item::Update(float frameTime)
 {
 	this->Rotate(0, 60 * frameTime, 0);
 }
 
-=======
->>>>>>> refs/remotes/origin/SoYun
 RotateRing::RotateRing(float x, float y, float z, float w, float h, float d, float r) : Ring(x, y, z, w, h, d), rad(r), angle(0)
 {
 	float tmp[16];
