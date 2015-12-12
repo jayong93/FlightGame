@@ -15,8 +15,8 @@ Patrol * Patrol::Instance()
 
 void Patrol::Update(Drone& drone, float frameTime)
 {
-	if ((GetDistance(vec3(drone.position.x, 0.0f, drone.position.z), vec3(drone.target->position.x, 0.0f, drone.target->position.z)) < 3000.0f)
-		&& (!drone.target->GetIsStelth())) {
+	if ((GetDistance(vec3(drone.position.x, 0.0f, drone.position.z), vec3(drone.target->position.x, 0.0f, drone.target->position.z)) < 1500.0f)
+		&& (!drone.target->GetIsStelth()) && (drone.target->GetAlive())) {
 		drone.ChangeState(Trace::Instance());
 		return;
 	}
@@ -46,8 +46,8 @@ Trace * Trace::Instance()
 
 void Trace::Update(Drone & drone, float frameTime)
 {
-	if (GetDistance(vec3(drone.position.x, 0.0f, drone.position.z), vec3(drone.target->position.x, 0.0f, drone.target->position.z)) > 4000.0f
-		||drone.target->GetIsStelth()) {
+	if (GetDistance(vec3(drone.position.x, 0.0f, drone.position.z), vec3(drone.target->position.x, 0.0f, drone.target->position.z)) > 2000.0f
+		||drone.target->GetIsStelth()||!drone.target->GetAlive()) {
 		drone.ChangeState(Patrol::Instance());
 		drone.SetDes();
 		return;
@@ -113,7 +113,7 @@ void Trace::Update(Drone & drone, float frameTime)
 	}
 	drone.Move(drone.velocity * (250 * frameTime));
 	//드론 방향 설정 - 벡터로 각 구하기
-	if (GetDistance(vec3(drone.position.x, 0.0f, drone.position.z), vec3(drone.target->position.x, 0.0f, drone.target->position.z)) < 1000.0f) {
+	if (GetDistance(vec3(drone.position.x, 0.0f, drone.position.z), vec3(drone.target->position.x, 0.0f, drone.target->position.z)) < 700.0f) {
 		if (drone.shotTimer == 0) drone.Shot();
 		vec3 dir = drone.target->position - drone.position;
 		dir.Normalize();
