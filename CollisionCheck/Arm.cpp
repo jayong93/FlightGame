@@ -117,7 +117,6 @@ void Bullet::CollisionCheck_Building()
 	StageManager* stm = StageManager::Instance();
 	std::vector<std::vector<Building>*> buildingList = stm->GetBuildingList(position.x, position.z, boundingRad);
 	for (int n = 0; n < buildingList.size(); ++n) {
-
 		for (int i = 0; i < buildingList[n]->size(); ++i) {
 			if (CubeObject::CollisionCheck(&(*buildingList[n])[i])) isAlive = false;
 		}
