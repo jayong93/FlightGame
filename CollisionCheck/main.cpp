@@ -8,7 +8,7 @@
 #include "InputManager.h"
 #include <time.h>
 
-static const int width = 1024, height = width/16.0*9;
+static const int width = 1024, height = width / 16.0 * 9;
 const float mapWidth = 200, mapHeight = 200;
 static float fov = 60;
 
@@ -211,7 +211,7 @@ void DrawScene() {
 	// Camera Transform
 	Camera.CameraTransform();
 
-	float lightPos[4] = { 0,2,1,0};
+	float lightPos[4] = { 0,2,1,0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 	BulletManager* bulletmger = BulletManager::Instance();
@@ -241,7 +241,7 @@ void DrawScene() {
 	glRotatef(90, 1, 0, 0);
 	glTranslatef(-camPos.x, -700, -camPos.z);
 
-	float mapLightPos[4] = { 0,2,1,0 };
+	float mapLightPos[4] = { 0,1,0,0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, mapLightPos);
 
 	glPushMatrix();
@@ -258,9 +258,33 @@ void DrawScene() {
 
 	glPushMatrix();
 	{
+		float mat[16];
+		vec3 dir, unit(0, 0, -1);
+		objList[1]->GetMatrix(mat);
+		dir = unit.MultMatrix(mat);
+
+		dir.y = 0;
+		dir.Normalize();
+
 		glTranslatef(camPos.x, 500, camPos.z);
-		glColor3f(1, 0, 0);
-		glutSolidSphere(20, 30, 30);
+		if (dir.x < 0)
+		{
+			glRotatef(acosf(dir.Dot(unit)) * 180 / 3.14, 0, 1, 0);
+		}
+		else
+		{
+			glRotatef(-acosf(dir.Dot(unit)) * 180 / 3.14, 0, 1, 0);
+		}
+		glColor3f(1, 0.0, 0.0);
+		glNormal3f(0, 1, 0);
+		glBegin(GL_POLYGON);
+		{
+			glVertex3f(0, 0, -30);
+			glVertex3f(-30, 0, 30);
+			glVertex3f(0, 0, 15);
+			glVertex3f(30, 0, 30);
+		}
+		glEnd();
 	}
 	glPopMatrix();
 
@@ -279,6 +303,9 @@ void TimerFunction(int value) {
 	BulletManager* bm = BulletManager::Instance();
 	bm->Update();
 
+	StageManager* sm = StageManager::Instance();
+	sm->Update(frameTime);
+
 	for (int i = 0; i < objList.size(); ++i) objList[i]->Update(frameTime);
 
 	glutTimerFunc(16, TimerFunction, 1);
@@ -294,7 +321,7 @@ void ProcessKeyInput(unsigned char key, int x, int y)
 
 void ProcessSpeciaKeyInput(int key, int x, int y)
 {
-	InputManager::GetInstance()->PushKey(key+300);
+	InputManager::GetInstance()->PushKey(key + 300);
 }
 
 void ProcessKeyRelease(unsigned char key, int x, int y)
@@ -306,6 +333,6 @@ void ProcessKeyRelease(unsigned char key, int x, int y)
 
 void ProcessSpeciaKeyRelease(int key, int x, int y)
 {
-	InputManager::GetInstance()->ReleaseKey(key+300);
+	InputManager::GetInstance()->ReleaseKey(key + 300);
 }
 

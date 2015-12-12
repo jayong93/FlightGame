@@ -104,7 +104,7 @@ void StageManager::Init()
 		}
 		else if (value["type"].asString() == "ring")
 		{
-			Ring* ring = new Ring(value["x"].asInt() - mapW / 2, value["z"].asInt(), -(value["y"].asInt() - mapH / 2), value["w"].asInt(), value["d"].asInt(), value["h"].asInt(),value["angle"].asInt(), value["is_rotate"].asBool());
+			Ring* ring = new Ring(value["x"].asInt() - mapW / 2, value["z"].asInt(), -(value["y"].asInt() - mapH / 2), value["w"].asInt(), value["d"].asInt(), value["h"].asInt(),value["angle"].asInt(), true);
 			objectList.push_back(ring);
 		}
 	}
@@ -159,6 +159,12 @@ void StageManager::Render()
 			glPopMatrix();
 		}
 	}
+}
+
+void StageManager::Update(float frameTime)
+{
+	for (auto& b : buildingList) b.Update(frameTime);
+	for (auto& o : objectList) o->Update(frameTime);
 }
 
 Node & StageManager::GetNearestNode(float x, float z)
