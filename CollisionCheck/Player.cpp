@@ -47,13 +47,9 @@ bool Player::ColiisionCheck_Ring(const Ring* ring)
 	{
 		for (auto& c : cubeList)
 		{
-<<<<<<< HEAD
 			ring->ItemCollisionCheck(c);
-			if (ring->CollisionCheck(c))
-=======
 			if (ring->CollisionCheck(c)) {
 				ProcessPlayerDeath();
->>>>>>> refs/remotes/origin/SoYun
 				return true;
 			}
 		}
