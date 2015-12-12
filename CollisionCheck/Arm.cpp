@@ -25,7 +25,7 @@ void Arm::Render()
 }
 
 Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx)
-	:CubeObject::CubeObject(ext, vec3(mtx[12],mtx[13],mtx[14]),ext.GetSize(),0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(2.0f), speedRate(2.0f)
+	:CubeObject::CubeObject(ext, vec3(mtx[12],mtx[13],mtx[14]),ext.GetSize(),0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(8.0f), speedRate(2.0f)
 	,timer(0), isAlive(true)
 {
 	for (int i = 0; i < 16; ++i) matrix[i] = mtx[i];
@@ -35,7 +35,7 @@ Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx)
 }
 
 Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir)
-	:CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(2.0f), speedRate(2.0f)
+	:CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(8.0f), speedRate(2.0f)
 	, timer(0), isAlive(true)
 {
 	for (int i = 0; i < 16; ++i) matrix[i] = mtx[i];

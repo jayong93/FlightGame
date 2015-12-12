@@ -6,7 +6,6 @@ void Ring::Render()
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	{
-		glMultMatrixf(matrix);
 		for (auto& c : cubeList)
 		{
 			c->Render();
@@ -20,6 +19,10 @@ void Ring::Update(float frameTime)
 	if (isRotate)
 	{
 		this->Rotate(0, 0, 60 * frameTime);
+		for (auto& c : cubeList)
+		{
+			c->UpdateMatrix(matrix);
+		}
 	}
 }
 
@@ -56,6 +59,11 @@ Ring::Ring(float x, float y, float z, float w, float h, float d, float angle, bo
 	ext = vec3(w / 2.0, d / 2.0, d / 2.0);
 	rPos = vec3(wx, wy, wz);
 	cubeList.push_back(new RingEdge(ext, position + rPos, rPos, ext.GetSize(), 0, 0, 0));
+
+	for (auto& c : cubeList)
+	{
+		c->UpdateMatrix(matrix);
+	}
 }
 
 RingEdge::RingEdge(vec3 & ext, vec3 & pos, vec3& rPos, float rad, float p, float y, float r) : CubeObject(ext, pos, rad, p, y, r), relativePos(rPos)
@@ -66,11 +74,22 @@ void RingEdge::Render()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
-	glTranslatef(relativePos.x, relativePos.y, relativePos.z);
+	glMultMatrixf(matrix);
 	glColor3f(1.0f, 1.0f, 0.0f);
 	glScalef(2 * extent.x, 2 * extent.y, 2 * extent.z);
 	glutSolidCube(1.0f);
 	glPopMatrix();
+}
+
+void RingEdge::UpdateMatrix(float * pMatrix)
+{
+	float tmp[16];
+	glMatrixMode(GL_MODELVIEW);
+	glGetFloatv(GL_MODELVIEW_MATRIX, tmp);
+	glLoadMatrixf(pMatrix);
+	glTranslatef(relativePos.x, relativePos.y, relativePos.z);
+	glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
+	glLoadMatrixf(tmp);
 }
 
 Item::Item(vec3 & extent, vec3 & pos, float rad, float p, float y, float r) : CubeObject(extent, pos, rad, p, y, r)
@@ -97,6 +116,11 @@ RotateRing::RotateRing(float x, float y, float z, float w, float h, float d, flo
 	glTranslatef(0, rad, 0);
 	glGetFloatv(GL_MODELVIEW_MATRIX, ringMat);
 	glLoadMatrixf(tmp);
+
+	for (auto& c : cubeList)
+	{
+		c->UpdateMatrix(matrix);
+	}
 }
 
 void RotateRing::Render()
@@ -127,4 +151,9 @@ void RotateRing::Update(float frameTime)
 	glTranslatef(0, rad, 0);
 	glGetFloatv(GL_MODELVIEW_MATRIX, ringMat);
 	glLoadMatrixf(tmp);
+
+	for (auto& c : cubeList)
+	{
+		c->UpdateMatrix(matrix);
+	}
 }

@@ -25,6 +25,7 @@ public:
 	PlayerBody(const vec3& oPos, const vec3& rPos);
 
 	virtual void Render();
+	virtual void UpdateMatrix(float* pMatrix);
 private:
 	vec3 relativePos;
 };
@@ -35,6 +36,7 @@ public:
 	PlayerWing(const vec3& oPos, const vec3& rPos);
 
 	virtual void Render();
+	virtual void UpdateMatrix(float* pMatrix);
 private:
 	vec3 relativePos;
 };

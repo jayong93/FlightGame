@@ -35,7 +35,7 @@ public:
 	RingEdge(vec3&, vec3&, vec3& rPos, float, float, float, float);
 
 	virtual void Render();
-
+	virtual void UpdateMatrix(float* pMatrix);
 private:
 	vec3 relativePos;
 };
