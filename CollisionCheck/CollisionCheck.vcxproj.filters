@@ -98,5 +98,8 @@
     <ClInclude Include="Effect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Fireworks.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
