@@ -36,7 +36,6 @@ class StageManager {
 	unsigned char** node;
 	float mapW, mapH;
 
-	//std::vector<Building> buildingList;
 	std::vector<Object*> objectList;
 
 	StageManager();
@@ -50,6 +49,8 @@ public:
 	void Init();
 
 	void Render();
+
+	void Update(float frameTime);
 
 	Node& GetNearestNode(float x, float z);
 

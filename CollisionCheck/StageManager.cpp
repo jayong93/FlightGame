@@ -72,10 +72,10 @@ StageManager::StageManager() {
 
 	for (int i = 0; i < 2; ++i) {
 		for (int j = 0; j < 2; ++j) {
-			quadTree[i*2 + j + 1].isLeafNode = false;
-			quadTree[i*2 + j + 1].pObjectList.shrink_to_fit();
-			quadTree[i*2 + j + 1].vPoint1 = vec3(-6000.0f + (6000.0f)*j, 0.0f, -6000.0f + (6000.0f)*i);
-			quadTree[i*2 + j + 1].vPoint2 = vec3(0.0f + (6000.0f)*j, 0.0f, 0.0f + (6000.0f)*i);
+			quadTree[i * 2 + j + 1].isLeafNode = false;
+			quadTree[i * 2 + j + 1].pObjectList.shrink_to_fit();
+			quadTree[i * 2 + j + 1].vPoint1 = vec3(-6000.0f + (6000.0f)*j, 0.0f, -6000.0f + (6000.0f)*i);
+			quadTree[i * 2 + j + 1].vPoint2 = vec3(0.0f + (6000.0f)*j, 0.0f, 0.0f + (6000.0f)*i);
 		}
 	}
 
@@ -175,9 +175,9 @@ void StageManager::Init()
 		{
 			float radius = vec3(value["w"].asInt() / 2.0f, value["d"].asInt() / 2.0f, value["h"].asInt() / 2.0f).GetSize();
 			vec3 pos = vec3(value["x"].asInt() - mapW / 2, value["d"].asInt() / 2.0, -(value["y"].asInt() - mapH / 2));
-			Building building(vec3(value["w"].asInt() / 2.0f, value["d"].asInt() / 2.0f, value["h"].asInt() / 2.0f),pos ,radius , 0.0f, (float)(rand() % 360), 0.0f);
+			Building building(vec3(value["w"].asInt() / 2.0f, value["d"].asInt() / 2.0f, value["h"].asInt() / 2.0f), pos, radius, 0.0f, (float)(rand() % 360), 0.0f);
 			building.SetColor(rand() / (float)RAND_MAX * 2 + 0.4f, rand() / (float)RAND_MAX * 2 + 0.4f, rand() / (float)RAND_MAX * 2 + 0.4f);
-			
+
 			for (int z = 0; z < 8; ++z) {
 				for (int x = 0; x < 8; ++x) {
 					if (((pos.x + radius > -6000.0f + (1500.0f)*x) && (pos.x - radius < -4500.0f + (1500.0f)*x))
@@ -189,7 +189,8 @@ void StageManager::Init()
 		}
 		else if (value["type"].asString() == "ring")
 		{
-			Ring* ring = new Ring(value["x"].asInt() - mapW / 2, value["z"].asInt(), -(value["y"].asInt() - mapH / 2), value["w"].asInt(), value["d"].asInt(), value["h"].asInt(),value["angle"].asInt(), value["is_rotate"].asBool());
+			// 링 회전 테스트
+			Ring* ring = new Ring(value["x"].asInt() - mapW / 2, value["z"].asInt(), -(value["y"].asInt() - mapH / 2), value["w"].asInt(), value["d"].asInt(), value["h"].asInt(), value["angle"].asInt(), true);
 			objectList.push_back(ring);
 		}
 	}
@@ -221,7 +222,6 @@ void StageManager::Init()
 void StageManager::Render()
 {
 	for (int i = 21; i < 85; ++i) quadTree[i].Draw();
-	//for (unsigned int i = 0; i < buildingList.size(); ++i) buildingList[i].Render();
 	for (auto& o : objectList) o->Render();
 
 	int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
@@ -245,6 +245,11 @@ void StageManager::Render()
 			glPopMatrix();
 		}
 	}
+}
+
+void StageManager::Update(float frameTime)
+{
+	for (auto& o : objectList) o->Update(frameTime);
 }
 
 Node & StageManager::GetNearestNode(float x, float z)
@@ -362,5 +367,3 @@ void StageManager::CollisonCheck_Bullet(std::vector<Bullet>* bulletList)
 	//		(*bulletList)[i].CollisionCheck_Building(&buildingList[j]);
 	//}
 }
-
-

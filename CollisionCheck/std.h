@@ -10,3 +10,4 @@ GLubyte * LoadDIBitmap(const char *filename, BITMAPINFO **info);
 
 int GetWindowWidth();
 int GetWindowHeight();
+float* GetFovValue();

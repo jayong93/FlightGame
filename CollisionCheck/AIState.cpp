@@ -82,8 +82,8 @@ void Trace::Update(Drone & drone, float frameTime)
 		for (int n = 0; n < buildingList.size(); ++n) {
 			for (int i = 0; i < buildingList[n]->size(); ++i) {
 				float distance;
-				if ((*buildingList[n])[i].CollisionCheckRay(drone.position, drone.target->position, distance)){
-				flag = true;
+				if ((*buildingList[n])[i].CollisionCheckRay(drone.position, drone.target->position, distance)) {
+					flag = true;
 				}
 			}
 		}

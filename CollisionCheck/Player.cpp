@@ -35,7 +35,6 @@ void Player::Render()
 	{
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glMultMatrixf(matrix);
 		for (auto& c : cubeList)
 		{
 			c->Render();
@@ -48,11 +47,6 @@ void Player::Render()
 void Player::Move(const vec3 & dir)
 {
 	position = position + dir;
-	for (auto& c : cubeList)
-	{
-		// 충돌체크를 위해 꼭 해줘야 함
-		c->Move(dir);
-	}
 
 	float mat[16], tmp[16];
 	glMatrixMode(GL_MODELVIEW);
@@ -64,6 +58,12 @@ void Player::Move(const vec3 & dir)
 	glGetFloatv(GL_MODELVIEW_MATRIX, mat);
 	this->SetMatrix(mat);
 	glLoadMatrixf(tmp);
+
+	for (auto& c : cubeList)
+	{
+		// 충돌체크를 위해 꼭 해줘야 함
+		c->UpdateMatrix(matrix);
+	}
 }
 
 void Player::Rotate(float pitch, float yaw, float roll)
@@ -79,6 +79,12 @@ void Player::Rotate(float pitch, float yaw, float roll)
 	glGetFloatv(GL_MODELVIEW_MATRIX, mat);
 	this->SetMatrix(mat);
 	glLoadMatrixf(tmp);
+
+	for (auto& c : cubeList)
+	{
+		// 충돌체크를 위해 꼭 해줘야 함
+		c->UpdateMatrix(matrix);
+	}
 
 	float speed = velocity.GetSize();
 	vec3 unit(0, 0, -1);
@@ -277,10 +283,12 @@ void Player::Update(float frameTime)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	float speed = velocity.GetSize();
-	gluPerspective(60 + (30 / 420.0 * speed), GetWindowWidth() / (float)GetWindowHeight(), 0.1, 2000);
+	float* fov = GetFovValue();
+	*fov = 60 + (30 / 420.0 * speed);
 	glMatrixMode(GL_MODELVIEW);
 
 	this->Move(velocity*frameTime);
+	printf("x: %f, y: %f, z: %f\n", position.x, position.y, position.z);
 }
 
 PlayerBody::PlayerBody(const vec3& oPos, const vec3& rPos) : CubeObject(vec3(2, 1.25, 7), oPos + rPos, 7, 0, 0, 0), relativePos(rPos)
@@ -292,12 +300,23 @@ void PlayerBody::Render()
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	{
-		glTranslatef(relativePos.x, relativePos.y, relativePos.z);
+		glMultMatrixf(matrix);
 		glScalef(extent.x * 2, extent.y * 2, extent.z * 2);
 		glColor4f(1, 1, 1, alpha);
 		glutSolidCube(1);
 	}
 	glPopMatrix();
+}
+
+void PlayerBody::UpdateMatrix(float * pMatrix)
+{
+	float tmp[16];
+	glMatrixMode(GL_MODELVIEW);
+	glGetFloatv(GL_MODELVIEW_MATRIX, tmp);
+	glLoadMatrixf(pMatrix);
+	glTranslatef(relativePos.x, relativePos.y, relativePos.z);
+	glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
+	glLoadMatrixf(tmp);
 }
 
 PlayerWing::PlayerWing(const vec3 & oPos, const vec3& rPos) : CubeObject(vec3(2, 1.25, 4), oPos + rPos, 4, 0, 0, 0), relativePos(rPos)
@@ -309,10 +328,21 @@ void PlayerWing::Render()
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	{
-		glTranslatef(relativePos.x, relativePos.y, relativePos.z);
+		glMultMatrixf(matrix);
 		glScalef(extent.x * 2, extent.y * 2, extent.z * 2);
 		glColor4f(0, 0, 0.5, alpha);
 		glutSolidCube(1);
 	}
 	glPopMatrix();
+}
+
+void PlayerWing::UpdateMatrix(float * pMatrix)
+{
+	float tmp[16];
+	glMatrixMode(GL_MODELVIEW);
+	glGetFloatv(GL_MODELVIEW_MATRIX, tmp);
+	glLoadMatrixf(pMatrix);
+	glTranslatef(relativePos.x, relativePos.y, relativePos.z);
+	glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
+	glLoadMatrixf(tmp);
 }
