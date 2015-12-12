@@ -248,6 +248,16 @@ void StageManager::Init(Unit* target)
 	droneList.back()->SetDes();
 }
 
+void StageManager::Restart(Unit* target)
+{
+	for (auto& d : droneList) delete d;
+	droneList.clear();
+	droneList.push_back(new Drone(target, vec3(0, 3.0f, 500.0f), 12.5f));
+	droneList.back()->SetDes();
+
+	for (auto& r : ringList) r->SetItem(true);
+}
+
 void StageManager::Render()
 {
 	for (int i = 21; i < 85; ++i) quadTree[i].Draw();
@@ -450,6 +460,18 @@ void StageManager::CallEffenct(int effectname, const vec3 & pos, vec3& color)
 				effectList.push_back(new Flame(pos, dir, color));
 			}
 			z += 0.4f;
+		}
+		break;
+	}
+	case EFFECT::SPARK: {
+		float z = -4.0f;
+		while (z <= 0.0f) {
+			float raidius = 4.0f*4.0f - z*z;
+			float radian = (rand() % 628) / 100.0f;
+			vec3 dir(cosf(radian)*raidius, sinf(radian)*raidius, z);
+			dir.Normalize();
+			effectList.push_back(new Spark(pos, dir, color, ((rand()%2))/10.0f));
+			z += 1.0f;
 		}
 		break;
 	}

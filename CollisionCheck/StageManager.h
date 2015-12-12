@@ -60,6 +60,8 @@ public:
 
 	void Init(Unit*);
 
+	void Restart(Unit* target);
+
 	void Render();
 
 	void MinimapRender();

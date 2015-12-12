@@ -32,6 +32,7 @@ public:
 	virtual bool CollisionCheck(const CubeObject* obj) const;
 	virtual bool ItemCollisionCheck(const CubeObject* obj) const;
 	bool IsItemExist() const { return isItemExist; }
+	void SetItem(bool b) { isItemExist = b; }
 };
 
 class RotateRing : public Ring
