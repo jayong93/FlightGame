@@ -401,7 +401,7 @@ void Player::Update(float frameTime)
 		if (deathTimer >= 3)
 		{
 			StageState* ss = GetStageState();
-			*ss = INTRO;
+			*ss = ENDING;
 			float* fov = GetFovValue();
 			*fov = 60;
 		}

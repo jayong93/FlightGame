@@ -6,6 +6,7 @@
 #include "text.h"
 #include "StageManager.h"
 #include "InputManager.h"
+#include "Fireworks.h"
 #include <time.h>
 
 
@@ -13,6 +14,8 @@ static const int width = 1024, height = width / 16.0 * 9;
 const float mapWidth = 200, mapHeight = 200;
 static float fov = 60;
 static StageState stageState;
+std::vector<Fireworks> fireworksList;
+int fireworkTimer;
 
 int GetWindowWidth()
 {
@@ -97,7 +100,12 @@ public:
 		}
 		else if (stageState == INTRO)
 		{
-			glTranslatef(0, -1800, -9000);
+			glTranslatef(0, -700, -5000);
+			glRotatef(fYaw, 0, 1, 0);
+		}
+		else if (stageState == ENDING)
+		{
+			glTranslatef(0, -1800, -6000);
 			glRotatef(fYaw, 0, 1, 0);
 		}
 	}
@@ -228,15 +236,17 @@ void DrawScene() {
 
 		StageManager* stm = StageManager::Instance();
 		stm->Render();
+		for (unsigned int i = 0; i < fireworksList.size(); ++i) fireworksList[i].Render();
 
-		// 경계 반구 그리기
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glColor4f(0.7, 0.7, 1.0, 0.5);
-		glutSolidSphere(5800, 30, 30);
-		glDisable(GL_BLEND);
-		glutWireSphere(5800, 30, 30);
-
+		if (stageState != ENDING) {
+			// 경계 반구 그리기
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glColor4f(0.7, 0.7, 1.0, 0.5);
+			glutSolidSphere(5800, 30, 30);
+			glDisable(GL_BLEND);
+			glutWireSphere(5800, 30, 30);
+		}
 		for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
 	}
 	glPopMatrix();
@@ -298,6 +308,9 @@ void DrawScene() {
 			{
 				glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, str[i]);
 			}
+		}
+		else if (stageState == ENDING) {
+			
 		}
 	}
 	glPopMatrix();
@@ -432,6 +445,15 @@ void TimerFunction(int value) {
 
 		sm->CollisionCheck((Player*)objList.front());
 		bm->CollisionCheck((Player*)objList.front());
+	}
+	else if (stageState == ENDING) {
+		Camera.YawRotate(20 * frameTime);
+		for (unsigned int i = 0; i < fireworksList.size(); ++i) fireworksList[i].Update();
+		++fireworkTimer;
+		if (fireworkTimer == 30 && fireworksList.size() < 100) {
+			fireworkTimer = 0;
+			fireworksList.push_back(Fireworks(vec3(float(rand() % int(2000) - 1000.0f), 0.0f, float(rand() % int(2000) - 1000.0f)), 0.0f, rand() % 360, 0.0f));
+		}
 	}
 
 	glutTimerFunc(16, TimerFunction, 1);
