@@ -227,22 +227,7 @@ void StageManager::Init(Unit* target)
 	}
 	else throw "No Map Node Data";
 
-<<<<<<< HEAD
-	//	靛沸 积己
-	droneList.push_back(new Drone(target, vec3(0, 3.0f, 500.0f), 12.5f));
-	droneList.back()->SetDes();
-}
-
-void StageManager::Render()
-{
-	for (int i = 21; i < 85; ++i) quadTree[i].Draw();
-	for (auto& r : ringList) r->Render();
-	for (auto& d : droneList) d->Render();
-	for (auto& e : effectList) e->Render();
-
-=======
 	// 辨 积己
->>>>>>> refs/remotes/origin/JaeYong
 	int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
 
 	for (int i = 0; i < 32; ++i) {
