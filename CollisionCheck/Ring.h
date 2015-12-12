@@ -21,6 +21,7 @@ protected:
 	std::vector<CubeObject*> cubeList;
 
 	bool isRotate;
+	mutable bool isItemExist;
 	Item item;
 
 public:
@@ -28,7 +29,9 @@ public:
 
 	virtual void Render();
 	virtual void Update(float frameTime);
-	virtual bool CollisionCheck(const Object* obj) const;
+	virtual bool CollisionCheck(const CubeObject* obj) const;
+	virtual bool ItemCollisionCheck(const CubeObject* obj) const;
+	bool IsItemExist() const { return isItemExist; }
 };
 
 class RotateRing : public Ring
