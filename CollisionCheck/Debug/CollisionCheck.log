@@ -1,0 +1,32 @@
+﻿빌드 시작: 2015-12-13 오전 3:49:00
+     1>2 노드의 "C:\Users\성소윤\Desktop\CollisionCheck\CollisionCheck.vcxproj" 프로젝트(Build 대상)입니다.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt AIState.cpp
+         AIState.cpp
+     1>c:\users\성소윤\desktop\collisioncheck\stagemanager.h(31): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+     1>c:\users\성소윤\desktop\collisioncheck\aistate.cpp(95): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+     1>c:\users\성소윤\desktop\collisioncheck\aistate.cpp(96): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\성소윤\Desktop\CollisionCheck\Debug\CollisionCheck.exe" /INCREMENTAL /NOLOGO lib_json.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\성소윤\Desktop\CollisionCheck\Debug\CollisionCheck.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\성소윤\Desktop\CollisionCheck\Debug\CollisionCheck.lib" /MACHINE:X86 Debug\AIState.obj
+         Debug\Arm.obj
+         Debug\Effect.obj
+         Debug\InputManager.obj
+         Debug\main.obj
+         Debug\Object.obj
+         Debug\Player.obj
+         Debug\Ring.obj
+         Debug\Road.obj
+         Debug\StageManager.obj
+         Debug\std.obj
+         Debug\text.obj
+         Debug\Unit.obj
+         Debug\Vector.obj
+     1>lib_json.lib(json_reader.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'lib_json.lib(json_reader.obj)' 또는 'C:\Users\성소윤\Desktop\CollisionCheck\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+     1>lib_json.lib(json_value.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'lib_json.lib(json_value.obj)' 또는 'C:\Users\성소윤\Desktop\CollisionCheck\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+     1>lib_json.lib(json_writer.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'lib_json.lib(json_writer.obj)' 또는 'C:\Users\성소윤\Desktop\CollisionCheck\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+         CollisionCheck.vcxproj -> C:\Users\성소윤\Desktop\CollisionCheck\Debug\CollisionCheck.exe
+     1>"C:\Users\성소윤\Desktop\CollisionCheck\CollisionCheck.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:02.09
