@@ -1,8 +1,9 @@
 #include "Player.h"
 #include "std.h"
 #include "InputManager.h"
+#include "Ring.h"
 
-Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), direction(0, 0, -1), isBoost(false), isStelth(false), boostTimer(-1), stelthTimer(-1), alpha(1), mana(100), fireTimer(-1)
+Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), direction(0, 0, -1), isBoost(false), isStelth(false), boostTimer(-1), stelthTimer(-1), alpha(1), mana(100), fireTimer(-1), hp(200)
 {
 	cubeList.push_back(new PlayerBody(position, vec3(0, 0, -2)));
 	vec3 pos = position;
@@ -23,6 +24,20 @@ bool Player::ColiisionCheck(const Object* obj) const
 		for (auto& c : cubeList)
 		{
 			if (obj->CollisionCheck(c))
+				return true;
+		}
+	}
+	return false;
+}
+
+bool Player::ColiisionCheck_Ring(const Ring* ring) const
+{
+	if (Object::CollisionCheck(ring))
+	{
+		for (auto& c : cubeList)
+		{
+			ring->ItemCollisionCheck(c);
+			if (ring->CollisionCheck(c))
 				return true;
 		}
 	}
@@ -266,6 +281,7 @@ void Player::Update(float frameTime)
 		stelthTimer = 0;
 	}
 
+	// 무기 발사 간격
 	if (fireTimer >= 0)
 	{
 		fireTimer += frameTime;

@@ -39,6 +39,8 @@ Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx) :CubeObject::CubeObject(ext,
 
 	velocity = vec3(matrix[8], matrix[9], matrix[10]);
 	velocity.Normalize();
+
+	position = position + (velocity * 10);
 }
 
 Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir) : CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(1000.0f), speedRate(2.0f)
