@@ -42,6 +42,7 @@ class Drone : public Unit {
 	int croute;
 
 	int shotTimer;
+	bool polling;
 public:
 	Drone(Unit* target, vec3 & pos, float rad = 5.0f, float p = 0.0f, float y = 0.0f, float r = 0.0f);
 
@@ -58,6 +59,8 @@ public:
 	void ChangeState(State*);
 
 	void SetDirection(vec3&);
+
+	void Polling();
 
 	friend class Patrol;
 	friend class Trace;

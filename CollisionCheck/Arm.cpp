@@ -1,6 +1,8 @@
 #include "Arm.h"
 #include "std.h"
-
+#include "Unit.h"
+#include "Player.h"
+#include "StageManager.h"
 
 void Arm::Shot(bool isAlly, float* mtx)
 {
@@ -12,6 +14,12 @@ void Arm::Shot(bool isAlly, float* mtx, const vec3& dir)
 {
 	BulletManager* bulletmgr = BulletManager::Instance();
 	bulletmgr->AddBullet(Bullet(isAlly, vec3(0.25f, 0.25f, 1.0f), mtx, dir));
+}
+
+void Arm::Shot(bool isAlly, float* mtx, const vec3& dir, Unit* unit)
+{
+	BulletManager* bulletmgr = BulletManager::Instance();
+	bulletmgr->AddBullet(Bullet(isAlly, vec3(0.25f, 0.25f, 1.0f), mtx, dir, unit));
 }
 
 void Arm::Render()
@@ -26,7 +34,7 @@ void Arm::Render()
 
 Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx)
 	:CubeObject::CubeObject(ext, vec3(mtx[12],mtx[13],mtx[14]),ext.GetSize(),0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(2.0f), speedRate(2.0f)
-	,timer(0), isAlive(true)
+	,timer(0), isAlive(true), target(NULL)
 {
 	for (int i = 0; i < 16; ++i) matrix[i] = mtx[i];
 
@@ -36,14 +44,26 @@ Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx)
 
 Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir)
 	:CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(1000.0f), speedRate(2.0f)
-	, timer(0), isAlive(true)
+	, timer(0), isAlive(true), target(NULL)
 {
 	for (int i = 0; i < 16; ++i) matrix[i] = mtx[i];
 
 	velocity = dir;
 	velocity.Normalize();
 
-	//position = position + (velocity * 10);
+	position = position + (velocity * 10);
+}
+
+Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir, Unit* unit)
+	:CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(1000.0f), speedRate(2.0f)
+	, timer(0), isAlive(true), target(unit)
+{
+	for (int i = 0; i < 16; ++i) matrix[i] = mtx[i];
+
+	velocity = dir;
+	velocity.Normalize();
+
+	position = position + (velocity * 10);
 }
 
 void Bullet::Render()
@@ -59,13 +79,51 @@ void Bullet::Render()
 
 void Bullet::Update(float frameTime)
 {
+	if (target) {
+		vec3 d = target->GetPos() - position;
+		float distance = d.GetSize();
+		d.Normalize();
+		if (distance > 30.0f && DotProduct(d,velocity)>0) {
+			velocity = target->GetPos() - position;
+			velocity.Normalize();
+			vec3 unit(0, 0, 1);
+			vec3 yv(velocity.x, 0, velocity.z);
+			vec3 xv(0, velocity.y, sqrt(velocity.x*velocity.x + velocity.z*velocity.z));
+
+			yv.Normalize(); xv.Normalize();
+			yaw = acosf(unit.Dot(yv)) / 3.14f * 180.0f;
+			pitch = -acosf(unit.Dot(xv)) / 3.14f * 180.0f;
+			if (velocity.x < 0)
+			{
+				yaw *= -1;
+			}
+			if (velocity.y < 0)
+			{
+				pitch *= -1;
+			}
+			this->Object::GenMatrix();
+		}
+	}
 	position.x += velocity.x*speed*frameTime;
 	position.y += velocity.y*speed*frameTime;
 	position.z += velocity.z*speed*frameTime;
 	matrix[12] = position.x; matrix[13] = position.y; matrix[14] = position.z;
 	speed += speedRate;
 	++timer;
+	CollisionCheck_Building();
 	if (timer > 600) isAlive = false;
+}
+
+void Bullet::CollisionCheck_Building()
+{
+	StageManager* stm = StageManager::Instance();
+	std::vector<std::vector<Building>*> buildingList = stm->GetBuildingList(position.x, position.z, boundingRad);
+	for (int n = 0; n < buildingList.size(); ++n) {
+
+		for (int i = 0; i < buildingList[n]->size(); ++i) {
+			if (CubeObject::CollisionCheck((*buildingList[n])[i])) isAlive = false;
+		}
+	}
 }
 
 
@@ -97,3 +155,9 @@ void BulletManager::Update(float frameTime)
 		else ++i;
 	}
 }
+
+void BulletManager::CollisionCheck(Player * player)
+{
+	
+}
+
