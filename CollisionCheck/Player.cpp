@@ -283,10 +283,12 @@ void Player::Update(float frameTime)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	float speed = velocity.GetSize();
-	gluPerspective(60 + (30 / 420.0 * speed), GetWindowWidth() / (float)GetWindowHeight(), 0.1, 2000);
+	float* fov = GetFovValue();
+	*fov = 60 + (30 / 420.0 * speed);
 	glMatrixMode(GL_MODELVIEW);
 
 	this->Move(velocity*frameTime);
+	printf("x: %f, y: %f, z: %f\n", position.x, position.y, position.z);
 }
 
 PlayerBody::PlayerBody(const vec3& oPos, const vec3& rPos) : CubeObject(vec3(2, 1.25, 7), oPos + rPos, 7, 0, 0, 0), relativePos(rPos)
