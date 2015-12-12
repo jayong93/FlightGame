@@ -12,13 +12,18 @@ public:
 	virtual void Render();
 	virtual void Move(const vec3 &);
 	virtual void Rotate(float, float, float);
+<<<<<<< HEAD
 	void Update(float frameTime);
+=======
+	virtual void Update(float frameTime);
+	float GetHp() const { return hp; }
+>>>>>>> refs/remotes/origin/JaeYong
 	bool ColiisionCheck_Ring(const Ring * ring) const;
 
 private:
 	vec3 direction;
 	bool isBoost, isStelth;
-	float boostTimer, stelthTimer, alpha, mana;
+	float boostTimer, stelthTimer, alpha, mana, hp;
 	float fireTimer;
 };
 

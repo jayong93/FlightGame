@@ -300,6 +300,17 @@ Node StageManager::GetNearestNode(float x, float z, Node & des)
 	return Node(minrow, mincol);
 }
 
+int StageManager::GetItemCount()
+{
+	int count = 0;
+	for (auto& r : ringList)
+	{
+		if (r->IsItemExist())
+			count++;
+	}
+	return count;
+}
+
 unsigned char StageManager::GetNodeDate(int row, int col)
 {
 	return node[row][col];

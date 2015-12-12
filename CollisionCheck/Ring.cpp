@@ -6,7 +6,10 @@ void Ring::Render()
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	{
-		item.Render();
+		if (isItemExist)
+		{
+			item.Render();
+		}
 		glMultMatrixf(matrix);
 		for (auto& c : cubeList)
 		{
@@ -33,7 +36,10 @@ void Ring::Update(float frameTime)
 			c->UpdateMatrix(matrix);
 		}
 	}
-	item.Update(frameTime);
+	if (isItemExist)
+	{
+		item.Update(frameTime);
+	}
 }
 
 bool Ring::CollisionCheck(const CubeObject * obj) const
@@ -47,12 +53,29 @@ bool Ring::CollisionCheck(const CubeObject * obj) const
 				std::cout << "CollisionWithRing" << std::endl;
 				return true;
 			}
+<<<<<<< HEAD
+=======
 		}
 	}
 	return false;
 }
 
-Ring::Ring(float x, float y, float z, float w, float h, float d, float angle, bool rotate) : Object(vec3(x, y, z), vec3(w, h, d).GetSize(), 0, angle, 0), isRotate(rotate), item(vec3(w / 6.0, h / 6.0, h / 6.0), vec3(x, y, z), vec3(w / 4.0, h / 4.0, d / 4.0).GetSize(), 0, 0, 0)
+bool Ring::ItemCollisionCheck(const CubeObject * obj) const
+{
+	if (isItemExist && ((Object)item).CollisionCheck(obj))
+	{
+		if (obj->CollisionCheck(&item))
+		{
+			isItemExist = false;
+			std::cout << "CollisionWithItem" << std::endl;
+			return true;
+>>>>>>> refs/remotes/origin/JaeYong
+		}
+	}
+	return false;
+}
+
+Ring::Ring(float x, float y, float z, float w, float h, float d, float angle, bool rotate) : Object(vec3(x, y, z), vec3(w, h, d).GetSize(), 0, angle, 0), isRotate(rotate), item(vec3(w / 6.0, h / 6.0, h / 6.0), vec3(x, y, z), vec3(w / 4.0, h / 4.0, d / 4.0).GetSize(), 0, 0, 0), isItemExist(true)
 {
 	// 테두리 생성
 
@@ -121,7 +144,7 @@ Item::Item(vec3 & extent, vec3 & pos, float rad, float p, float y, float r) : Cu
 {
 }
 
-float Item::pointColor[8][3] = 
+float Item::pointColor[8][3] =
 {
 	{0,0,0}, {1,0,0}, {0,1,0}, {0,0,1},
 	{1,0,1}, {1,1,0}, {0,1,1}, {1,1,1}
@@ -133,7 +156,7 @@ void Item::Render()
 	glPushMatrix();
 	{
 		glMultMatrixf(matrix);
-		glScalef(extent.x*2, extent.y*2, extent.z*2);
+		glScalef(extent.x * 2, extent.y * 2, extent.z * 2);
 		glBegin(GL_QUADS);
 		{
 			glNormal3f(0, 0, -1);

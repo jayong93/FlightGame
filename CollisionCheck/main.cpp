@@ -143,9 +143,6 @@ int main() {
 	srand(time(NULL));
 
 	// OpenGL Setting
-	//glEnable(GL_CULL_FACE);
-	//glFrontFace(GL_CCW);
-	//glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
 
 	float lightValue[] = { 1,1,1,1 };
@@ -224,8 +221,43 @@ void DrawScene() {
 	}
 	glPopMatrix();
 
+	// UI 그리기
+	glViewport(0, 0, width, height);
+	glDisable(GL_LIGHTING);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//Clip공간 설정
+	glOrtho(0, width, 0, height, -1.0, 1.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glPushMatrix();
+	{
+		char str[20];
+		sprintf_s(str, 20, "HP : %d", (int)((Player*)objList[1])->GetHp());
+
+		glColor3f(1, 1, 1);
+		glRasterPos2f(0, height - 20);
+		int len = strlen(str);
+		for (int i = 0; i < len; ++i)
+		{
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str[i]);
+		}
+
+		StageManager* stm = StageManager::Instance();
+		sprintf_s(str, 20, "REMAIN ITEM : %d", stm->GetItemCount());
+		glRasterPos2f(0, height - 40);
+		len = strlen(str);
+		for (int i = 0; i < len; ++i)
+		{
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str[i]);
+		}
+	}
+	glPopMatrix();
+
 	// 미니맵 뷰
 	glViewport(width - mapWidth, 0, mapWidth, mapHeight);
+	glEnable(GL_LIGHTING);
 
 	//Projenction
 	glMatrixMode(GL_PROJECTION);
