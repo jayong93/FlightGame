@@ -1,6 +1,7 @@
 #include "StageManager.h"
 #include "Ring.h"
 #include "std.h"
+#include "Arm.h"
 #include <fstream>
 #include <json.h>
 
@@ -63,11 +64,85 @@ float heuristic_cost_estimate(int sdx, int ddx) {
 }
 
 StageManager* StageManager::instance = nullptr;
-StageManager::StageManager() { }
+StageManager::StageManager() {
+	quadTree[0].isLeafNode = false;
+	quadTree[0].pObjectList.shrink_to_fit();
+	quadTree[0].vPoint1 = vec3(-6000.0f, 0.0f, -6000.0f);
+	quadTree[0].vPoint2 = vec3(6000.0f, 0.0f, 6000.0f);
+
+	for (int i = 0; i < 2; ++i) {
+		for (int j = 0; j < 2; ++j) {
+			quadTree[i * 2 + j + 1].isLeafNode = false;
+			quadTree[i * 2 + j + 1].pObjectList.shrink_to_fit();
+			quadTree[i * 2 + j + 1].vPoint1 = vec3(-6000.0f + (6000.0f)*j, 0.0f, -6000.0f + (6000.0f)*i);
+			quadTree[i * 2 + j + 1].vPoint2 = vec3(0.0f + (6000.0f)*j, 0.0f, 0.0f + (6000.0f)*i);
+		}
+	}
+
+	for (int i = 0; i < 4; ++i) {
+		for (int j = 0; j < 4; ++j) {
+			quadTree[i * 4 + j + 5].isLeafNode = false;
+			quadTree[i * 4 + j + 5].vPoint1 = vec3(-6000.0f + (3000.0f)*j, 0.0f, -6000.0f + (3000.0f)*i);
+			quadTree[i * 4 + j + 5].vPoint2 = vec3(-3000.0f + (3000.0f)*j, 0.0f, -3000.0f + (3000.0f)*i);
+		}
+	}
+
+	for (int i = 0; i < 8; ++i) {
+		for (int j = 0; j < 8; ++j) {
+			quadTree[i * 8 + j + 21].isLeafNode = true;
+			quadTree[i * 8 + j + 21].vPoint1 = vec3(-6000.0f + (1500.0f)*j, 0.0f, -6000.0f + (1500.0f)*i);
+			quadTree[i * 8 + j + 21].vPoint2 = vec3(-4500.0f + (1500.0f)*j, 0.0f, -4500.0f + (3000.0f)*i);
+		}
+	}
+}
 
 StageManager* StageManager::Instance() {
 	if (!instance) instance = new StageManager();
 	return instance;
+}
+
+std::vector<std::vector<Building>*> StageManager::GetBuildingList(float x, float z, float radius)
+{
+	std::vector<std::vector<Building>*> ret;
+	vec3 p1(x - radius, 0.0f, z - radius);
+	vec3 p2(x + radius, 0.0f, z + radius);
+
+	int stack[50];
+	int sp = 0;
+	stack[sp++] = 0;
+
+	while (sp) {
+		int idx = stack[--sp];
+		if (quadTree[idx].Isin(p1, p2)) {
+			if (quadTree[idx].isLeafNode) {
+				ret.push_back(&quadTree[idx].pObjectList);
+			}
+			else {
+				if (idx == 0) {
+					for (int i = 4; i >= 1; --i)
+						stack[sp++] = 4 * idx + i;
+				}
+				else if (1 <= idx&&idx <= 4) {
+					int sum = 1;
+					if (idx % 2 == 0) sum = -1;
+					stack[sp++] = 4 * idx + sum;
+					stack[sp++] = 4 * idx + sum + 1;
+					stack[sp++] = 4 * idx + sum + 4;
+					stack[sp++] = 4 * idx + sum + 1 + 4;
+				}
+				else if (5 <= idx&&idx <= 20) {
+					int d = (idx - 1) % 4;
+					int sum = 1 - 2 * d;
+					stack[sp++] = 4 * idx + sum;
+					stack[sp++] = 4 * idx + sum + 1;
+					stack[sp++] = 4 * idx + sum + 8;
+					stack[sp++] = 4 * idx + sum + 1 + 8;
+				}
+				else { std::cout << "Error"; exit(0); }
+			}
+		}
+	}
+	return ret;
 }
 
 StageManager::~StageManager()
@@ -98,13 +173,24 @@ void StageManager::Init()
 		Json::Value& value = data[i];
 		if (value["type"].asString() == "building")
 		{
-			Building building(vec3(value["w"].asInt() / 2.0f, value["d"].asInt() / 2.0f, value["h"].asInt() / 2.0f), vec3(value["x"].asInt() - mapW / 2, value["d"].asInt() / 2.0, -(value["y"].asInt() - mapH / 2)), vec3(value["w"].asInt() / 2.0f, value["d"].asInt() / 2.0f, value["h"].asInt() / 2.0f).GetSize(), 0.0f, (float)(rand() % 360), 0.0f);
+			float radius = vec3(value["w"].asInt() / 2.0f, value["d"].asInt() / 2.0f, value["h"].asInt() / 2.0f).GetSize();
+			vec3 pos = vec3(value["x"].asInt() - mapW / 2, value["d"].asInt() / 2.0, -(value["y"].asInt() - mapH / 2));
+			Building building(vec3(value["w"].asInt() / 2.0f, value["d"].asInt() / 2.0f, value["h"].asInt() / 2.0f), pos, radius, 0.0f, (float)(rand() % 360), 0.0f);
 			building.SetColor(rand() / (float)RAND_MAX * 2 + 0.4f, rand() / (float)RAND_MAX * 2 + 0.4f, rand() / (float)RAND_MAX * 2 + 0.4f);
-			buildingList.push_back(building);
+
+			for (int z = 0; z < 8; ++z) {
+				for (int x = 0; x < 8; ++x) {
+					if (((pos.x + radius > -6000.0f + (1500.0f)*x) && (pos.x - radius < -4500.0f + (1500.0f)*x))
+						&& ((pos.z + radius > -6000.0f + (1500.0f)*z) && (pos.z - radius < -4500.0f + (1500.0f)*z))) {
+						quadTree[z * 8 + x + 21].pObjectList.push_back(building);
+					}
+				}
+			}
 		}
 		else if (value["type"].asString() == "ring")
 		{
-			Ring* ring = new Ring(value["x"].asInt() - mapW / 2, value["z"].asInt(), -(value["y"].asInt() - mapH / 2), value["w"].asInt(), value["d"].asInt(), value["h"].asInt(),value["angle"].asInt(), true);
+			// 링 회전 테스트
+			Ring* ring = new Ring(value["x"].asInt() - mapW / 2, value["z"].asInt(), -(value["y"].asInt() - mapH / 2), value["w"].asInt(), value["d"].asInt(), value["h"].asInt(), value["angle"].asInt(), true);
 			objectList.push_back(ring);
 		}
 	}
@@ -135,7 +221,7 @@ void StageManager::Init()
 
 void StageManager::Render()
 {
-	for (unsigned int i = 0; i < buildingList.size(); ++i) buildingList[i].Render();
+	for (int i = 21; i < 85; ++i) quadTree[i].Draw();
 	for (auto& o : objectList) o->Render();
 
 	int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
@@ -163,7 +249,6 @@ void StageManager::Render()
 
 void StageManager::Update(float frameTime)
 {
-	for (auto& b : buildingList) b.Update(frameTime);
 	for (auto& o : objectList) o->Update(frameTime);
 }
 
@@ -275,4 +360,10 @@ bool StageManager::GetAStarRoute(Node & start, Node & destiny, std::vector<Node>
 	return false;
 }
 
-
+void StageManager::CollisonCheck_Bullet(std::vector<Bullet>* bulletList)
+{
+	//for (unsigned int i = 0; i < bulletList->size(); ++i) {
+	//	for (unsigned int j = 0; j < buildingList.size(); ++j)
+	//		(*bulletList)[i].CollisionCheck_Building(&buildingList[j]);
+	//}
+}
