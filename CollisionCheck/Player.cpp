@@ -394,7 +394,7 @@ void Player::Update(float frameTime)
 
 		this->Move(velocity*frameTime);
 
-		if (position.GetSize() >= 5800)
+		if (position.GetSize() >= 5990)
 		{
 			ProcessPlayerDeath();
 		}
