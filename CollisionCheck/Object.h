@@ -25,7 +25,7 @@ public:
 
 	void GenMatrix();
 
-	virtual bool CollisionCheck(const Object&);
+	virtual bool CollisionCheck(const Object*) const;
 
 	virtual void Render();
 
@@ -51,7 +51,7 @@ protected:
 public:
 	CubeObject(vec3&, vec3&, float, float, float, float);
 
-	virtual bool CollisionCheck(const CubeObject&);
+	virtual bool CollisionCheck(const CubeObject*) const;
 
 	virtual void Render();
 

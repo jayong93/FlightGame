@@ -156,7 +156,7 @@ int main() {
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
-	float globalAmbient[] = { 0.3, 0.3, 0.3, 1 };
+	float globalAmbient[] = { 0.3f, 0.3f, 0.3f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
 
 	// Object Init
@@ -231,7 +231,7 @@ void DrawScene() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//Clip공간 설정
-	glOrtho(-mapWidth * 3, mapWidth * 3, -mapHeight * 3, mapHeight * 3, 0.0, 1000.0f);
+	glOrtho(-mapWidth * 4, mapWidth * 4, -mapHeight * 4, mapHeight * 4, 0.0, 1000.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -283,12 +283,22 @@ void DrawScene() {
 			glNormal3f(0, 1, 0);
 			glBegin(GL_POLYGON);
 			{
-				glVertex3f(0, 0, -30);
-				glVertex3f(-30, 0, 30);
-				glVertex3f(0, 0, 15);
-				glVertex3f(30, 0, 30);
+				glVertex3f(0, 0, -40);
+				glVertex3f(-40, 0, 40);
+				glVertex3f(0, 0, 30);
+				glVertex3f(40, 0, 40);
 			}
 			glEnd();
+		}
+		glPopMatrix();
+
+		// 드론 마크 그리기
+		glPushMatrix();
+		{
+			vec3 dronePos = objList.back()->GetPos();
+			glTranslatef(dronePos.x, 500, dronePos.z);
+			glColor3f(1, 1, 1);
+			glutSolidSphere(30, 30, 30);
 		}
 		glPopMatrix();
 	}

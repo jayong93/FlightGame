@@ -210,7 +210,9 @@ void StageManager::Init()
 		{
 			for (int j = 0; j < nodeNum; ++j)
 			{
-				fscanf_s(file, "%d", &node[i][j]);
+				int tmp;
+				fscanf_s(file, "%d", &tmp);
+				node[i][j] = tmp;
 			}
 		}
 
@@ -252,7 +254,7 @@ void StageManager::Update(float frameTime)
 	for (auto& o : objectList) o->Update(frameTime);
 }
 
-Node & StageManager::GetNearestNode(float x, float z)
+Node StageManager::GetNearestNode(float x, float z)
 {
 	int row = int((z + 6000.0f) / 387.1f + 0.51f);
 	int col = int((x + 6000.0f) / 387.1f + 0.51f);
@@ -267,7 +269,7 @@ Node & StageManager::GetNearestNode(float x, float z)
 	return Node(r, c);
 }
 
-Node & StageManager::GetNearestNode(float x, float z, Node & des)
+Node StageManager::GetNearestNode(float x, float z, Node & des)
 {
 	float minH = 1000.0f;
 	int d[4][2] = { { 1,0 },{ 0,-1 },{ -1,0 },{ 0,1 } };
