@@ -248,6 +248,16 @@ void StageManager::Init(Unit* target)
 	droneList.back()->SetDes();
 }
 
+void StageManager::Restart(Unit* target)
+{
+	for (auto& d : droneList) delete d;
+	droneList.clear();
+	droneList.push_back(new Drone(target, vec3(0, 3.0f, 500.0f), 12.5f));
+	droneList.back()->SetDes();
+
+	for (auto& r : ringList) r->SetItem(true);
+}
+
 void StageManager::Render()
 {
 	for (int i = 21; i < 85; ++i) quadTree[i].Draw();
