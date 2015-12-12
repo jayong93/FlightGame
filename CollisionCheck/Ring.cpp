@@ -53,8 +53,6 @@ bool Ring::CollisionCheck(const CubeObject * obj) const
 				std::cout << "CollisionWithRing" << std::endl;
 				return true;
 			}
-<<<<<<< HEAD
-=======
 		}
 	}
 	return false;
@@ -69,7 +67,6 @@ bool Ring::ItemCollisionCheck(const CubeObject * obj) const
 			isItemExist = false;
 			std::cout << "CollisionWithItem" << std::endl;
 			return true;
->>>>>>> refs/remotes/origin/JaeYong
 		}
 	}
 	return false;
