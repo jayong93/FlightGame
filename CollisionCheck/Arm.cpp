@@ -77,6 +77,11 @@ void Bullet::Render()
 	glPopMatrix();
 }
 
+void Bullet::SetAlive(bool alive)
+{
+	isAlive = alive;
+}
+
 void Bullet::Update(float frameTime)
 {
 	if (target) {
@@ -157,6 +162,14 @@ void BulletManager::Update(float frameTime)
 
 void BulletManager::CollisionCheck(Player * player)
 {
-
+	for (unsigned int i = 0; i < bulletList.size(); ++i) {
+		if (player->ColiisionCheck_Cube(&bulletList[i])) {
+			std::cout << "Collison with bullet" << std::endl;
+			bulletList[i].SetAlive(false);
+		}
+	}
+	for (auto i = bulletList.begin(); i != bulletList.end(); ) {
+		if (!i->GetIsAlive()) i = bulletList.erase(i);
+		else ++i;
+	}
 }
-
