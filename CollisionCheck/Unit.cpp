@@ -33,7 +33,7 @@ void Unit::Rotate(float pdel, float ydel, float rdel)
 }
 
 
-Drone::Drone(Unit* target, vec3 & pos, float rad, float p, float y, float r) : Unit(pos, rad, p, y, r), 
+Drone::Drone(Unit* target, vec3 & pos, float rad, float p, float y, float r) : Unit(pos, rad, p, y, r),
 target(target), shotTimer(0), polling(false)
 {
 	cubeList.push_back(new CubeObject(vec3(2.5f*sqrt(2), 2.5f * sqrt(2), 2.5f * sqrt(2)), pos, rad, p, y, r));

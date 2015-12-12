@@ -32,19 +32,17 @@ void Arm::Render()
 	glPopMatrix();
 }
 
-Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx)
-	:CubeObject::CubeObject(ext, vec3(mtx[12],mtx[13],mtx[14]),ext.GetSize(),0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(2.0f), speedRate(2.0f)
-	,timer(0), isAlive(true), target(NULL)
+Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx) :CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(2.0f), speedRate(2.0f)
+, timer(0), isAlive(true), target(NULL)
 {
 	for (int i = 0; i < 16; ++i) matrix[i] = mtx[i];
 
-	velocity = vec3(matrix[8],matrix[9],matrix[10]);
+	velocity = vec3(matrix[8], matrix[9], matrix[10]);
 	velocity.Normalize();
 }
 
-Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir)
-	:CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(1000.0f), speedRate(2.0f)
-	, timer(0), isAlive(true), target(NULL)
+Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir) : CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(1000.0f), speedRate(2.0f)
+, timer(0), isAlive(true), target(NULL)
 {
 	for (int i = 0; i < 16; ++i) matrix[i] = mtx[i];
 
@@ -83,7 +81,7 @@ void Bullet::Update(float frameTime)
 		vec3 d = target->GetPos() - position;
 		float distance = d.GetSize();
 		d.Normalize();
-		if (distance > 30.0f && DotProduct(d,velocity)>0) {
+		if (distance > 30.0f && DotProduct(d, velocity)>0) {
 			velocity = target->GetPos() - position;
 			velocity.Normalize();
 			vec3 unit(0, 0, 1);
@@ -158,6 +156,6 @@ void BulletManager::Update(float frameTime)
 
 void BulletManager::CollisionCheck(Player * player)
 {
-	
+
 }
 
