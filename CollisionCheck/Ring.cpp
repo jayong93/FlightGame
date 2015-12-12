@@ -11,10 +11,6 @@ void Ring::Render()
 		{
 			c->Render();
 		}
-		glRotatef(pitch, -1, 0, 0);
-		glRotatef(yaw, 0, -1, 0);
-		glRotatef(roll, 0, 0, -1);
-		item.Render();
 	}
 	glPopMatrix();
 }
@@ -24,21 +20,16 @@ void Ring::Update(float frameTime)
 	if (isRotate)
 	{
 		this->Rotate(0, 0, 60 * frameTime);
-		for (auto& c : cubeList)
-		{
-			c->Rotate(0, 0, 60 * frameTime);
-		}
 	}
-	item.Update(frameTime);
 }
 
-Ring::Ring(float x, float y, float z, float w, float h, float d) : Object(vec3(x, y, z), vec3(w / 2.0, h / 2.0, d / 2.0).GetSize(), 0, 0, 0), isRotate(true), item(vec3(w / 4.0, h / 4.0, w / 4.0), vec3(x, y, z), vec3(w / 4.0, h / 4.0, d / 4.0).GetSize(), 0, 0, 0)
+Ring::Ring(float x, float y, float z, float w, float h, float d, float angle, bool rotate) : Object(vec3(x, y, z), vec3(w, h, d).GetSize(), 0, angle, 0), isRotate(rotate)
 {
 	// 테두리 생성
 
 	float wx, wy, wz;
 
-	wx = -w / 2.0 + d / 2.0;
+	wx = - w / 2.0 + d / 2.0;
 	wy = 0;
 	wz = 0;
 	vec3 ext = vec3(d / 2.0, h / 2.0, d / 2.0);
@@ -60,7 +51,7 @@ Ring::Ring(float x, float y, float z, float w, float h, float d) : Object(vec3(x
 	cubeList.push_back(new RingEdge(ext, position + rPos, rPos, ext.GetSize(), 0, 0, 0));
 
 	wx = 0;
-	wy = -h / 2.0 + d / 2.0;
+	wy = - h / 2.0 + d / 2.0;
 	wz = 0;
 	ext = vec3(w / 2.0, d / 2.0, d / 2.0);
 	rPos = vec3(wx, wy, wz);
@@ -91,100 +82,49 @@ void Item::Render()
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	{
-		float color[8][3] =
-		{
-			{0,0,0},
-			{1,0,0},
-			{0,1,0},
-			{0,0,1},
-			{1,1,0},
-			{1,0,1},
-			{0,1,1},
-			{1,1,1}
-		};
-		glScalef(extent.x * 2.0, extent.y * 2.0, extent.z * 2.0);
-		glRotatef(yaw, 0, 1, 0);
-		glTranslatef(-0.5, -0.5, -0.5);
-		glBegin(GL_QUADS);
-		{
-			glColor3fv(color[0]);
-			glVertex3fv(color[0]);
 
-			glColor3fv(color[3]);
-			glVertex3fv(color[3]);
-
-			glColor3fv(color[6]);
-			glVertex3fv(color[6]);
-
-			glColor3fv(color[2]);
-			glVertex3fv(color[2]);
-
-			glColor3fv(color[0]);
-			glVertex3fv(color[0]);
-
-			glColor3fv(color[2]);
-			glVertex3fv(color[2]);
-
-			glColor3fv(color[4]);
-			glVertex3fv(color[4]);
-
-			glColor3fv(color[1]);
-			glVertex3fv(color[1]);
-
-			glColor3fv(color[0]);
-			glVertex3fv(color[0]);
-
-			glColor3fv(color[1]);
-			glVertex3fv(color[1]);
-
-			glColor3fv(color[5]);
-			glVertex3fv(color[5]);
-
-			glColor3fv(color[3]);
-			glVertex3fv(color[3]);
-
-			glColor3fv(color[3]);
-			glVertex3fv(color[3]);
-
-			glColor3fv(color[5]);
-			glVertex3fv(color[5]);
-
-			glColor3fv(color[7]);
-			glVertex3fv(color[7]);
-
-			glColor3fv(color[6]);
-			glVertex3fv(color[6]);
-
-			glColor3fv(color[2]);
-			glVertex3fv(color[2]);
-
-			glColor3fv(color[6]);
-			glVertex3fv(color[6]);
-
-			glColor3fv(color[7]);
-			glVertex3fv(color[7]);
-
-			glColor3fv(color[4]);
-			glVertex3fv(color[4]);
-
-			glColor3fv(color[5]);
-			glVertex3fv(color[5]);
-
-			glColor3fv(color[1]);
-			glVertex3fv(color[1]);
-
-			glColor3fv(color[4]);
-			glVertex3fv(color[4]);
-
-			glColor3fv(color[7]);
-			glVertex3fv(color[7]);
-		}
-		glEnd();
 	}
 	glPopMatrix();
 }
 
-void Item::Update(float frameTime)
+RotateRing::RotateRing(float x, float y, float z, float w, float h, float d, float r) : Ring(x,y,z,w,h,d), rad(r), angle(0)
 {
-	yaw += 60 * frameTime;
+	float tmp[16];
+
+	glMatrixMode(GL_MODELVIEW);
+	glGetFloatv(GL_MODELVIEW_MATRIX, tmp);
+	glLoadMatrixf(matrix);
+	glTranslatef(0, rad, 0);
+	glGetFloatv(GL_MODELVIEW_MATRIX, ringMat);
+	glLoadMatrixf(tmp);
+}
+
+void RotateRing::Render()
+{
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	{
+		glMultMatrixf(ringMat);
+		for (auto& c : cubeList)
+		{
+			c->Render();
+		}
+	}
+	glPopMatrix();
+}
+
+void RotateRing::Update(float frameTime)
+{
+	angle += 60 * frameTime;
+	if (angle >= 360) angle -= 360;
+
+	float tmp[16];
+
+	glMatrixMode(GL_MODELVIEW);
+	glGetFloatv(GL_MODELVIEW_MATRIX, tmp);
+	glLoadMatrixf(matrix);
+	glRotatef(angle, 0, 0, 1);
+	glTranslatef(0, rad, 0);
+	glGetFloatv(GL_MODELVIEW_MATRIX, ringMat);
+	glLoadMatrixf(tmp);
 }

@@ -2,26 +2,28 @@
 #include "Object.h"
 #include <vector>
 
-class Item : public CubeObject
-{
-public:
-	Item(vec3& extent, vec3& pos, float rad, float p, float y, float r);
-
-	virtual void Render();
-
-	virtual void Update(float frameTime);
-};
-
 class Ring : public Object
 {
-private:
+protected:
 	float width, height, depth;
 	std::vector<CubeObject*> cubeList;
-	Item item;
+	
 	bool isRotate;
 
 public:
-	Ring(float x, float y, float z, float w, float h, float d);
+	Ring(float x, float y, float z, float w, float h, float d, float angle = 0, bool rotate = false);
+
+	virtual void Render();
+	virtual void Update(float frameTime);
+};
+
+class RotateRing : public Ring
+{
+private:
+	float rad, angle, ringMat[16];
+	
+public:
+	RotateRing(float x, float y, float z, float w, float h, float d, float r);
 
 	virtual void Render();
 	virtual void Update(float frameTime);
@@ -36,4 +38,12 @@ public:
 
 private:
 	vec3 relativePos;
+};
+
+class Item : public CubeObject
+{
+public:
+	Item(vec3& extent, vec3& pos, float rad, float p, float y, float r);
+
+	virtual void Render();
 };

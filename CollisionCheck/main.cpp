@@ -27,7 +27,7 @@ void TimerFunction(int);
 void ProcessKeyInput(unsigned char, int, int);
 void ProcessSpeciaKeyInput(int, int, int);
 void ProcessKeyRelease(unsigned char, int, int);
-void ProcessSpeciaKeyRelease(int, int, int);
+extern void ProcessSpeciaKeyRelease(int, int, int);
 
 
 class CCamera {
@@ -41,7 +41,9 @@ class CCamera {
 
 public:
 	CCamera(float px = 0.0f, float py = 0.0f, float pz = 300.0f, float fP = 0.0f, float fY = 0.0f, float fR = 0.0f) :
-		vPositon(px, py, pz), fPitch(fP), fYaw(fY), fRoll(fR), target(nullptr) {}
+		vPositon(px, py, pz), fPitch(fP), fYaw(fY), fRoll(fR), target(nullptr), isLookBack(false) {}
+
+	bool isLookBack;
 
 	void CameraTransform() {
 		glMatrixMode(GL_MODELVIEW);
@@ -56,8 +58,18 @@ public:
 			dir = dir.MultMatrix(mat);
 			up = up.MultMatrix(mat);
 
-			vec3 cPos = pPos + (up * 20) + (dir * 50);
-			vec3 at = cPos - dir;
+			vec3 cPos, at;
+			if (isLookBack)
+			{
+				cPos = pPos + (up * 20) + (dir * 50);
+				at = cPos - dir;
+			}
+			else
+			{
+				cPos = pPos + (up * 20) - (dir * 50);
+				at = cPos + dir;
+
+			}
 			gluLookAt(cPos.x, cPos.y, cPos.z, at.x, at.y, at.z, up.x, up.y, up.z);
 		}
 
@@ -103,68 +115,7 @@ public:
 		target = p;
 	}
 
-} Camera(0.0f, 100.0f, 500.0f, -10.0f, 0.0f, 0.0f);
-
-//class CCamera {
-//	vec3 vPositon;
-//
-//	float fPitch;
-//	float fYaw;
-//	float fRoll;
-//
-//	Player* target;
-//public:
-//	CCamera(float px = 0.0f, float py = 0.0f, float pz = 300.0f, float fP = 0.0f, float fY = 0.0f, float fR = 0.0f) :
-//		vPositon(px, py, pz), fPitch(fP), fYaw(fY), fRoll(fR) {}
-//
-//	void CameraTransform() {
-//		glMatrixMode(GL_MODELVIEW);
-//
-//		if (target)
-//		{
-//			vec3 pPos = target->GetPos();
-//			glTranslatef(-pPos.x, pPos.z, -pPos.y-600);
-//		}
-//		else
-//			glTranslatef(-vPositon.x, -vPositon.y, -vPositon.z);
-//		//glTranslatef(0.0f, vPositon.y, 0.0f);
-//		glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-//	}
-//
-//	void SetTarget(Player* p) { target = p; }
-//
-//	void PitchRotate(float fDelta) {
-//		fPitch += fDelta;
-//	}
-//
-//	void RollRoate(float fDelta) {
-//		fRoll += fDelta;
-//	}
-//
-//	void YawRotate(float fDelta) {
-//		fYaw += fDelta;
-//		if (fYaw > 360.0f) fYaw -= 360.0f;
-//	}
-//
-//	void Move(const vec3& vShift) {
-//		vPositon.x += vShift.x;
-//		vPositon.y += vShift.y;
-//		vPositon.z += vShift.z;
-//	}
-//
-//	void CameraInit() {
-//		vPositon.x = 0.0f;
-//		vPositon.y = 0.0f;
-//		vPositon.z = 500.0f;
-//
-//		fPitch = -30.0f;
-//		fYaw = 45.0f;
-//		fRoll = 0.0f;
-//	}
-//
-//	vec3 GetCameraPos() { return(vPositon); }
-//
-//} Camera(0.0f, 200.0f, 1000.0f, -7.0f, 0.0f, 0.0f);
+} Camera(0.0f, 500.0f, 2000.0f, -10.0f, 0.0f, 0.0f);
 
 std::vector<Object*> objList;
 Unit* target;
@@ -186,23 +137,28 @@ int main() {
 	srand(time(NULL));
 
 	// OpenGL Setting
+	//glEnable(GL_CULL_FACE);
+	//glFrontFace(GL_CCW);
+	//glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
 
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
 	float lightValue[] = { 1,1,1,1 };
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightValue);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, lightValue);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
+	float globalAmbient[] = { 0.3, 0.3, 0.3, 1 };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
+
 	// Object Init
-	objList.push_back(new Road(0, 0, 3000, 500, 6000, 0, 0, 0));
+
+	objList.push_back(new Road(0, 0, 3000, 400, 6000, 0, 0, 0));
 	objList.push_back(new Player(0, 3, 100));
 
 	Camera.SetTarget((Player*)objList.back());
-
-	objList.push_back(new Ring(0,100,0,80,80,5));
 
 	StageManager* stm = StageManager::Instance();
 	stm->Init();
@@ -223,7 +179,7 @@ void Reshape(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//Clip공간 설정
-	gluPerspective(60.0, w / float(h), 1.0, 2000.0);
+	gluPerspective(60.0, w / float(h), 1.0, 8000.0);
 	//glOrtho((-size / 2.0f), (size / 2.0f), (-size / 2.0f), (size / 2.0f), 10.0f, 10000.0f);
 
 	//ModelView
@@ -238,12 +194,12 @@ void DrawScene() {
 	glLoadIdentity();
 	glPushMatrix();
 
-	glScalef(0.3, 0.3, 0.3);
+	glScalef(0.5, 0.5, 0.5);
 
 	// Camera Transform
 	Camera.CameraTransform();
 
-	float lightPos[4] = { 0,1,1,0 };
+	float lightPos[4] = { 0,2,1,0};
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 	BulletManager* bulletmger = BulletManager::Instance();
@@ -270,12 +226,15 @@ void TimerFunction(int value) {
 	bm->Update();
 
 	for (int i = 0; i < objList.size(); ++i) objList[i]->Update(frameTime);
+
 	glutTimerFunc(16, TimerFunction, 1);
 	glutPostRedisplay();
 }
 
 void ProcessKeyInput(unsigned char key, int x, int y)
 {
+	if (key == 'f')
+		Camera.isLookBack = true;
 	InputManager::GetInstance()->PushKey(key);
 }
 
@@ -286,6 +245,8 @@ void ProcessSpeciaKeyInput(int key, int x, int y)
 
 void ProcessKeyRelease(unsigned char key, int x, int y)
 {
+	if (key == 'f')
+		Camera.isLookBack = false;
 	InputManager::GetInstance()->ReleaseKey(key);
 }
 
