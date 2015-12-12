@@ -27,8 +27,6 @@ bool Player::ColiisionCheck(const Object* obj) const
 				return true;
 		}
 	}
-<<<<<<< HEAD
-=======
 	return false;
 }
 
@@ -42,7 +40,6 @@ bool Player::ColiisionCheck_Ring(const Ring* ring) const
 				return true;
 		}
 	}
->>>>>>> refs/remotes/origin/SoYun
 	return false;
 }
 
