@@ -6,8 +6,10 @@ from share import *
 image = None
 error_image = None
 is_able_to_create = True
-width, height, depth = 80, 80, 5    # opengl에서의 x, y, z 크기
-wz = 150    # opengl에서 링의 y값
+width, height, depth = 80, 80, 5  # opengl에서의 x, y, z 크기
+wz = 150  # opengl에서 링의 y값
+angle = 0
+isRotate = False
 
 
 def init():
@@ -19,15 +21,22 @@ def init():
 
 class Ring(Object):
     # x: opengl의 x, y: opengl의 z, z: opengl의 y
-    def __init__(self, x, y, z, img):
+    def __init__(self, x, y, z, img, angle, rotate):
         super().__init__(x, y, width, depth, img)
+        self.angle = angle
+        self.rotate = rotate
         self.z = z
         self.d = height
         self.type = Object.RING
 
+    def draw(self):
+        mul = Camera.GetMul(800, 800)
+        cx, cy = Camera.GetCameraPos(self.x, self.y)
+        self.image.rotate_draw(self.angle * 3.14 / 180.0, cx * mul, cy * mul, self.w * mul, self.h * mul)
+
 
 def update(objectList):
-    global is_able_to_create, wz
+    global is_able_to_create, wz, angle, isRotate
 
     if InputManager.GetKeyState(SDLK_UP):
         wz += 1
@@ -35,6 +44,13 @@ def update(objectList):
     if InputManager.GetKeyState(SDLK_DOWN):
         wz -= 1
         print("ring Y: %d" % wz)
+    if InputManager.GetKeyState(SDLK_LEFT):
+        angle += 1
+    if InputManager.GetKeyState(SDLK_RIGHT):
+        angle -= 1
+    if InputManager.GetKeyState(SDLK_r):
+        InputManager.KeyUp(SDLK_r)
+        isRotate = ~isRotate
 
     mul = Camera.GetMul(WIDTH, HEIGHT)
     wx, wy = Camera.GetWorldPos(InputManager.mouseX / mul, InputManager.mouseY / mul)
@@ -64,13 +80,13 @@ def draw():
     mul = Camera.GetMul(WIDTH, HEIGHT)
     cx, cy = InputManager.mouseX, InputManager.mouseY
     if is_able_to_create:
-        image.draw(cx, cy, width * mul, depth * mul)
+        image.rotate_draw(angle * 3.14 / 180.0, cx, cy, width * mul, depth * mul)
     else:
-        error_image.draw(cx, cy, width * mul, depth * mul)
+        error_image.rotate_draw(angle * 3.14 / 180.0, cx, cy, width * mul, depth * mul)
 
 
 def add(objectList):
     if is_able_to_create:
         mul = Camera.GetMul(WIDTH, HEIGHT)
         wx, wy = Camera.GetWorldPos(InputManager.mouseX / mul, InputManager.mouseY / mul)
-        objectList.append(Ring(wx, wy, wz, image))
+        objectList.append(Ring(wx, wy, wz, image, angle, isRotate))

@@ -18,7 +18,7 @@ Road::Road(float x, float y, float z, float w, float h, float pitch, float yaw, 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); 
 
 		tWidth = bInfo->bmiHeader.biWidth;
 		tHeight = bInfo->bmiHeader.biHeight;
@@ -64,7 +64,6 @@ void Road::Render()
 			glVertex3f(width / 2.0, 0, -height);
 		}
 		glEnd();
-
 		glDisable(GL_TEXTURE_2D);
 	}
 	glPopMatrix();
