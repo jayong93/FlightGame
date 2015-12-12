@@ -184,6 +184,7 @@
     <ClInclude Include="Unit.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="Fireworks.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
