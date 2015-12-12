@@ -50,7 +50,10 @@ bool Player::ColiisionCheck_Ring(const Ring* ring)
 	{
 		for (auto& c : cubeList)
 		{
-			ring->ItemCollisionCheck(c);
+			if (ring->ItemCollisionCheck(c))
+			{
+				hp += 5;
+			}
 			if (ring->CollisionCheck(c)) {
 				ProcessPlayerDeath();
 				return true;
