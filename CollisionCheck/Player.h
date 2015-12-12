@@ -1,6 +1,8 @@
 #pragma once
 #include "Unit.h"
 
+class Ring;
+
 class Player : public Unit
 {
 public:
@@ -11,6 +13,7 @@ public:
 	virtual void Move(const vec3 &);
 	virtual void Rotate(float, float, float);
 	void Update(float frameTime);
+	bool ColiisionCheck_Ring(const Ring * ring) const;
 
 private:
 	vec3 direction;
