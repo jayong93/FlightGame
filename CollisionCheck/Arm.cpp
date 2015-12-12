@@ -88,7 +88,7 @@ void Bullet::Update(float frameTime)
 		vec3 d = target->GetPos() - position;
 		float distance = d.GetSize();
 		d.Normalize();
-		if (distance > 30.0f && DotProduct(d, velocity)>0) {
+		if (distance > 30.0f && DotProduct(d, velocity)>0 && !target->GetIsStelth()) {
 			velocity = target->GetPos() - position;
 			velocity.Normalize();
 			vec3 unit(0, 0, 1);

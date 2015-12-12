@@ -24,7 +24,7 @@ public:
 
 private:
 	vec3 direction;
-	bool isBoost, isStelth;
+	bool isBoost;
 	float boostTimer, stelthTimer, alpha, mana;
 	float fireTimer;
 	mutable float hp;
