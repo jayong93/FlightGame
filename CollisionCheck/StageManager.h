@@ -52,9 +52,9 @@ public:
 
 	void Update(float frameTime);
 
-	Node& GetNearestNode(float x, float z);
+	Node GetNearestNode(float x, float z);
 
-	Node& GetNearestNode(float x, float z, Node& des);
+	Node GetNearestNode(float x, float z, Node& des);
 
 	unsigned char GetNodeDate(int row, int col);
 

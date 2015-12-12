@@ -34,6 +34,19 @@ void Ring::Update(float frameTime)
 	}
 }
 
+bool Ring::CollisionCheck(const Object * obj) const
+{
+	if (Object::CollisionCheck(obj))
+	{
+		for (auto& c : cubeList)
+		{
+			if (obj->CollisionCheck(c))
+				return true;
+		}
+	}
+	return false;
+}
+
 Ring::Ring(float x, float y, float z, float w, float h, float d, float angle, bool rotate) : Object(vec3(x, y, z), vec3(w, h, d).GetSize(), 0, angle, 0), isRotate(rotate)
 {
 	// 테두리 생성

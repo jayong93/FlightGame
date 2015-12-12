@@ -27,10 +27,10 @@ void Object::GenMatrix()
 	glLoadMatrixf(tmpmtx);
 }
 
-bool Object::CollisionCheck(const Object & obj)
+bool Object::CollisionCheck(const Object* obj) const
 {
-	float d = GetDistance(this->position, obj.position);
-	if (d < this->boundingRad + obj.boundingRad) return true;
+	float d = GetDistance(this->position, obj->position);
+	if (d < this->boundingRad + obj->boundingRad) return true;
 	return false;
 }
 
@@ -77,10 +77,11 @@ CubeObject::CubeObject(vec3 & ext, vec3 & pos, float boundingRadius, float p, fl
 }
 
 //위에서 GenMatrix 호출 완료됐다는 전제하에 호출
-bool CubeObject::CollisionCheck(const CubeObject& box2)
+bool CubeObject::CollisionCheck(const CubeObject* b) const
 {
-	if (Object::CollisionCheck(box2)) {		//	바운딩 구가 충돌하면
-		CubeObject& box1 = *this;
+	if (Object::CollisionCheck(b)) {		//	바운딩 구가 충돌하면
+		const CubeObject& box2 = *b;
+		const CubeObject& box1 = *this;
 		vec3 T = vec3(box2.position.x - box1.position.x, box2.position.y - box1.position.y, box2.position.z - box1.position.z);
 		float R[3][3];					//	matrix R = A^T * B ,r_{ij} = Dot(A_i,B_j)
 		float absR[3][3];				//	|r_{ij}|
