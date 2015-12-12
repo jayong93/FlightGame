@@ -57,6 +57,9 @@ public:
 	Node GetNearestNode(float x, float z);
 	Node GetNearestNode(float x, float z, Node& des);
 
+	int GetItemMaxCount() { return ringList.size(); }
+	int GetItemCount();
+
 	unsigned char GetNodeDate(int row, int col);
 
 	bool GetAStarRoute(Node& start, Node& destiny, std::vector<Node>& routeList);
