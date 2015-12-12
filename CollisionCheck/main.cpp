@@ -143,9 +143,6 @@ int main() {
 	srand(time(NULL));
 
 	// OpenGL Setting
-	//glEnable(GL_CULL_FACE);
-	//glFrontFace(GL_CCW);
-	//glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
 
 	float lightValue[] = { 1,1,1,1 };
@@ -209,7 +206,7 @@ void DrawScene() {
 		// Camera Transform
 		Camera.CameraTransform();
 
-		float lightPos[4] = { 0,2,1,0 };
+		float lightPos[4] = { 0,1,0,0 };
 		glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 		BulletManager* bulletmger = BulletManager::Instance();
@@ -219,11 +216,53 @@ void DrawScene() {
 		stm->Render();
 
 		for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glColor4f(0.7, 0.7, 1.0, 0.5);
+		glutSolidSphere(5800, 30, 30);
+		glDisable(GL_BLEND);
+		glutWireSphere(5800, 30, 30);
+	}
+	glPopMatrix();
+
+	// UI 그리기
+	glViewport(0, 0, width, height);
+	glDisable(GL_LIGHTING);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//Clip공간 설정
+	glOrtho(0, width, 0, height, -1.0, 1.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glPushMatrix();
+	{
+		char str[20];
+		sprintf_s(str, 20, "HP : %d", (int)((Player*)objList[1])->GetHp());
+
+		glColor3f(1, 1, 1);
+		glRasterPos2f(0, height - 20);
+		int len = strlen(str);
+		for (int i = 0; i < len; ++i)
+		{
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str[i]);
+		}
+
+		StageManager* stm = StageManager::Instance();
+		sprintf_s(str, 20, "REMAIN ITEM : %d", stm->GetItemCount());
+		glRasterPos2f(0, height - 40);
+		len = strlen(str);
+		for (int i = 0; i < len; ++i)
+		{
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str[i]);
+		}
 	}
 	glPopMatrix();
 
 	// 미니맵 뷰
 	glViewport(width - mapWidth, 0, mapWidth, mapHeight);
+	glEnable(GL_LIGHTING);
 
 	//Projenction
 	glMatrixMode(GL_PROJECTION);
@@ -355,4 +394,3 @@ void ProcessSpeciaKeyRelease(int key, int x, int y)
 {
 	InputManager::GetInstance()->ReleaseKey(key + 300);
 }
-

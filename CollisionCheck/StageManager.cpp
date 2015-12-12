@@ -318,6 +318,17 @@ Node StageManager::GetNearestNode(float x, float z, Node & des)
 	return Node(minrow, mincol);
 }
 
+int StageManager::GetItemCount()
+{
+	int count = 0;
+	for (auto& r : ringList)
+	{
+		if (r->IsItemExist())
+			count++;
+	}
+	return count;
+}
+
 unsigned char StageManager::GetNodeDate(int row, int col)
 {
 	return node[row][col];
@@ -416,6 +427,18 @@ void StageManager::CallEffenct(int effectname, const vec3 & pos, vec3& color)
 				effectList.push_back(new Flame(pos, dir, color));
 			}
 			z += 0.4f;
+		}
+		break;
+	}
+	case EFFECT::SPARK: {
+		float z = -4.0f;
+		while (z <= 0.0f) {
+			float raidius = 4.0f*4.0f - z*z;
+			float radian = (rand() % 628) / 100.0f;
+			vec3 dir(cosf(radian)*raidius, sinf(radian)*raidius, z);
+			dir.Normalize();
+			effectList.push_back(new Spark(pos, dir, color, ((rand()%2))/10.0f));
+			z += 1.0f;
 		}
 		break;
 	}

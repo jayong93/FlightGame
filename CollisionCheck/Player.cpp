@@ -4,7 +4,7 @@
 #include "Ring.h"
 #include "StageManager.h"
 
-Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), direction(0, 0, -1), isBoost(false), boostTimer(-1), stelthTimer(-1), alpha(1), mana(100), fireTimer(-1)
+Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), direction(0, 0, -1), isBoost(false), boostTimer(-1), stelthTimer(-1), alpha(1), mana(100), fireTimer(-1), hp(200)
 {
 	cubeList.push_back(new PlayerBody(position, vec3(0, 0, -2)));
 	vec3 pos = position;
@@ -36,7 +36,10 @@ bool Player::ColiisionCheck_Cube(const CubeObject* obj) const
 	for (auto& c : cubeList)
 	{
 		if (obj->CollisionCheck(c))
+		{
+			hp -= 1;
 			return true;
+		}
 	}
 	return false;
 }
@@ -47,6 +50,7 @@ bool Player::ColiisionCheck_Ring(const Ring* ring)
 	{
 		for (auto& c : cubeList)
 		{
+			ring->ItemCollisionCheck(c);
 			if (ring->CollisionCheck(c)) {
 				ProcessPlayerDeath();
 				return true;
@@ -282,7 +286,7 @@ void Player::Update(float frameTime)
 	// 스텔스 적용
 	if (isStelth)
 	{
-		mana -= 20 * frameTime;
+		mana -= 10 * frameTime;
 		if (mana <= 0)
 		{
 			mana = 0;
@@ -290,11 +294,12 @@ void Player::Update(float frameTime)
 			stelthTimer = 0;
 		}
 	}
-	else if (mana < 100)
+	// 마나 자동 충전
+	else if (mana < 200)
 	{
 		mana += 5 * frameTime;
-		if (mana > 100)
-			mana = 100;
+		if (mana > 200)
+			mana = 200;
 	}
 
 	if (stelthTimer >= 0)
@@ -332,13 +337,14 @@ void Player::Update(float frameTime)
 	}
 
 	// 스텔스 On/Off
-	if (im->GetKeyState('e') && stelthTimer < 0 && mana > 0)
+	if (im->GetKeyState('e') && stelthTimer < 0 && mana > 10)
 	{
 		isStelth = !isStelth;
 		im->ReleaseKey('e');
 		stelthTimer = 0;
 	}
 
+	// 무기 발사 간격
 	if (fireTimer >= 0)
 	{
 		fireTimer += frameTime;
@@ -362,6 +368,16 @@ void Player::Update(float frameTime)
 	glMatrixMode(GL_MODELVIEW);
 
 	this->Move(velocity*frameTime);
+
+	if (isAlive && position.GetSize() >= 5800)
+	{
+		ProcessPlayerDeath();
+	}
+
+	if (isAlive && position.y < 0)
+	{
+		ProcessPlayerDeath();
+	}
 }
 
 PlayerBody::PlayerBody(const vec3& oPos, const vec3& rPos) : CubeObject(vec3(2, 1.25, 7), oPos + rPos, 7, 0, 0, 0), relativePos(rPos)

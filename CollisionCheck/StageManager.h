@@ -61,10 +61,11 @@ public:
 	void Render();
 
 	void Update(float frameTime);
-
 	Node GetNearestNode(float x, float z);
-
 	Node GetNearestNode(float x, float z, Node& des);
+
+	int GetItemMaxCount() { return ringList.size(); }
+	int GetItemCount();
 
 	unsigned char GetNodeDate(int row, int col);
 
