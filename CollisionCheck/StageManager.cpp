@@ -1,4 +1,5 @@
 #include "StageManager.h"
+#include "Ring.h"
 #include "std.h"
 #include <fstream>
 #include <json.h>
@@ -101,6 +102,11 @@ void StageManager::Init()
 			building.SetColor(rand() / (float)RAND_MAX * 2 + 0.4f, rand() / (float)RAND_MAX * 2 + 0.4f, rand() / (float)RAND_MAX * 2 + 0.4f);
 			buildingList.push_back(building);
 		}
+		else if (value["type"].asString() == "ring")
+		{
+			Ring* ring = new Ring(value["x"].asInt() - mapW / 2, value["z"].asInt(), -(value["y"].asInt() - mapH / 2), value["w"].asInt(), value["d"].asInt(), value["h"].asInt(),value["angle"].asInt(), value["is_rotate"].asBool());
+			objectList.push_back(ring);
+		}
 	}
 
 	FILE* file;
@@ -124,11 +130,13 @@ void StageManager::Init()
 
 		fclose(file);
 	}
+	else throw "No Map Node Data";
 }
 
 void StageManager::Render()
 {
 	for (unsigned int i = 0; i < buildingList.size(); ++i) buildingList[i].Render();
+	for (auto& o : objectList) o->Render();
 
 	int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
 
@@ -155,8 +163,8 @@ void StageManager::Render()
 
 Node & StageManager::GetNearestNode(float x, float z)
 {
-	int row = int((z + 6000.0f) / 387.1f + 0.5f);
-	int col = int((x + 6000.0f) / 387.1f + 0.5f);
+	int row = int((z + 6000.0f) / 387.1f + 0.51f);
+	int col = int((x + 6000.0f) / 387.1f + 0.51f);
 	int d[8][2] = { { 1, 0 },{ 1, 1 },{ 0, 1 },{ -1, 1 },{ -1, 0 },{ -1, -1 },{ 0, -1 },{ 1, -1 } };
 	int k = 0;
 	int r = row, c = col;

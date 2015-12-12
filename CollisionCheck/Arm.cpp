@@ -35,7 +35,7 @@ Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx)
 }
 
 Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir)
-	:CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(2.0f), speedRate(2.0f)
+	:CubeObject::CubeObject(ext, vec3(mtx[12], mtx[13], mtx[14]), ext.GetSize(), 0.0f, 0.0f, 0.0f), isAlly(isAlly), speed(1000.0f), speedRate(2.0f)
 	, timer(0), isAlive(true)
 {
 	for (int i = 0; i < 16; ++i) matrix[i] = mtx[i];
@@ -43,7 +43,7 @@ Bullet::Bullet(bool isAlly, vec3 & ext, float* mtx, const vec3& dir)
 	velocity = dir;
 	velocity.Normalize();
 
-	position = position + (velocity * 10);
+	//position = position + (velocity * 10);
 }
 
 void Bullet::Render()
@@ -57,11 +57,11 @@ void Bullet::Render()
 	glPopMatrix();
 }
 
-void Bullet::Update()
+void Bullet::Update(float frameTime)
 {
-	position.x += velocity.x*speed;
-	position.y += velocity.y*speed;
-	position.z += velocity.z*speed;
+	position.x += velocity.x*speed*frameTime;
+	position.y += velocity.y*speed*frameTime;
+	position.z += velocity.z*speed*frameTime;
 	matrix[12] = position.x; matrix[13] = position.y; matrix[14] = position.z;
 	speed += speedRate;
 	++timer;
@@ -89,9 +89,9 @@ void BulletManager::Render()
 	for (unsigned int i = 0; i < bulletList.size(); ++i) bulletList[i].Render();
 }
 
-void BulletManager::Update()
+void BulletManager::Update(float frameTime)
 {
-	for (unsigned int i = 0; i < bulletList.size(); ++i) bulletList[i].Update();
+	for (unsigned int i = 0; i < bulletList.size(); ++i) bulletList[i].Update(frameTime);
 	for (auto i = bulletList.begin(); i != bulletList.end(); ) {
 		if (!i->GetIsAlive()) i = bulletList.erase(i);
 		else ++i;

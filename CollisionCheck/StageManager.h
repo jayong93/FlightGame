@@ -11,6 +11,7 @@ class StageManager {
 	float mapW, mapH;
 
 	std::vector<Building> buildingList;
+	std::vector<Object*> objectList;
 
 	StageManager();
 public:
