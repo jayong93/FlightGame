@@ -1,7 +1,11 @@
 #pragma once
 #include "Object.h"
 #include "Ring.h"
+#include "Unit.h"
+#include "Effect.h"
 #include <vector>
+
+enum EFFECT { FLAME, SPARK };
 
 class Bullet;
 class Player;
@@ -40,6 +44,8 @@ class StageManager {
 
 	std::vector<Object*> objectList;
 	std::vector<Ring*> ringList;
+	std::vector<Drone*> droneList;
+	std::vector<Effect*> effectList;
 
 	StageManager();
 public:
@@ -48,8 +54,9 @@ public:
 	static StageManager* Instance();
 
 	std::vector<std::vector<Building>*> GetBuildingList(float x, float z, float radius);
+	std::vector<Drone*>* GetDroneList();
 
-	void Init();
+	void Init(Unit*);
 
 	void Render();
 
@@ -67,4 +74,6 @@ public:
 	void CollisionCheck(Player* player);
 
 	void CollisonCheck_Bullet(std::vector<Bullet>* bulletList);
+
+	void CallEffenct(int effectname, const vec3& pos, vec3& color);
 };

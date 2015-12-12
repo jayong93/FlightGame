@@ -2,6 +2,7 @@
 #include "std.h"
 #include "InputManager.h"
 #include "Ring.h"
+#include "StageManager.h"
 
 Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), direction(0, 0, -1), isBoost(false), isStelth(false), boostTimer(-1), stelthTimer(-1), alpha(1), mana(100), fireTimer(-1), hp(200)
 {
@@ -30,34 +31,96 @@ bool Player::ColiisionCheck(const Object* obj) const
 	return false;
 }
 
-bool Player::ColiisionCheck_Ring(const Ring* ring) const
+bool Player::ColiisionCheck_Cube(const CubeObject* obj) const
+{
+	for (auto& c : cubeList)
+	{
+		if (obj->CollisionCheck(c))
+			return true;
+	}
+	return false;
+}
+
+bool Player::ColiisionCheck_Ring(const Ring* ring) 
 {
 	if (Object::CollisionCheck(ring))
 	{
 		for (auto& c : cubeList)
 		{
+<<<<<<< HEAD
 			ring->ItemCollisionCheck(c);
 			if (ring->CollisionCheck(c))
+=======
+			if (ring->CollisionCheck(c)) {
+				ProcessPlayerDeath();
+>>>>>>> refs/remotes/origin/SoYun
 				return true;
+			}
 		}
 	}
 	return false;
 }
 
-void Player::Render()
+bool Player::CollisionCheck_Building()
 {
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
+	StageManager* stm = StageManager::Instance();
+	std::vector<std::vector<Building>*> buildingList = stm->GetBuildingList(position.x, position.z, boundingRad);
+	for (int n = 0; n < buildingList.size(); ++n) {
+		for (int i = 0; i < buildingList[n]->size(); ++i) {
+			if (Object::CollisionCheck(&(*buildingList[n])[i]))
+			{
+				for (auto& c : cubeList)
+				{
+					if (c->CubeObject::CollisionCheck(&(*buildingList[n])[i])) {
+						ProcessPlayerDeath();
+						std::cout << "BuildingCollisionCheck" << std::endl;
+						return true;
+					}
+				}
+			}
+		}
+	}
+	return false;
+}
+
+bool Player::CollisionCheck_Drone(Drone * drone) 
+{
+	if (Object::CollisionCheck(drone))
 	{
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		for (auto& c : cubeList)
 		{
-			c->Render();
+			if (drone->CollisionCheck(c)) {
+				ProcessPlayerDeath();
+				return true;
+			}
 		}
-		glDisable(GL_BLEND);
 	}
-	glPopMatrix();
+	return false;
+}
+
+void Player::ProcessPlayerDeath()
+{
+	StageManager* stm = StageManager::Instance();
+	stm->CallEffenct(EFFECT::FLAME, position, vec3((rand() % 9) / 10.0f + 0.1f, (rand() % 9) / 10.0f + 0.1f, (rand() % 9) / 10.0f + 0.1f));
+	isAlive = false;
+}
+
+void Player::Render()
+{
+	if (isAlive) {
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		{
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			for (auto& c : cubeList)
+			{
+				c->Render();
+			}
+			glDisable(GL_BLEND);
+		}
+		glPopMatrix();
+	}
 }
 
 void Player::Move(const vec3 & dir)
