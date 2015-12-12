@@ -77,13 +77,14 @@ void Trace::Update(Drone & drone, float frameTime)
 		else drone.velocity = vec3(0.0f, 0.0f, 0.0f);
 	}
 	else if ((nDrone.col == nTarget.col && nDrone.row == nTarget.row)) {
-		std::vector<Building>* buildingList = stm->GetBuildingList();
+		std::vector<std::vector<Building>*> buildingList = stm->GetBuildingList(drone.position.x, drone.position.z, drone.boundingRad);
 		bool flag = false;
-		for (int i = 0; i < buildingList->size(); ++i) {
-			float distance;
-			if ((*buildingList)[i].CollisionCheckRay(drone.position, drone.target->position, distance))
-			{
-				flag = true;
+		for (int n = 0; n < buildingList.size(); ++n) {
+			for (int i = 0; i < buildingList[n]->size(); ++i) {
+				float distance;
+				if ((*buildingList[n])[i].CollisionCheckRay(drone.position, drone.target->position, distance)) {
+					flag = true;
+				}
 			}
 		}
 		if (!flag) {
@@ -94,9 +95,10 @@ void Trace::Update(Drone & drone, float frameTime)
 		else drone.velocity = vec3();
 		/*drone.velocity = vec3();*/
 	}
+	if (drone.polling) drone.Polling();
 	drone.Move(drone.velocity * (250 * frameTime));
 	//드론 방향 설정 - 벡터로 각 구하기
-	if (GetDistance(vec3(drone.position.x, 0.0f, drone.position.z), vec3(drone.target->position.x, 0.0f, drone.target->position.z)) < 500.0f) {
+	if (GetDistance(vec3(drone.position.x, 0.0f, drone.position.z), vec3(drone.target->position.x, 0.0f, drone.target->position.z)) < 1000.0f) {
 		if (drone.shotTimer == 0) drone.Shot();
 		vec3 dir = drone.target->position - drone.position;
 		dir.Normalize();

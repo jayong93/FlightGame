@@ -40,7 +40,7 @@ Ring::Ring(float x, float y, float z, float w, float h, float d, float angle, bo
 
 	float wx, wy, wz;
 
-	wx = - w / 2.0 + d / 2.0;
+	wx = -w / 2.0 + d / 2.0;
 	wy = 0;
 	wz = 0;
 	vec3 ext = vec3(d / 2.0, h / 2.0, d / 2.0);
@@ -62,12 +62,11 @@ Ring::Ring(float x, float y, float z, float w, float h, float d, float angle, bo
 	cubeList.push_back(new RingEdge(ext, position + rPos, rPos, ext.GetSize(), 0, 0, 0));
 
 	wx = 0;
-	wy = - h / 2.0 + d / 2.0;
+	wy = -h / 2.0 + d / 2.0;
 	wz = 0;
 	ext = vec3(w / 2.0, d / 2.0, d / 2.0);
 	rPos = vec3(wx, wy, wz);
 	cubeList.push_back(new RingEdge(ext, position + rPos, rPos, ext.GetSize(), 0, 0, 0));
-
 	for (auto& c : cubeList)
 	{
 		c->UpdateMatrix(matrix);
@@ -114,7 +113,7 @@ void Item::Render()
 	glPopMatrix();
 }
 
-RotateRing::RotateRing(float x, float y, float z, float w, float h, float d, float r) : Ring(x,y,z,w,h,d), rad(r), angle(0)
+RotateRing::RotateRing(float x, float y, float z, float w, float h, float d, float r) : Ring(x, y, z, w, h, d), rad(r), angle(0)
 {
 	float tmp[16];
 
@@ -124,7 +123,6 @@ RotateRing::RotateRing(float x, float y, float z, float w, float h, float d, flo
 	glTranslatef(0, rad, 0);
 	glGetFloatv(GL_MODELVIEW_MATRIX, ringMat);
 	glLoadMatrixf(tmp);
-
 	for (auto& c : cubeList)
 	{
 		c->UpdateMatrix(matrix);
