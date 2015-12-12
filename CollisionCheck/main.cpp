@@ -9,7 +9,8 @@
 #include <time.h>
 
 static const int width = 1024, height = width/16.0*9;
-const int size = 1000;
+const float mapWidth = 200, mapHeight = 200;
+static float fov = 60;
 
 int GetWindowWidth()
 {
@@ -19,6 +20,11 @@ int GetWindowWidth()
 int GetWindowHeight()
 {
 	return height;
+}
+
+float* GetFovValue()
+{
+	return &fov;
 }
 
 void DrawScene();
@@ -167,7 +173,6 @@ int main() {
 
 	t3dInit();
 
-	clock();
 	glutMainLoop();
 }
 
@@ -179,7 +184,7 @@ void Reshape(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//Clip공간 설정
-	gluPerspective(60.0, w / float(h), 1.0, 8000.0);
+	gluPerspective(60.0, w / float(h), 0.01, 8000.0);
 	//glOrtho((-size / 2.0f), (size / 2.0f), (-size / 2.0f), (size / 2.0f), 10.0f, 10000.0f);
 
 	//ModelView
@@ -190,6 +195,13 @@ void DrawScene() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	glViewport(0, 0, width, height);
+
+	//Projenction
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//Clip공간 설정
+	gluPerspective(fov, width / float(height), 0.01, 8000.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glPushMatrix();
@@ -209,6 +221,48 @@ void DrawScene() {
 	stm->Render();
 
 	for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
+
+	glPopMatrix();
+
+
+	glViewport(width - mapWidth, 0, mapWidth, mapHeight);
+
+	//Projenction
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//Clip공간 설정
+	glOrtho(-mapWidth * 3, mapWidth * 3, -mapHeight * 3, mapHeight * 3, 0.0, 1000.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glPushMatrix();
+
+	vec3 camPos = objList[1]->GetPos();
+
+	glRotatef(90, 1, 0, 0);
+	glTranslatef(-camPos.x, -700, -camPos.z);
+
+	float mapLightPos[4] = { 0,2,1,0 };
+	glLightfv(GL_LIGHT0, GL_POSITION, mapLightPos);
+
+	glPushMatrix();
+	{
+		glTranslatef(0, -10, 0);
+		glRotatef(-90, 1, 0, 0);
+		glColor3f(0, 0, 0);
+		glRectf(-6000, -6000, 6000, 6000);
+	}
+	glPopMatrix();
+
+	stm = StageManager::Instance();
+	stm->Render();
+
+	glPushMatrix();
+	{
+		glTranslatef(camPos.x, 500, camPos.z);
+		glColor3f(1, 0, 0);
+		glutSolidSphere(20, 30, 30);
+	}
+	glPopMatrix();
 
 	glPopMatrix();
 

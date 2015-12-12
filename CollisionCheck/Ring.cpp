@@ -6,6 +6,7 @@ void Ring::Render()
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	{
+		glMultMatrixf(matrix);
 		for (auto& c : cubeList)
 		{
 			c->Render();
@@ -74,7 +75,7 @@ void RingEdge::Render()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
-	glMultMatrixf(matrix);
+	glTranslatef(relativePos.x, relativePos.y, relativePos.z);
 	glColor3f(1.0f, 1.0f, 0.0f);
 	glScalef(2 * extent.x, 2 * extent.y, 2 * extent.z);
 	glutSolidCube(1.0f);
