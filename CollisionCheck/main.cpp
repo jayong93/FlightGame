@@ -216,6 +216,13 @@ void DrawScene() {
 		stm->Render();
 
 		for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glColor4f(1, 1, 1, 0.5);
+		glutSolidSphere(5800, 30, 30);
+		glDisable(GL_BLEND);
+		glutWireSphere(5800, 30, 30);
 	}
 	glPopMatrix();
 
