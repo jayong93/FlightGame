@@ -12,7 +12,7 @@ extern Sound* sound[3];
 extern Channel* channel;
 extern Channel* bgmChan;
 
-Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), direction(0, 0, -1), isBoost(false), boostTimer(-1), stelthTimer(-1), alpha(1), mana(100), fireTimer(-1), deathTimer(-1), hp(200)
+Player::Player(float x, float y, float z) : Unit(vec3(x, y, z), 30, 0, 0, 0), direction(0, 0, -1), isBoost(false), boostTimer(-1), stelthTimer(-1), alpha(1), mana(100), deathTimer(-1), hp(200)
 {
 	cubeList.push_back(new PlayerBody(position, vec3(0, 0, -2)));
 	vec3 pos = position;
@@ -60,7 +60,7 @@ bool Player::ColiisionCheck_Cube(const CubeObject* obj)
 	return false;
 }
 
-bool Player::ColiisionCheck_Ring(const Ring* ring) 
+bool Player::ColiisionCheck_Ring(const Ring* ring)
 {
 	if (Object::CollisionCheck(ring))
 	{
@@ -103,7 +103,7 @@ bool Player::CollisionCheck_Building()
 	return false;
 }
 
-bool Player::CollisionCheck_Drone(Drone * drone) 
+bool Player::CollisionCheck_Drone(Drone * drone)
 {
 	if (Object::CollisionCheck(drone))
 	{
@@ -367,21 +367,6 @@ void Player::Update(float frameTime)
 			isStelth = !isStelth;
 			im->ReleaseKey('e');
 			stelthTimer = 0;
-		}
-
-		// 무기 발사 간격
-		if (fireTimer >= 0)
-		{
-			fireTimer += frameTime;
-			if (fireTimer >= 0.05)
-				fireTimer = -1;
-		}
-
-		// 무기 발사
-		if (im->GetKeyState(' ') && fireTimer < 0)
-		{
-			arm.Shot(true, matrix, direction);
-			fireTimer = 0;
 		}
 
 		// 시야각 조절
