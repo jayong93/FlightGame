@@ -8,12 +8,18 @@
 #include "InputManager.h"
 #include "Fireworks.h"
 #include <time.h>
+#include <fmod.hpp>
 
+using namespace FMOD;
 
 static const int width = 1024, height = width / 16.0 * 9;
 const float mapWidth = 200, mapHeight = 200;
 static float fov = 60;
 static StageState stageState;
+System* fSystem;
+Sound* sound[3];
+Channel* channel;
+Channel* bgmChan;
 std::vector<Fireworks> fireworksList;
 int fireworkTimer;
 
@@ -108,6 +114,11 @@ public:
 			glTranslatef(0, -1800, -6000);
 			glRotatef(fYaw, 0, 1, 0);
 		}
+		else if (stageState == ENDING)
+		{
+			glTranslatef(0, -1800, -6000);
+			glRotatef(fYaw, 0, 1, 0);
+		}
 	}
 
 	void PitchRotate(float fDelta) {
@@ -161,6 +172,12 @@ int main() {
 	glutSpecialFunc(ProcessSpeciaKeyInput);
 	glutSpecialUpFunc(ProcessSpeciaKeyRelease);
 
+	// FMOD Init
+	System_Create(&fSystem);
+	fSystem->init(20, FMOD_INIT_NORMAL, 0);
+	fSystem->createStream("background.wav", FMOD_LOOP_NORMAL|FMOD_2D, 0, &sound[0]);
+	fSystem->createSound("explosion.wav", FMOD_2D, 0, &sound[1]);
+
 	srand(time(NULL));
 
 	// OpenGL Setting
@@ -179,7 +196,6 @@ int main() {
 
 	// Object Init
 	objList.push_back(new Player(0, 3, 100));
-	//objList.push_back(new Road(vec3(-100,0,100), vec3(100,0,-100), 20));
 
 	Camera.SetTarget((Player*)objList.front());
 
@@ -188,8 +204,12 @@ int main() {
 
 	t3dInit();
 
-	clock();
+	fSystem->playSound(sound[0], NULL, true, &bgmChan);
+	bgmChan->setVolume(1.0);
 	glutMainLoop();
+
+	fSystem->release();
+	fSystem->close();
 }
 
 void Reshape(int w, int h) {
@@ -243,9 +263,9 @@ void DrawScene() {
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glColor4f(0.7, 0.7, 1.0, 0.5);
-			glutSolidSphere(5800, 30, 30);
+			glutSolidSphere(5990, 30, 30);
 			glDisable(GL_BLEND);
-			glutWireSphere(5800, 30, 30);
+			glutWireSphere(5990, 30, 30);
 		}
 		for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
 	}
@@ -412,6 +432,8 @@ void TimerFunction(int value) {
 	//printf("FPS : %f\n", 1 / frameTime);
 	prevClock = nowClock;
 
+	fSystem->update();
+
 	if (stageState == INTRO)
 	{
 		Camera.YawRotate(20 * frameTime);
@@ -430,6 +452,8 @@ void TimerFunction(int value) {
 
 			StageManager* sm = StageManager::Instance();
 			sm->Restart((Unit*)objList.front());
+
+			bgmChan->setPaused(false);
 		}
 	}
 
@@ -445,6 +469,12 @@ void TimerFunction(int value) {
 
 		sm->CollisionCheck((Player*)objList.front());
 		bm->CollisionCheck((Player*)objList.front());
+
+		if (sm->GetItemCount() == 0)
+		{
+			stageState = ENDING;
+			bgmChan->setPaused(true);
+		}
 	}
 	else if (stageState == ENDING) {
 		Camera.YawRotate(20 * frameTime);
