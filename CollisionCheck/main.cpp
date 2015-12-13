@@ -263,15 +263,9 @@ void DrawScene() {
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glColor4f(0.7, 0.7, 1.0, 0.5);
-<<<<<<< HEAD
-			glutSolidSphere(5800, 30, 30);
-			glDisable(GL_BLEND);
-			glutWireSphere(5800, 30, 30);
-=======
 			glutSolidSphere(5990, 30, 30);
 			glDisable(GL_BLEND);
 			glutWireSphere(5990, 30, 30);
->>>>>>> refs/remotes/origin/JaeYong
 		}
 		for (unsigned int i = 0; i < objList.size(); ++i) objList[i]->Render();
 	}
@@ -480,15 +474,6 @@ void TimerFunction(int value) {
 		{
 			stageState = ENDING;
 			bgmChan->setPaused(true);
-		}
-	}
-	else if (stageState == ENDING) {
-		Camera.YawRotate(20 * frameTime);
-		for (unsigned int i = 0; i < fireworksList.size(); ++i) fireworksList[i].Update();
-		++fireworkTimer;
-		if (fireworkTimer == 30 && fireworksList.size() < 100) {
-			fireworkTimer = 0;
-			fireworksList.push_back(Fireworks(vec3(float(rand() % int(2000) - 1000.0f), 0.0f, float(rand() % int(2000) - 1000.0f)), 0.0f, rand() % 360, 0.0f));
 		}
 	}
 	else if (stageState == ENDING) {
