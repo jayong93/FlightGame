@@ -26,7 +26,7 @@ private:
 	vec3 direction;
 	bool isBoost;
 	float boostTimer, stelthTimer, alpha, mana;
-	float fireTimer, deathTimer;
+	float deathTimer;
 	mutable float hp;
 };
 
