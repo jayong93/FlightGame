@@ -15,6 +15,7 @@ protected:
 	std::vector<CubeObject*> cubeList;
 
 	Arm arm;
+	bool isStelth;
 public:
 	Unit(vec3& pos, float rad, float p, float y, float r);
 
@@ -25,6 +26,10 @@ public:
 	void Rotate(float, float, float);
 
 	virtual void CameraTransform() { }
+
+	void SetAlive(bool alive) { isAlive = alive; }
+	bool GetAlive() { return isAlive; }
+	bool GetIsStelth() { return isStelth; }
 
 	friend class Patrol;
 	friend class Trace;
@@ -42,6 +47,7 @@ class Drone : public Unit {
 	int croute;
 
 	int shotTimer;
+	bool polling;
 public:
 	Drone(Unit* target, vec3 & pos, float rad = 5.0f, float p = 0.0f, float y = 0.0f, float r = 0.0f);
 
@@ -58,6 +64,10 @@ public:
 	void ChangeState(State*);
 
 	void SetDirection(vec3&);
+
+	void Polling();
+
+	virtual bool CollisionCheck(const CubeObject* obj);
 
 	friend class Patrol;
 	friend class Trace;

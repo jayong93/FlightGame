@@ -51,12 +51,12 @@
     <ClCompile Include="AIState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-<<<<<<< HEAD
-=======
     <ClCompile Include="Ring.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
->>>>>>> refs/remotes/origin/JaeYong
+    <ClCompile Include="Effect.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object.h">
@@ -93,6 +93,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Ring.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Fireworks.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

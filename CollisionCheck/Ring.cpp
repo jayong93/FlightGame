@@ -6,6 +6,10 @@ void Ring::Render()
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	{
+		if (isItemExist)
+		{
+			item.Render();
+		}
 		glMultMatrixf(matrix);
 		for (auto& c : cubeList)
 		{
@@ -32,15 +36,49 @@ void Ring::Update(float frameTime)
 			c->UpdateMatrix(matrix);
 		}
 	}
+	if (isItemExist)
+	{
+		item.Update(frameTime);
+	}
 }
 
-Ring::Ring(float x, float y, float z, float w, float h, float d, float angle, bool rotate) : Object(vec3(x, y, z), vec3(w, h, d).GetSize(), 0, angle, 0), isRotate(rotate)
+bool Ring::CollisionCheck(const CubeObject * obj) const
+{
+	if (Object::CollisionCheck(obj))
+	{
+		for (auto& c : cubeList)
+		{
+			if (obj->CollisionCheck(c))
+			{
+				std::cout << "CollisionWithRing" << std::endl;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool Ring::ItemCollisionCheck(const CubeObject * obj) const
+{
+	if (isItemExist && ((Object)item).CollisionCheck(obj))
+	{
+		if (obj->CollisionCheck(&item))
+		{
+			isItemExist = false;
+			std::cout << "CollisionWithItem" << std::endl;
+			return true;
+		}
+	}
+	return false;
+}
+
+Ring::Ring(float x, float y, float z, float w, float h, float d, float angle, bool rotate) : Object(vec3(x, y, z), vec3(w, h, d).GetSize(), 0, angle, 0), isRotate(rotate), item(vec3(w / 6.0, h / 6.0, h / 6.0), vec3(x, y, z), vec3(w / 4.0, h / 4.0, d / 4.0).GetSize(), 0, 0, 0), isItemExist(true)
 {
 	// 테두리 생성
 
 	float wx, wy, wz;
 
-	wx = - w / 2.0 + d / 2.0;
+	wx = -w / 2.0 + d / 2.0;
 	wy = 0;
 	wz = 0;
 	vec3 ext = vec3(d / 2.0, h / 2.0, d / 2.0);
@@ -62,12 +100,11 @@ Ring::Ring(float x, float y, float z, float w, float h, float d, float angle, bo
 	cubeList.push_back(new RingEdge(ext, position + rPos, rPos, ext.GetSize(), 0, 0, 0));
 
 	wx = 0;
-	wy = - h / 2.0 + d / 2.0;
+	wy = -h / 2.0 + d / 2.0;
 	wz = 0;
 	ext = vec3(w / 2.0, d / 2.0, d / 2.0);
 	rPos = vec3(wx, wy, wz);
 	cubeList.push_back(new RingEdge(ext, position + rPos, rPos, ext.GetSize(), 0, 0, 0));
-
 	for (auto& c : cubeList)
 	{
 		c->UpdateMatrix(matrix);
@@ -104,17 +141,92 @@ Item::Item(vec3 & extent, vec3 & pos, float rad, float p, float y, float r) : Cu
 {
 }
 
+float Item::pointColor[8][3] =
+{
+	{0,0,0}, {1,0,0}, {0,1,0}, {0,0,1},
+	{1,0,1}, {1,1,0}, {0,1,1}, {1,1,1}
+};
+
 void Item::Render()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	{
+		glMultMatrixf(matrix);
+		glScalef(extent.x * 2, extent.y * 2, extent.z * 2);
+		glBegin(GL_QUADS);
+		{
+			glNormal3f(0, 0, -1);
+			glColor3fv(pointColor[0]);
+			glVertex3f(-0.5, -0.5, -0.5);
+			glColor3fv(pointColor[2]);
+			glVertex3f(-0.5, 0.5, -0.5);
+			glColor3fv(pointColor[5]);
+			glVertex3f(0.5, 0.5, -0.5);
+			glColor3fv(pointColor[1]);
+			glVertex3f(0.5, -0.5, -0.5);
 
+			glNormal3f(-1, 0, 0);
+			glColor3fv(pointColor[0]);
+			glVertex3f(-0.5, -0.5, -0.5);
+			glColor3fv(pointColor[3]);
+			glVertex3f(-0.5, -0.5, 0.5);
+			glColor3fv(pointColor[6]);
+			glVertex3f(-0.5, 0.5, 0.5);
+			glColor3fv(pointColor[2]);
+			glVertex3f(-0.5, 0.5, -0.5);
+
+			glNormal3f(0, -1, 0);
+			glColor3fv(pointColor[0]);
+			glVertex3f(-0.5, -0.5, -0.5);
+			glColor3fv(pointColor[1]);
+			glVertex3f(0.5, -0.5, -0.5);
+			glColor3fv(pointColor[4]);
+			glVertex3f(0.5, -0.5, 0.5);
+			glColor3fv(pointColor[3]);
+			glVertex3f(-0.5, -0.5, 0.5);
+
+			glNormal3f(0, 0, 1);
+			glColor3fv(pointColor[6]);
+			glVertex3f(-0.5, 0.5, 0.5);
+			glColor3fv(pointColor[3]);
+			glVertex3f(-0.5, -0.5, 0.5);
+			glColor3fv(pointColor[4]);
+			glVertex3f(0.5, -0.5, 0.5);
+			glColor3fv(pointColor[7]);
+			glVertex3f(0.5, 0.5, 0.5);
+
+			glNormal3f(0, 1, 0);
+			glColor3fv(pointColor[6]);
+			glVertex3f(-0.5, 0.5, 0.5);
+			glColor3fv(pointColor[7]);
+			glVertex3f(0.5, 0.5, 0.5);
+			glColor3fv(pointColor[5]);
+			glVertex3f(0.5, 0.5, -0.5);
+			glColor3fv(pointColor[2]);
+			glVertex3f(-0.5, 0.5, -0.5);
+
+			glNormal3f(1, 0, 0);
+			glColor3fv(pointColor[7]);
+			glVertex3f(0.5, 0.5, 0.5);
+			glColor3fv(pointColor[4]);
+			glVertex3f(0.5, -0.5, 0.5);
+			glColor3fv(pointColor[1]);
+			glVertex3f(0.5, -0.5, -0.5);
+			glColor3fv(pointColor[5]);
+			glVertex3f(0.5, 0.5, -0.5);
+		}
+		glEnd();
 	}
 	glPopMatrix();
 }
 
-RotateRing::RotateRing(float x, float y, float z, float w, float h, float d, float r) : Ring(x,y,z,w,h,d), rad(r), angle(0)
+void Item::Update(float frameTime)
+{
+	this->Rotate(0, 60 * frameTime, 0);
+}
+
+RotateRing::RotateRing(float x, float y, float z, float w, float h, float d, float r) : Ring(x, y, z, w, h, d), rad(r), angle(0)
 {
 	float tmp[16];
 
@@ -124,7 +236,6 @@ RotateRing::RotateRing(float x, float y, float z, float w, float h, float d, flo
 	glTranslatef(0, rad, 0);
 	glGetFloatv(GL_MODELVIEW_MATRIX, ringMat);
 	glLoadMatrixf(tmp);
-
 	for (auto& c : cubeList)
 	{
 		c->UpdateMatrix(matrix);

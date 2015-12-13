@@ -6,7 +6,8 @@
 
 
 
-Unit::Unit(vec3 & pos, float rad, float p, float y, float r) : Object(pos, rad, p, y, r), velocity(0, 0, 0), isAlly(false), isAlive(true), arm()
+Unit::Unit(vec3 & pos, float rad, float p, float y, float r) : Object(pos, rad, p, y, r), 
+velocity(0, 0, 0), isAlly(false), isAlive(true), arm(), isStelth(false)
 {
 }
 
@@ -33,7 +34,8 @@ void Unit::Rotate(float pdel, float ydel, float rdel)
 }
 
 
-Drone::Drone(Unit* target, vec3 & pos, float rad, float p, float y, float r) : Unit(pos, rad, p, y, r), target(target), shotTimer(0)
+Drone::Drone(Unit* target, vec3 & pos, float rad, float p, float y, float r) : Unit(pos, rad, p, y, r),
+target(target), shotTimer(0), polling(false)
 {
 	cubeList.push_back(new CubeObject(vec3(2.5f*sqrt(2), 2.5f * sqrt(2), 2.5f * sqrt(2)), pos, rad, p, y, r));
 	cubeList.shrink_to_fit();
@@ -119,22 +121,18 @@ void Drone::Render()
 }
 
 void Drone::Shot() {
+	vec3 dir = target->GetPos() - position;
+	dir.Normalize();
 	float bulletmtx[16];
 	float tmpmtx[16];
 	glMatrixMode(GL_MODELVIEW);
 	glGetFloatv(GL_MODELVIEW_MATRIX, tmpmtx);
 	glLoadIdentity();
 
-	glTranslatef(position.x, position.y, position.z);
-	glRotatef(roll, 0.0f, 0.0f, 1.0f);
-<<<<<<< HEAD
-=======
-	glRotatef(yaw, 0.0f, 1.0f, 0.0f);
-	glRotatef(pitch, 1.0f, 0.0f, 0.0f);
->>>>>>> refs/remotes/origin/JaeYong
+	glLoadMatrixf(matrix);
 	glTranslatef(-boundingRad + 3.0f, 0.0f, boundingRad);
 	glGetFloatv(GL_MODELVIEW_MATRIX, bulletmtx);
-	arm.Shot(false, bulletmtx);
+	arm.Shot(false, bulletmtx, dir, target);
 
 	glLoadIdentity();
 	glLoadMatrixf(tmpmtx);
@@ -143,16 +141,10 @@ void Drone::Shot() {
 	glGetFloatv(GL_MODELVIEW_MATRIX, tmpmtx);
 	glLoadIdentity();
 
-	glTranslatef(position.x, position.y, position.z);
-	glRotatef(roll, 0.0f, 0.0f, 1.0f);
-<<<<<<< HEAD
-=======
-	glRotatef(yaw, 0.0f, 1.0f, 0.0f);
-	glRotatef(pitch, 1.0f, 0.0f, 0.0f);
->>>>>>> refs/remotes/origin/JaeYong
+	glLoadMatrixf(matrix);
 	glTranslatef(boundingRad - 3.0f, 0.0f, boundingRad);
 	glGetFloatv(GL_MODELVIEW_MATRIX, bulletmtx);
-	arm.Shot(false, bulletmtx);
+	arm.Shot(false, bulletmtx, dir, target);
 
 	glLoadIdentity();
 	glLoadMatrixf(tmpmtx);
@@ -166,12 +158,50 @@ void Drone::Update(float frameTime)
 	for (unsigned int i = 0; i < cubeList.size(); ++i) {
 		cubeList[i]->Object::GenMatrix();
 	}
-	shotTimer = (shotTimer + 1) % 5;
+	shotTimer = (shotTimer + 1) % 7;
 }
 
 void Drone::ChangeState(State * st)
 {
 	state = st;
+}
+
+void Drone::Polling()
+{
+	StageManager* stm = StageManager::Instance();
+	std::vector<std::vector<Building>*> buildingList = stm->GetBuildingList(position.x, position.z, boundingRad);
+	bool flag = false;
+	for (int n = 0; n < buildingList.size(); ++n) {
+		for (int i = 0; i < buildingList[n]->size(); ++i) {
+			float distance;
+			if ((*buildingList[n])[i].CollisionCheckRay(position, vec3((desNode.col*387.1f - 6000.0f), position.y, (desNode.row*387.1f - 6000.0f)), distance)) {
+				flag = true;
+			}
+		}
+	}
+	if (!flag) {
+		velocity.x = (desNode.col*387.1f - 6000.0f) - position.x;
+		velocity.y = 0.0f;
+		velocity.z = (desNode.row*387.1f - 6000.0f) - position.z;
+		velocity.Normalize();
+		polling = false;
+	}
+}
+
+bool Drone::CollisionCheck(const CubeObject * obj)
+{
+
+	for (auto& c : cubeList)
+	{
+		if (obj->CollisionCheck(c)) {
+			std::cout << "CollisionDrone" << std::endl;
+			StageManager* stm = StageManager::Instance();
+			stm->CallEffenct(EFFECT::FLAME, position, vec3((rand() % 9) / 10.0f + 0.1f, (rand() % 9) / 10.0f + 0.1f, (rand() % 9) / 10.0f + 0.1f));
+			isAlive = false;
+			return true;
+		}
+	}
+	return false;
 }
 
 void Drone::SetDirection(vec3 & v)
@@ -196,21 +226,12 @@ void Drone::SetDirection(vec3 & v)
 	}
 	//printf("Pitch : %f, Yaw : %f\n", pitch, yaw);
 	this->Object::GenMatrix();
-<<<<<<< HEAD
 }
 
 TempTarget::TempTarget(vec3 & pos, float rad, float p, float y, float r) : Unit(pos, rad, p, y, r)
 {
 }
 
-=======
-}
-
-TempTarget::TempTarget(vec3 & pos, float rad, float p, float y, float r) : Unit(pos, rad, p, y, r)
-{
-}
-
->>>>>>> refs/remotes/origin/JaeYong
 void TempTarget::Render()
 {
 	glMatrixMode(GL_MODELVIEW);
