@@ -8,25 +8,31 @@
 using namespace FMOD;
 
 extern System* fSystem;
-extern Sound* sound[3];
+extern Sound* sound[6];
 extern Channel* channel;
 
 void Arm::Shot(bool isAlly, float* mtx)
 {
 	BulletManager* bulletmgr = BulletManager::Instance();
 	bulletmgr->AddBullet(Bullet(isAlly, vec3(0.25f, 0.25f, 1.0f), mtx));
+	fSystem->playSound(sound[3], NULL, false, &channel);
+	channel->setVolume(0.4);
 }
 
 void Arm::Shot(bool isAlly, float* mtx, const vec3& dir)
 {
 	BulletManager* bulletmgr = BulletManager::Instance();
 	bulletmgr->AddBullet(Bullet(isAlly, vec3(0.25f, 0.25f, 1.0f), mtx, dir));
+	fSystem->playSound(sound[3], NULL, false, &channel);
+	channel->setVolume(0.4);
 }
 
 void Arm::Shot(bool isAlly, float* mtx, const vec3& dir, Unit* unit)
 {
 	BulletManager* bulletmgr = BulletManager::Instance();
 	bulletmgr->AddBullet(Bullet(isAlly, vec3(0.25f, 0.25f, 1.0f), mtx, dir, unit));
+	fSystem->playSound(sound[3], NULL, false, &channel);
+	channel->setVolume(0.4);
 }
 
 void Arm::Render()

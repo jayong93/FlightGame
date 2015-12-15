@@ -17,7 +17,7 @@ const float mapWidth = 200, mapHeight = 200;
 static float fov = 60;
 static StageState stageState;
 System* fSystem;
-Sound* sound[3];
+Sound* sound[6];
 Channel* channel;
 Channel* bgmChan;
 std::vector<Fireworks> fireworksList;
@@ -170,9 +170,12 @@ int main() {
 	// FMOD Init
 	System_Create(&fSystem);
 	fSystem->init(20, FMOD_INIT_NORMAL, 0);
-	fSystem->createStream("background.wav", FMOD_LOOP_NORMAL|FMOD_2D, 0, &sound[0]);
+	fSystem->createStream("background.ogg", FMOD_LOOP_NORMAL | FMOD_2D, 0, &sound[0]);
 	fSystem->createSound("explosion.wav", FMOD_2D, 0, &sound[1]);
 	fSystem->createSound("item.wav", FMOD_2D, 0, &sound[2]);
+	fSystem->createSound("shot.wav", FMOD_2D, 0, &sound[3]);
+	fSystem->createSound("stealth_on.wav", FMOD_2D, 0, &sound[4]);
+	fSystem->createSound("stealth_off.wav", FMOD_2D, 0, &sound[5]);
 
 	srand(time(NULL));
 
@@ -201,7 +204,7 @@ int main() {
 	t3dInit();
 
 	fSystem->playSound(sound[0], NULL, true, &bgmChan);
-	bgmChan->setVolume(1.0);
+	bgmChan->setVolume(0.3);
 	glutMainLoop();
 
 	fSystem->release();
@@ -326,7 +329,7 @@ void DrawScene() {
 			}
 		}
 		else if (stageState == ENDING) {
-			
+
 		}
 	}
 	glPopMatrix();
@@ -408,9 +411,11 @@ void DrawScene() {
 				std::vector<Drone*>* dronelist = stm->GetDroneList();
 				for (int i = 0; i < dronelist->size(); ++i) {
 					vec3 dronePos = (*dronelist)[i]->GetPos();
+					glPushMatrix();
 					glTranslatef(dronePos.x, 500, dronePos.z);
 					glColor3f(1, 1, 1);
 					glutSolidSphere(30, 30, 30);
+					glPopMatrix();
 				}
 			}
 			glPopMatrix();
