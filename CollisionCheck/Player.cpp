@@ -8,7 +8,7 @@
 using namespace FMOD;
 
 extern System* fSystem;
-extern Sound* sound[3];
+extern Sound* sound[6];
 extern Channel* channel;
 extern Channel* bgmChan;
 
@@ -319,6 +319,7 @@ void Player::Update(float frameTime)
 				mana = 0;
 				isStelth = false;
 				stelthTimer = 0;
+				fSystem->playSound(sound[5], 0, false, &channel);
 			}
 		}
 		// 마나 자동 충전
@@ -364,9 +365,17 @@ void Player::Update(float frameTime)
 		}
 
 		// 스텔스 On/Off
-		if (im->GetKeyState('e') && stelthTimer < 0 && mana > 10)
+		if (im->GetKeyState('e') && stelthTimer < 0)
 		{
 			isStelth = !isStelth;
+			if (isStelth)
+			{
+				fSystem->playSound(sound[4], 0, false, &channel);
+			}
+			else
+			{
+				fSystem->playSound(sound[5], 0, false, &channel);
+			}
 			im->ReleaseKey('e');
 			stelthTimer = 0;
 		}
