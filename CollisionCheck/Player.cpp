@@ -71,6 +71,8 @@ bool Player::ColiisionCheck_Ring(const Ring* ring)
 				hp += 5;
 				if (hp > 200)
 					hp = 200;
+				
+				fSystem->playSound(sound[2], 0, false, &channel);
 			}
 			if (ring->CollisionCheck(c)) {
 				ProcessPlayerDeath();

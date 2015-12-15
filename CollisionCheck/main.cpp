@@ -172,6 +172,7 @@ int main() {
 	fSystem->init(20, FMOD_INIT_NORMAL, 0);
 	fSystem->createStream("background.wav", FMOD_LOOP_NORMAL|FMOD_2D, 0, &sound[0]);
 	fSystem->createSound("explosion.wav", FMOD_2D, 0, &sound[1]);
+	fSystem->createSound("item.wav", FMOD_2D, 0, &sound[2]);
 
 	srand(time(NULL));
 
