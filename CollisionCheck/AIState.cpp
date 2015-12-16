@@ -15,7 +15,7 @@ Patrol * Patrol::Instance()
 
 void Patrol::Update(Drone& drone, float frameTime)
 {
-	if ((GetDistance(vec3(drone.position.x, 0.0f, drone.position.z), vec3(drone.target->position.x, 0.0f, drone.target->position.z)) < 1500.0f)
+	if ((GetDistance(vec3(drone.position.x, 0.0f, drone.position.z), vec3(drone.target->position.x, 0.0f, drone.target->position.z)) < 3000.0f)
 		&& (!drone.target->GetIsStelth()) && (drone.target->GetAlive())) {
 		drone.ChangeState(Trace::Instance());
 		return;
@@ -46,7 +46,7 @@ Trace * Trace::Instance()
 
 void Trace::Update(Drone & drone, float frameTime)
 {
-	if (GetDistance(vec3(drone.position.x, 0.0f, drone.position.z), vec3(drone.target->position.x, 0.0f, drone.target->position.z)) > 2000.0f
+	if (GetDistance(vec3(drone.position.x, 0.0f, drone.position.z), vec3(drone.target->position.x, 0.0f, drone.target->position.z)) > 4000.0f
 		||drone.target->GetIsStelth()||!drone.target->GetAlive()) {
 		drone.ChangeState(Patrol::Instance());
 		drone.SetDes();
