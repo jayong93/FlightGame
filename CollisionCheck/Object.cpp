@@ -329,34 +329,10 @@ void Car::Render()
 	glMultMatrixf(matrix);
 
 	const float wheel_radius = 1.0f;
-
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
 	glTranslatef(0.0f, wheel_radius, 0.0f);
 	glColor3f(color.x, color.y, color.z);
 	glutSolidCube(car_size);
 
-	glTranslatef(0.0f, -(car_size / 2.0f + wheel_radius), 0.0f);
-
-	glColor3f(0.3f, 0.3f, 0.3f);
-	glPushMatrix();
-	glTranslatef(-car_size / 4.0f, 0.0f, -car_size / 4.0f);
-	glutSolidSphere(wheel_radius, 16, 16);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(car_size / 4.0f, 0.0f, -car_size / 4.0f);
-	glutSolidSphere(wheel_radius, 16, 16);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(car_size / 4.0f, 0.0f, car_size / 4.0f);
-	glutSolidSphere(wheel_radius, 16, 16);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(-car_size / 4.0f, 0.0f, car_size / 4.0f);
-	glutSolidSphere(wheel_radius, 16, 16);
-	glPopMatrix();
-
-	glPopMatrix();
 	glPopMatrix();
 }
 
